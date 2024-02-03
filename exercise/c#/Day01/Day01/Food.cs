@@ -6,10 +6,8 @@
         Guid? InspectorId)
     {
         public bool IsEdible(Func<DateOnly> now)
-        {
-            return ExpirationDate.CompareTo(now()) > 0 &&
-                   ApprovedForConsumption &&
-                   InspectorId != null;
-        }
+            => ExpirationDate.CompareTo(now()) > 0 &&
+               ApprovedForConsumption &&
+               InspectorId != null;
     }
 }
