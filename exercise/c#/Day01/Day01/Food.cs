@@ -11,7 +11,7 @@
                HaveBeenInspected();
 
         private bool IsFresh(Func<DateOnly> now)
-            => ExpirationDate.CompareTo(now()) > 0;
+            => ExpirationDate > now();
 
         private bool CanBeConsumed()
             => ApprovedForConsumption;
