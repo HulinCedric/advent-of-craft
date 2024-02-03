@@ -14,6 +14,7 @@ namespace Day01.Tests
         {
             return new List<object?[]>
             {
+                new object[] {true, Inspector, ExpirationDate},
                 new object[] {true, Inspector, NotFreshDate},
                 new object[] {false, Inspector, FreshDate},
                 new object?[] {true, null, FreshDate},
