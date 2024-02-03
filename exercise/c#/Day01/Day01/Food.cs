@@ -6,8 +6,17 @@
         Guid? InspectorId)
     {
         public bool IsEdible(Func<DateOnly> now)
-            => ExpirationDate.CompareTo(now()) > 0 &&
-               ApprovedForConsumption &&
-               InspectorId != null;
+            => IsFresh(now) &&
+               CanBeConsumed() &&
+               HaveBeenInspected();
+
+        private bool IsFresh(Func<DateOnly> now)
+            => ExpirationDate.CompareTo(now()) > 0;
+
+        private bool CanBeConsumed()
+            => ApprovedForConsumption;
+
+        private bool HaveBeenInspected()
+            => InspectorId != null;
     }
 }
