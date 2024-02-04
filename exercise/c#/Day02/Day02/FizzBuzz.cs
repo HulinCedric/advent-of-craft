@@ -14,22 +14,25 @@ public static class FizzBuzz
             throw new OutOfRangeException();
         }
 
-        if (input % 3 == 0 &&
-            input % 5 == 0)
+        if (IsDivisibleBy(input, 3) &&
+            IsDivisibleBy(input, 5))
         {
             return "FizzBuzz";
         }
 
-        if (input % 3 == 0)
+        if (IsDivisibleBy(input, 3))
         {
             return "Fizz";
         }
 
-        if (input % 5 == 0)
+        if (IsDivisibleBy(input, 5))
         {
             return "Buzz";
         }
 
         return input.ToString();
     }
+
+    private static bool IsDivisibleBy(int number, int divisor)
+        => number % divisor == 0;
 }
