@@ -2,6 +2,9 @@
 
 public static class FizzBuzz
 {
+    private const int Min = 0;
+    private const int Max = 100;
+
     public static string Convert(int number)
         => number switch
         {
@@ -13,7 +16,7 @@ public static class FizzBuzz
         };
 
     private static bool IsOutOfRange(this int number)
-        => number is <= 0 or > 100;
+        => number is <= Min or > Max;
 
     private static string ToFailure()
         => throw new OutOfRangeException();
