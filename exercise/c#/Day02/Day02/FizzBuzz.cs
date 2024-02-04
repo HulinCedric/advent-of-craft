@@ -10,7 +10,11 @@ public static class FizzBuzz
         }
         else
         {
-            if (input <= 100)
+            if (input > 100)
+            {
+                throw new OutOfRangeException();
+            }
+            else
             {
                 if (input % 3 == 0 &&
                     input % 5 == 0)
@@ -29,10 +33,6 @@ public static class FizzBuzz
                 }
 
                 return input.ToString();
-            }
-            else
-            {
-                throw new OutOfRangeException();
             }
         }
     }
