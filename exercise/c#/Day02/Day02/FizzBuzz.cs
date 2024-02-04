@@ -2,35 +2,35 @@
 
 public static class FizzBuzz
 {
-    public static string Convert(int input)
+    public static string Convert(int number)
     {
-        if (input <= 0)
+        if (number <= 0)
         {
             throw new OutOfRangeException();
         }
 
-        if (input > 100)
+        if (number > 100)
         {
             throw new OutOfRangeException();
         }
 
-        if (input.IsDivisibleBy(3) &&
-            input.IsDivisibleBy(5))
+        if (number.IsDivisibleBy(3) &&
+            number.IsDivisibleBy(5))
         {
             return "FizzBuzz";
         }
 
-        if (input.IsDivisibleBy(3))
+        if (number.IsDivisibleBy(3))
         {
             return "Fizz";
         }
 
-        if (input.IsDivisibleBy(5))
+        if (number.IsDivisibleBy(5))
         {
             return "Buzz";
         }
 
-        return input.ToString();
+        return number.ToString();
     }
 
     private static bool IsDivisibleBy(this int number, int divisor)
