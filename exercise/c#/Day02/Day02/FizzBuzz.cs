@@ -6,7 +6,7 @@ public static class FizzBuzz
         => number switch
         {
             _ when number.IsOutOfRange() => ToFailure(),
-            _ when number.IsDivisibleBy(3) && number.IsDivisibleBy(5) => "FizzBuzz",
+            _ when number.IsDivisibleBy(15) => "FizzBuzz",
             _ when number.IsDivisibleBy(3) => "Fizz",
             _ when number.IsDivisibleBy(5) => "Buzz",
             _ => number.Representation()
