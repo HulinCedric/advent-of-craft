@@ -4,8 +4,7 @@ public record Person(string FirstName, string LastName, params Pet[] Pets)
 {
     public int YoungestPetAge()
     {
-        var youngestPetByAge = YoungestPetIfAny();
-        return youngestPetByAge?.Age ?? int.MaxValue;
+        return YoungestPetIfAny()?.Age ?? int.MaxValue;
     }
 
     private Pet? YoungestPetIfAny()
