@@ -21,7 +21,12 @@ public class PopulationTests
     [Fact]
     public void Who_Owns_The_Youngest_Pet()
     {
-        var filtered = Population.MinBy(person => { var youngestPetByAge = person.Pets.MinBy(p => p.Age); return youngestPetByAge?.Age ?? int.MaxValue; });
+        var filtered = Population.MinBy(
+            person =>
+            {
+                var youngestPetByAge = person.Pets.MinBy(p => p.Age);
+                return youngestPetByAge?.Age ?? int.MaxValue;
+            });
 
         filtered.Should().NotBeNull();
         filtered!.FirstName.Should().Be("Lois");
