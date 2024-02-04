@@ -16,6 +16,7 @@ namespace Day02.Tests
         [Fact]
         public void Returns_The_Given_Number_For_82() => FizzBuzz.Convert(82).Should().Be("82");
 
+        
         #endregion
 
         #region Fizz
@@ -41,6 +42,10 @@ namespace Day02.Tests
 
         [Fact]
         public void Returns_Buzz_For_85() => FizzBuzz.Convert(85).Should().Be("Buzz");
+        
+        [Fact]
+        public void Returns_Buzz_For_100() => FizzBuzz.Convert(100).Should().Be("Buzz");
+
 
         #endregion
 
