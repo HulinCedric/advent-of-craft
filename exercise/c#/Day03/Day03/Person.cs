@@ -3,7 +3,10 @@
 public record Person(string FirstName, string LastName, params Pet[] Pets)
 {
     public int YoungestPetAge()
-        => Pets.Any() ? Pets.Min(pet => pet.Age) : int.MaxValue;
+        => HasPets() ? Pets.Min(pet => pet.Age) : int.MaxValue;
+
+    private bool HasPets()
+        => Pets.Any();
 }
 
 public record Pet(PetType Type, string Name, int Age);
