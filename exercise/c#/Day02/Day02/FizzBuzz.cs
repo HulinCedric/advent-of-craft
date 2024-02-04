@@ -4,11 +4,16 @@ public static class FizzBuzz
 {
     public static string Convert(int input)
     {
-        if (input > 0)
+        if (input <= 0)
+        {
+            throw new OutOfRangeException();
+        }
+        else
         {
             if (input <= 100)
             {
-                if (input % 3 == 0 && input % 5 == 0)
+                if (input % 3 == 0 &&
+                    input % 5 == 0)
                 {
                     return "FizzBuzz";
                 }
@@ -29,10 +34,6 @@ public static class FizzBuzz
             {
                 throw new OutOfRangeException();
             }
-        }
-        else
-        {
-            throw new OutOfRangeException();
         }
     }
 }
