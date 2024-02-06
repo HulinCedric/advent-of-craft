@@ -7,6 +7,7 @@ public class ArticleTests
 {
     [Fact]
     // It_Should_Add_A_Comment_With_The_Given_Text
+    // It_Should_Add_A_Comment_With_The_Given_Author
     public void It_Should_Add_Valid_Comment()
     {
         var article = new Article(
@@ -15,29 +16,17 @@ public class ArticleTests
         );
 
         const string text = "Amazing article !!!";
-        article.AddComment(text, "Pablo Escobar");
-
+        const string author = "Pablo Escobar";
+        article.AddComment(text, author);
+        
         article.Comments
             .Should().HaveCount(1)
             .And.ContainSingle(comment => comment.Text == text);
-    }
-
-    [Fact]
-    public void It_Should_Add_A_Comment_With_The_Given_Author()
-    {
-        var article = new Article(
-            "Lorem Ipsum",
-            "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore"
-        );
-        
-        const string author = "Pablo Escobar";
-        article.AddComment("Amazing article !!!", author);
-
         article.Comments
             .Should().HaveCount(1)
             .And.ContainSingle(comment => comment.Author == author);
     }
-
+    
     [Fact]
     public void It_Should_Add_A_Comment_With_The_Date_Of_The_Day()
     {
