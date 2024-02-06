@@ -41,7 +41,8 @@ public class ArticleTests
     {
         _article.AddComment(CommentText, CommentAuthor);
 
-        var act = () => _article.AddComment(CommentText, CommentAuthor);
-        act.Should().Throw<CommentAlreadyExistException>();
+        _article.Invoking(_ => _.AddComment(CommentText, CommentAuthor))
+            .Should()
+            .Throw<CommentAlreadyExistException>();
     }
 }
