@@ -6,18 +6,8 @@ namespace Day04.Tests;
 public class ArticleTests
 {
     [Fact]
+    // It_Should_Add_A_Comment_With_The_Given_Text
     public void It_Should_Add_Valid_Comment()
-    {
-        var article = new Article(
-            "Lorem Ipsum",
-            "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore"
-        );
-
-        article.AddComment("Amazing article !!!", "Pablo Escobar");
-    }
-
-    [Fact]
-    public void It_Should_Add_A_Comment_With_The_Given_Text()
     {
         var article = new Article(
             "Lorem Ipsum",
@@ -39,7 +29,7 @@ public class ArticleTests
             "Lorem Ipsum",
             "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore"
         );
-
+        
         const string author = "Pablo Escobar";
         article.AddComment("Amazing article !!!", author);
 
