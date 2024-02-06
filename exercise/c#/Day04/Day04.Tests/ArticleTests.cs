@@ -14,10 +14,7 @@ public class ArticleTests
     );
 
     [Fact]
-    // It_Should_Add_A_Comment_With_The_Given_Text
-    // It_Should_Add_A_Comment_With_The_Given_Author
-    // It_Should_Add_A_Comment_With_The_Date_Of_The_Day
-    public void It_Should_Add_Valid_Comment()
+    public void Should_add_comment()
     {
         var today = DateOnly.FromDateTime(DateTime.Today);
        
@@ -28,7 +25,7 @@ public class ArticleTests
     }
 
     [Fact]
-    public void It_Should_Throw_An_Exception_When_Adding_Existing_Comment()
+    public void Should_fail_when_adding_existing_comment()
     {
         _article.AddComment(CommentText, CommentAuthor);
 
