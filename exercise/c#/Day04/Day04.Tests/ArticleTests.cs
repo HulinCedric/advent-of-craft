@@ -20,20 +20,8 @@ public class ArticleTests
         var today = DateOnly.FromDateTime(DateTime.Today);
        
         article.AddComment(text, author);
-        
-        ShouldHaveCommentWith(article, text, author, today);
-    }
 
-    private static void ShouldHaveCommentWith(Article article, string text, string author, DateOnly today)
-    {
-        article.Comments
-            .Should().HaveCount(1)
-            .And.ContainSingle(comment => comment.Text == text);
-        article.Comments
-            .Should().HaveCount(1)
-            .And.ContainSingle(comment => comment.Author == author);
-        article.Comments
-            .Should().ContainSingle(comment => comment.CreationDate == today);
+        article.ShouldHaveCommentWith(text, author, today);
     }
 
     [Fact]
