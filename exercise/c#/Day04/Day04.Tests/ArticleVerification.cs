@@ -4,9 +4,13 @@ namespace Day04.Tests;
 
 public static class ArticleVerification
 {
+    public static void ShouldHaveCommentsCount(this Article article, int count)
+        => article.Comments
+            .Should()
+            .HaveCount(count);
+
     public static void ShouldHaveCommentWith(this Article article, string text, string author, DateOnly creationDate)
         => article.Comments
             .Should()
-            .HaveCount(1)
-            .And.ContainSingle(comment => comment == new Comment(text, author, creationDate));
+            .ContainSingle(comment => comment == new Comment(text, author, creationDate));
 }

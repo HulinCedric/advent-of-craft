@@ -23,6 +23,7 @@ public class ArticleTests
        
         _article.AddComment(CommentText, CommentAuthor);
 
+        _article.ShouldHaveCommentsCount(1);
         _article.ShouldHaveCommentWith(CommentText, CommentAuthor, today);
     }
 
