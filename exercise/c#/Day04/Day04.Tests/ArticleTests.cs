@@ -21,6 +21,11 @@ public class ArticleTests
        
         article.AddComment(text, author);
         
+        ShouldHaveCommentWith(article, text, author, today);
+    }
+
+    private static void ShouldHaveCommentWith(Article article, string text, string author, DateOnly today)
+    {
         article.Comments
             .Should().HaveCount(1)
             .And.ContainSingle(comment => comment.Text == text);
