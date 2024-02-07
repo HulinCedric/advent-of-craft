@@ -9,7 +9,6 @@ public class AnArticle
     private const string CommentAuthor = "Pablo Escobar";
 
     private readonly Article _article;
-
     private readonly Clock _clock;
 
     public AnArticle()
@@ -27,7 +26,7 @@ public class AnArticle
     {
         _article.AddComment(CommentText, CommentAuthor);
 
-        _article.ShouldHaveCommentsCount(1);
+        _article.ShouldHaveComments(count: 1);
         _article.ShouldHaveCommentWith(CommentText, CommentAuthor, _clock.Today());
     }
 
@@ -40,7 +39,7 @@ public class AnArticle
         _article.AddComment(CommentText, CommentAuthor);
         _article.AddComment(secondCommentText, secondCommentAuthor);
 
-        _article.ShouldHaveCommentsCount(2);
+        _article.ShouldHaveComments(count: 2);
         _article.ShouldHaveCommentWith(secondCommentText, secondCommentAuthor, _clock.Today());
     }
 
@@ -55,7 +54,7 @@ public class AnArticle
     }
 
     [Fact]
-    public void Can_be_commented_twice_with_the_same_comment_at_different_day()
+    public void Can_be_commented_twice_with_the_same_comment_on_a_different_day()
     {
         _article.AddComment(CommentText, CommentAuthor);
 
@@ -63,7 +62,7 @@ public class AnArticle
 
         _article.AddComment(CommentText, CommentAuthor);
 
-        _article.ShouldHaveCommentsCount(2);
+        _article.ShouldHaveComments(count: 2);
         _article.ShouldHaveCommentWith(CommentText, CommentAuthor, _clock.Today());
     }
 }

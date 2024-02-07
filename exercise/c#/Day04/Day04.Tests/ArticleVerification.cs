@@ -4,7 +4,7 @@ namespace Day04.Tests;
 
 public static class ArticleVerification
 {
-    public static void ShouldHaveCommentsCount(this Article article, int count)
+    public static void ShouldHaveComments(this Article article, int count)
         => article.Comments
             .Should()
             .HaveCount(count);
