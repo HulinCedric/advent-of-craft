@@ -53,4 +53,17 @@ public class AnArticle
             .Should()
             .Throw<CommentAlreadyExistException>();
     }
+
+    [Fact]
+    public void Can_be_commented_twice_with_the_same_comment_at_different_day()
+    {
+        _article.AddComment(CommentText, CommentAuthor);
+
+        _clock.AddDays(1);
+
+        _article.AddComment(CommentText, CommentAuthor);
+
+        _article.ShouldHaveCommentsCount(2);
+        _article.ShouldHaveCommentWith(CommentText, CommentAuthor, _clock.Today());
+    }
 }
