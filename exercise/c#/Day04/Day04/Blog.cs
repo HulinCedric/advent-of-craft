@@ -1,7 +1,14 @@
 ﻿namespace Day04
 {
-    public class Article(string name, string content)
+    public class Article
     {
+        private readonly IClock _clock;
+
+        public Article(string name, string content, IClock clock)
+        {
+            _clock = clock;
+        }
+
         public List<Comment> Comments { get; } = [];
 
         private void AddComment(
@@ -18,7 +25,7 @@
         }
 
         public void AddComment(string text, string author)
-            => AddComment(text, author, DateOnly.FromDateTime(DateTime.Now));
+            => AddComment(text, author, _clock.Today());
     }
 
     public record Comment(string Text, string Author, DateOnly CreationDate);
