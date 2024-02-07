@@ -2,9 +2,9 @@
 {
     public class Article
     {
-        private readonly IClock _clock;
+        private readonly TimeProvider _clock;
 
-        public Article(string name, string content, IClock clock)
+        public Article(string name, string content, TimeProvider clock)
         {
             _clock = clock;
         }

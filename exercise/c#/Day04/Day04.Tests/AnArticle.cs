@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.Extensions.Time.Testing;
 using Xunit;
 
 namespace Day04.Tests;
@@ -9,17 +10,16 @@ public class AnArticle
     private const string CommentAuthor = "Pablo Escobar";
 
     private readonly Article _article;
-    private readonly Clock _clock;
+    private readonly FakeTimeProvider _clock;
 
     public AnArticle()
     {
-        _clock = new Clock(DateOnly.FromDateTime(DateTime.Today));
+        _clock = new FakeTimeProvider();
         _article = new Article(
             "Lorem Ipsum",
             "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore",
             _clock);
     }
-
 
     [Fact]
     public void Can_be_commented()
