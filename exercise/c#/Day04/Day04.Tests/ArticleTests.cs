@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Day04.Tests;
 
-public class ArticleTests
+public class AnArticle
 {
     private const string CommentText = "Amazing article !!!";
     private const string CommentAuthor = "Pablo Escobar";
@@ -15,7 +15,7 @@ public class ArticleTests
     private readonly DateOnly _today = DateOnly.FromDateTime(DateTime.Today);
 
     [Fact]
-    public void Should_add_a_comment_in_an_article()
+    public void Can_be_commented()
     {
         _article.AddComment(CommentText, CommentAuthor);
 
@@ -24,7 +24,7 @@ public class ArticleTests
     }
 
     [Fact]
-    public void Should_add_a_comment_in_an_article_already_containing_a_comment()
+    public void Can_be_commented_multiple_times()
     {
         const string secondCommentText = "Lorem Ipsum";
         const string secondCommentAuthor = "Ipsum Lorem";
@@ -37,7 +37,7 @@ public class ArticleTests
     }
 
     [Fact]
-    public void Should_fail_when_adding_an_existing_comment()
+    public void Cannot_be_commented_twice_with_the_same_comment()
     {
         _article.AddComment(CommentText, CommentAuthor);
 
