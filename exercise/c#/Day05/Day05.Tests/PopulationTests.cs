@@ -1,7 +1,5 @@
-using System.Text;
 using FluentAssertions;
 using Xunit;
-using static System.Environment;
 using static Day05.PetType;
 
 namespace Day05.Tests;
@@ -22,7 +20,7 @@ public class PopulationTests
 
     [Fact]
     public void People_With_Their_Pets()
-        => FormatPopulation(Population)
+        => Population.Format()
             .Should()
             .Be(
                 """
@@ -35,18 +33,6 @@ public class PopulationTests
                 Cleveland Brown who owns : Fuzzy Wuzzy
                 Glenn Quagmire
                 """);
-
-    private static string FormatPopulation(IEnumerable<Person> population)
-        => string.Join(NewLine, population.Select(FormatPerson));
-
-    private static string FormatPerson(Person person)
-        => $"{person.FirstName} {person.LastName}{FormatOwnedPets(person.Pets)}";
-
-    private static string FormatOwnedPets(Pet[] pets)
-        => pets.Any() ? $" who owns : {FormatPets(pets)}" : "";
-
-    private static string FormatPets(Pet[] pets)
-        => string.Join(" ", pets.Select(pet => pet.Name));
 
     [Fact]
     public void Who_Owns_The_Youngest_Pet()
