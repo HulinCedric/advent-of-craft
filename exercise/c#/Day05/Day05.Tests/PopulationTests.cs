@@ -52,15 +52,18 @@ public class PopulationTests
                 response.Append(" who owns : ");
             }
 
+            var petsResponse = "";
             foreach (var pet in person.Pets)
             {
-                response.Append($"{pet.Name}");
+                petsResponse += $"{pet.Name}";
 
                 if (pet != person.Pets.Last())
                 {
-                    response.Append(' ');
+                    petsResponse += ' ';
                 }
             }
+            
+            response.Append(petsResponse);
 
             if (person != Population.Last())
             {
