@@ -41,21 +41,7 @@ public class PopulationTests
     }
 
     private static StringBuilder FormatPopulation()
-    {
-        var response = "";
-
-        foreach (var person in Population)
-        {
-            response += FormatPerson(person);
-
-            if (person != Population.Last())
-            {
-                response += NewLine;
-            }
-        }
-
-        return new StringBuilder(response);
-    }
+        => new(string.Join(NewLine, Population.Select(FormatPerson)));
 
     private static string FormatPerson(Person person)
     {
