@@ -8,14 +8,14 @@ public static class FormatExtensions
     internal static string Format(this IEnumerable<Person> population)
         => Join(NewLine, population.Select(Format));
 
-    private static string Format(Person person)
-        => $"{person.FirstName} {person.LastName}{FormatOwnedPets(person.Pets)}";
+    private static string Format(this Person person)
+        => $"{person.FirstName} {person.LastName}{person.Pets.FormatOwned()}";
 
-    private static string FormatOwnedPets(Pet[] pets)
+    private static string FormatOwned(this Pet[] pets)
         => pets.Any()
-               ? $" who owns : {FormatPets(pets)}"
+               ? $" who owns : {pets.Format()}"
                : Empty;
 
-    private static string FormatPets(Pet[] pets)
+    private static string Format(this Pet[] pets)
         => Join(" ", pets.Select(pet => pet.Name));
 }
