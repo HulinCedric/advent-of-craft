@@ -42,19 +42,19 @@ public class PopulationTests
 
     private static StringBuilder FormatPopulation()
     {
-        var response = new StringBuilder();
+        var response = "";
 
         foreach (var person in Population)
         {
-            response.AppendFormat(FormatPerson(person));
+            response += FormatPerson(person);
 
             if (person != Population.Last())
             {
-                response.Append(NewLine);
+                response += NewLine;
             }
         }
 
-        return response;
+        return new StringBuilder(response);
     }
 
     private static string FormatPerson(Person person)
