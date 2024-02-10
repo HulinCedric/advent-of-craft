@@ -22,7 +22,7 @@ public class PopulationTests
 
     [Fact]
     public void People_With_Their_Pets()
-        => FormatPopulation().ToString()
+        => FormatPopulation()
             .Should()
             .Be(
                 """
@@ -36,8 +36,8 @@ public class PopulationTests
                 Glenn Quagmire
                 """);
 
-    private static StringBuilder FormatPopulation()
-        => new(string.Join(NewLine, Population.Select(FormatPerson)));
+    private static string FormatPopulation()
+        => string.Join(NewLine, Population.Select(FormatPerson));
 
     private static string FormatPerson(Person person)
         => $"{person.FirstName} {person.LastName}{FormatOwnedPets(person.Pets)}";
