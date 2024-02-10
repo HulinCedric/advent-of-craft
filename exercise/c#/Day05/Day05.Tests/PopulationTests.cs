@@ -63,21 +63,8 @@ public class PopulationTests
         return response;
     }
 
-    private static string FormatPets(Pet[] pets)
-    {
-        var petsResponse = "";
-        foreach (var pet in pets)
-        {
-            petsResponse += $"{pet.Name}";
-
-            if (pet != pets.Last())
-            {
-                petsResponse += ' ';
-            }
-        }
-
-        return petsResponse;
-    }
+    private static string FormatPets(IEnumerable<Pet> pets)
+        => string.Join(" ", pets.Select(pet => pet.Name));
 
     [Fact]
     public void Who_Owns_The_Youngest_Pet()
