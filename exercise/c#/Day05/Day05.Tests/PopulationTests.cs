@@ -22,10 +22,7 @@ public class PopulationTests
 
     [Fact]
     public void People_With_Their_Pets()
-    {
-        var response = FormatPopulation();
-
-        response.ToString()
+        => FormatPopulation().ToString()
             .Should()
             .Be(
                 """
@@ -38,7 +35,6 @@ public class PopulationTests
                 Cleveland Brown who owns : Fuzzy Wuzzy
                 Glenn Quagmire
                 """);
-    }
 
     private static StringBuilder FormatPopulation()
         => new(string.Join(NewLine, Population.Select(FormatPerson)));
