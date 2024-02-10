@@ -52,18 +52,7 @@ public class PopulationTests
                 response.Append(" who owns : ");
             }
 
-            var petsResponse = "";
-            foreach (var pet in person.Pets)
-            {
-                petsResponse += $"{pet.Name}";
-
-                if (pet != person.Pets.Last())
-                {
-                    petsResponse += ' ';
-                }
-            }
-            
-            response.Append(petsResponse);
+            response.Append(FormatPets(person.Pets));
 
             if (person != Population.Last())
             {
@@ -72,6 +61,22 @@ public class PopulationTests
         }
 
         return response;
+    }
+
+    private static string FormatPets(Pet[] pets)
+    {
+        var petsResponse = "";
+        foreach (var pet in pets)
+        {
+            petsResponse += $"{pet.Name}";
+
+            if (pet != pets.Last())
+            {
+                petsResponse += ' ';
+            }
+        }
+
+        return petsResponse;
     }
 
     [Fact]
