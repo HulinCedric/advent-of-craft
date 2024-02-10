@@ -45,17 +45,13 @@ public class PopulationTests
 
     private static string FormatPerson(Person person)
     {
-        var response = new StringBuilder();
-        response.Append($"{person.FirstName} {person.LastName}");
-
-        if (person.Pets.Length > 0)
+        var response = $"{person.FirstName} {person.LastName}";
+        if (person.Pets.Any())
         {
-            response.Append(" who owns : ");
+            response += $" who owns : {FormatPets(person.Pets)}";
         }
 
-        response.Append(FormatPets(person.Pets));
-
-        return response.ToString();
+        return response;
     }
 
     private static string FormatPets(IEnumerable<Pet> pets)
