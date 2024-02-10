@@ -44,17 +44,12 @@ public class PopulationTests
         => new(string.Join(NewLine, Population.Select(FormatPerson)));
 
     private static string FormatPerson(Person person)
-    {
-        var response = $"{person.FirstName} {person.LastName}";
-        if (person.Pets.Any())
-        {
-            response += $" who owns : {FormatPets(person.Pets)}";
-        }
+        => $"{person.FirstName} {person.LastName}{FormatOwnedPets(person.Pets)}";
 
-        return response;
-    }
+    private static string FormatOwnedPets(Pet[] pets)
+        => pets.Any() ? $" who owns : {FormatPets(pets)}" : "";
 
-    private static string FormatPets(IEnumerable<Pet> pets)
+    private static string FormatPets(Pet[] pets)
         => string.Join(" ", pets.Select(pet => pet.Name));
 
     [Fact]
