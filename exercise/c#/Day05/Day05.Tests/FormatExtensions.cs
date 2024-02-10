@@ -12,7 +12,9 @@ public static class FormatExtensions
         => $"{person.FirstName} {person.LastName}{FormatOwnedPets(person.Pets)}";
 
     private static string FormatOwnedPets(Pet[] pets)
-        => pets.Any() ? $" who owns : {FormatPets(pets)}" : Empty;
+        => pets.Any()
+               ? $" who owns : {FormatPets(pets)}"
+               : Empty;
 
     private static string FormatPets(Pet[] pets)
         => Join(" ", pets.Select(pet => pet.Name));
