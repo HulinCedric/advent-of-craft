@@ -27,7 +27,8 @@ public class PopulationTests
 
         response.ToString()
             .Should()
-            .Be("""
+            .Be(
+                """
                 Peter Griffin who owns : Tabby
                 Stewie Griffin who owns : Dolly Brian
                 Joe Swanson who owns : Spike
@@ -45,14 +46,7 @@ public class PopulationTests
 
         foreach (var person in Population)
         {
-            response.Append($"{person.FirstName} {person.LastName}");
-
-            if (person.Pets.Length > 0)
-            {
-                response.Append(" who owns : ");
-            }
-
-            response.Append(FormatPets(person.Pets));
+            response.AppendFormat(FormatPerson(person));
 
             if (person != Population.Last())
             {
@@ -61,6 +55,21 @@ public class PopulationTests
         }
 
         return response;
+    }
+
+    private static string FormatPerson(Person person)
+    {
+        var response = new StringBuilder();
+        response.Append($"{person.FirstName} {person.LastName}");
+
+        if (person.Pets.Length > 0)
+        {
+            response.Append(" who owns : ");
+        }
+
+        response.Append(FormatPets(person.Pets));
+
+        return response.ToString();
     }
 
     private static string FormatPets(IEnumerable<Pet> pets)
@@ -75,6 +84,6 @@ public class PopulationTests
         filtered!.FirstName.Should().Be("Lois");
     }
 
-    private static int YoungestPetAgeOfThePerson(Person person) =>
-        person.Pets.MinBy(p => p.Age)?.Age ?? int.MaxValue;
+    private static int YoungestPetAgeOfThePerson(Person person)
+        => person.Pets.MinBy(p => p.Age)?.Age ?? int.MaxValue;
 }
