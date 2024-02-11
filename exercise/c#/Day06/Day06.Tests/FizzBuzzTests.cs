@@ -6,18 +6,18 @@ namespace Day06.Tests;
 public class FizzBuzzTests
 {
     [Theory]
-    [InlineData(1, "1")]
-    [InlineData(67, "67")]
-    [InlineData(82, "82")]
-    [InlineData(3, "Fizz")]
-    [InlineData(66, "Fizz")]
-    [InlineData(99, "Fizz")]
-    [InlineData(5, "Buzz")]
-    [InlineData(50, "Buzz")]
-    [InlineData(85, "Buzz")]
+    [InlineData(01, "1")]
+    [InlineData(03, "Fizz")]
+    [InlineData(05, "Buzz")]
     [InlineData(15, "FizzBuzz")]
     [InlineData(30, "FizzBuzz")]
     [InlineData(45, "FizzBuzz")]
+    [InlineData(50, "Buzz")]
+    [InlineData(66, "Fizz")]
+    [InlineData(67, "67")]
+    [InlineData(82, "82")]
+    [InlineData(85, "Buzz")]
+    [InlineData(99, "Fizz")]
     public void Convert_number(int input, string output)
         => FizzBuzz.Convert(input)
             .Should()
