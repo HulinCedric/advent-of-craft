@@ -47,10 +47,11 @@ public class FizzBuzzTests
 
     #region Failures
 
-    [Fact]
-    public void Throws_An_Exception_For_0()
+    [Theory]
+    [InlineData(0)]
+    public void Throws_An_Exception_For_(int input)
     {
-        var act = () => FizzBuzz.Convert(0);
+        var act = () => FizzBuzz.Convert(input);
         act.Should().Throw<OutOfRangeException>();
     }
 
