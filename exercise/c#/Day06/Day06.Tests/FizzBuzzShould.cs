@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Day06.Tests;
 
-public class FizzBuzzTests
+public class FizzBuzzShould
 {
     [Theory]
     [InlineData(01, "1")]
