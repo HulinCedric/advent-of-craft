@@ -7,8 +7,9 @@ public class FizzBuzzTests
 {
     #region "Normal" numbers
 
-    [Fact]
-    public void Returns_The_Given_Number_For_1() => FizzBuzz.Convert(1).Should().Be("1");
+    [Theory]
+    [InlineData(1, "1")]
+    public void Returns_The_Given_Number_For_(int input, string output) => FizzBuzz.Convert(input).Should().Be(output);
 
     [Fact]
     public void Returns_The_Given_Number_For_67() => FizzBuzz.Convert(67).Should().Be("67");
