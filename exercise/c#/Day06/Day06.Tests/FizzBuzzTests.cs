@@ -30,10 +30,8 @@ public class FizzBuzzTests
     [Theory]
     [InlineData(5)]
     [InlineData(50)]
+    [InlineData(85)]
     public void Returns_Buzz_For_(int input) => FizzBuzz.Convert(input).Should().Be("Buzz");
-
-    [Fact]
-    public void Returns_Buzz_For_85() => FizzBuzz.Convert(85).Should().Be("Buzz");
 
     #endregion
 
