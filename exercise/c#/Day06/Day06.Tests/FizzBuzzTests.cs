@@ -12,22 +12,22 @@ public class FizzBuzzTests
     public void Returns_The_Given_Number_For_(int input, string output) => FizzBuzz.Convert(input).Should().Be(output);
 
     [Theory]
-    [InlineData(3)]
-    [InlineData(66)]
-    [InlineData(99)]
-    public void Returns_Fizz_For_(int input) => FizzBuzz.Convert(input).Should().Be("Fizz");
+    [InlineData(3, "Fizz")]
+    [InlineData(66, "Fizz")]
+    [InlineData(99, "Fizz")]
+    public void Returns_Fizz_For_(int input, string output) => FizzBuzz.Convert(input).Should().Be(output);
 
     [Theory]
-    [InlineData(5)]
-    [InlineData(50)]
-    [InlineData(85)]
-    public void Returns_Buzz_For_(int input) => FizzBuzz.Convert(input).Should().Be("Buzz");
+    [InlineData(5, "Buzz")]
+    [InlineData(50, "Buzz")]
+    [InlineData(85, "Buzz")]
+    public void Returns_Buzz_For_(int input, string output) => FizzBuzz.Convert(input).Should().Be(output);
 
     [Theory]
-    [InlineData(15)]
-    [InlineData(30)]
-    [InlineData(45)]
-    public void Returns_FizzBuzz_For_(int input) => FizzBuzz.Convert(input).Should().Be("FizzBuzz");
+    [InlineData(15, "FizzBuzz")]
+    [InlineData(30, "FizzBuzz")]
+    [InlineData(45, "FizzBuzz")]
+    public void Returns_FizzBuzz_For_(int input, string output) => FizzBuzz.Convert(input).Should().Be(output);
 
     [Theory]
     [InlineData(0)]
