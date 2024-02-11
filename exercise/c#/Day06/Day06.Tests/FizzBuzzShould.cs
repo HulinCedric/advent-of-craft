@@ -5,19 +5,43 @@ namespace Day06.Tests;
 
 public class FizzBuzzShould
 {
+    public static TheoryData<int, string> BuzzNumbers
+        => new()
+        {
+            { 5, "Buzz" },
+            { 50, "Buzz" },
+            { 85, "Buzz" }
+        };
+
+    public static TheoryData<int, string> FizzBuzzNumbers
+        => new()
+        {
+            { 15, "FizzBuzz" },
+            { 30, "FizzBuzz" },
+            { 45, "FizzBuzz" }
+        };
+
+    public static TheoryData<int, string> FizzNumbers
+        => new()
+        {
+            { 3, "Fizz" },
+            { 66, "Fizz" },
+            { 99, "Fizz" }
+        };
+
+    public static TheoryData<int, string> Numbers
+        => new()
+        {
+            { 01, "1" },
+            { 67, "67" },
+            { 82, "82" }
+        };
+
     [Theory]
-    [InlineData(01, "1")]
-    [InlineData(03, "Fizz")]
-    [InlineData(05, "Buzz")]
-    [InlineData(15, "FizzBuzz")]
-    [InlineData(30, "FizzBuzz")]
-    [InlineData(45, "FizzBuzz")]
-    [InlineData(50, "Buzz")]
-    [InlineData(66, "Fizz")]
-    [InlineData(67, "67")]
-    [InlineData(82, "82")]
-    [InlineData(85, "Buzz")]
-    [InlineData(99, "Fizz")]
+    [MemberData(nameof(Numbers))]
+    [MemberData(nameof(FizzNumbers))]
+    [MemberData(nameof(BuzzNumbers))]
+    [MemberData(nameof(FizzBuzzNumbers))]
     public void Convert_number(int input, string output)
         => FizzBuzz.Convert(input)
             .Should()
