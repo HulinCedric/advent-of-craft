@@ -17,8 +17,9 @@ public class FizzBuzzTests
 
     #region Fizz
 
-    [Fact]
-    public void Returns_Fizz_For_3() => FizzBuzz.Convert(3).Should().Be("Fizz");
+    [Theory]
+    [InlineData(3)]
+    public void Returns_Fizz_For_(int input) => FizzBuzz.Convert(input).Should().Be("Fizz");
 
     [Fact]
     public void Returns_Fizz_For_66() => FizzBuzz.Convert(66).Should().Be("Fizz");
