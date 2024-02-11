@@ -49,16 +49,10 @@ public class FizzBuzzTests
 
     [Theory]
     [InlineData(0)]
+    [InlineData(101)]
     public void Throws_An_Exception_For_(int input)
     {
         var act = () => FizzBuzz.Convert(input);
-        act.Should().Throw<OutOfRangeException>();
-    }
-
-    [Fact]
-    public void Throws_An_Exception_For_101()
-    {
-        var act = () => FizzBuzz.Convert(101);
         act.Should().Throw<OutOfRangeException>();
     }
 
