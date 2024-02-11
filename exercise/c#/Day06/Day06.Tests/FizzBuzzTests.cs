@@ -10,11 +10,9 @@ public class FizzBuzzTests
     [Theory]
     [InlineData(1, "1")]
     [InlineData(67, "67")]
+    [InlineData(82, "82")]
     public void Returns_The_Given_Number_For_(int input, string output) => FizzBuzz.Convert(input).Should().Be(output);
-
-    [Fact]
-    public void Returns_The_Given_Number_For_82() => FizzBuzz.Convert(82).Should().Be("82");
-
+    
     #endregion
 
     #region Fizz
