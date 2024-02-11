@@ -19,10 +19,8 @@ public class FizzBuzzTests
 
     [Theory]
     [InlineData(3)]
+    [InlineData(66)]
     public void Returns_Fizz_For_(int input) => FizzBuzz.Convert(input).Should().Be("Fizz");
-
-    [Fact]
-    public void Returns_Fizz_For_66() => FizzBuzz.Convert(66).Should().Be("Fizz");
 
     [Fact]
     public void Returns_Fizz_For_99() => FizzBuzz.Convert(99).Should().Be("Fizz");
