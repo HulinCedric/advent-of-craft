@@ -11,17 +11,15 @@ public class FizzBuzzShould
     [ClassData(typeof(FizzNumbers))]
     [ClassData(typeof(BuzzNumbers))]
     [ClassData(typeof(FizzBuzzNumbers))]
-    public void Convert_number(int input, string output)
-        => FizzBuzz.Convert(input)
+    public void Convert_number(int number, string expected)
+        => FizzBuzz.Convert(number)
             .Should()
-            .Be(output);
+            .Be(expected);
 
     [Theory]
-    [InlineData(0)]
-    [InlineData(101)]
-    [InlineData(-1)]
-    public void Fails_when_the_number_is_out_of_range(int input)
-        => ((Action)(() => FizzBuzz.Convert(input)))
+    [ClassData(typeof(OutOfRangeNumbers))]
+    public void Fails_when_the_number_is_out_of_range(int number)
+        => ((Action)(() => FizzBuzz.Convert(number)))
             .Should()
             .Throw<OutOfRangeException>();
 }
