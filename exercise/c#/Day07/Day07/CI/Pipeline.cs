@@ -6,9 +6,7 @@ public class Pipeline(IConfig config, IEmailer emailer, ILogger log)
 {
     public void Run(Project project)
     {
-        var testsPassed = RunTests(project);
-
-        if (!testsPassed)
+        if (!RunTests(project))
         {
             SendEmail("Tests failed");
             return;
