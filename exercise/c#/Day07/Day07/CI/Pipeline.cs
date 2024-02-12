@@ -21,15 +21,11 @@ public class Pipeline(IConfig config, IEmailer emailer, ILogger log)
             {
                 return StepPassed("Tests passed");
             }
-            else
-            {
-                return StepFailed("Tests failed");
-            }
+
+            return StepFailed("Tests failed");
         }
-        else
-        {
-            return StepPassed("No tests");
-        }
+
+        return StepPassed("No tests");
     }
 
     private bool RunDeployment(Project project, bool testsPassed)
