@@ -39,6 +39,23 @@ public class Pipeline(IConfig config, IEmailer emailer, ILogger log)
 
     private void RunSendEmailSummary(bool testsPassed, bool deploySuccessful)
     {
+        if (!testsPassed)
+        {
+            SendEmail("Tests failed");
+            return;
+        }
+
+        if (!deploySuccessful)
+        {
+            SendEmail("Deployment failed");
+            return;
+        }
+
+        SendEmail("Deployment completed successfully");
+    }
+
+    private void SendEmail(string message)
+    {
         if (!config.SendEmailSummary())
         {
             log.Info("Email disabled");
@@ -46,20 +63,8 @@ public class Pipeline(IConfig config, IEmailer emailer, ILogger log)
         }
 
         log.Info("Sending email");
-        
-        if (!testsPassed)
-        {
-            emailer.Send("Tests failed");
-            return;
-        }
 
-        if (!deploySuccessful)
-        {
-            emailer.Send("Deployment failed");
-            return;
-        }
-
-        emailer.Send("Deployment completed successfully");
+        emailer.Send(message);
     }
 
     private bool StepPassed(string message)
