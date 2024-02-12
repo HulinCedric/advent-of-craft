@@ -54,7 +54,7 @@ public class Password
            ContainsAtLeastOneLowercaseLetter(password) &&
            ContainsAtLeastANumber(password) &&
            ContainsAtLeastASpecialCharacter(password, SpecialCharacters) &&
-           !password.Any(c =>  "_".Contains(c));
+           !password.Any(c =>  "_)".Contains(c));
 
     private static bool ContainsAtLeastASpecialCharacter(string password, string specialCharacters)
         => password.Any(specialCharacters.Contains);
