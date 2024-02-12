@@ -39,6 +39,7 @@ public class PasswordShould
     [Theory]
     [InlineData("Aa1Cc2Dd3._")]
     [InlineData("Aa1Cc2Dd3.)")]
+    [InlineData("Aa1Cc2Dd3./")]
     public void Be_invalid_when_contains_unauthorized_character(string password)
         => Password.IsValid(password).Should().BeFalse();
 }
@@ -54,7 +55,7 @@ public class Password
            ContainsAtLeastOneLowercaseLetter(password) &&
            ContainsAtLeastANumber(password) &&
            ContainsAtLeastASpecialCharacter(password, SpecialCharacters) &&
-           !password.Any(c =>  "_)".Contains(c));
+           !password.Any(c => !char.IsLetterOrDigit(c) && !SpecialCharacters.Contains(c));
 
     private static bool ContainsAtLeastASpecialCharacter(string password, string specialCharacters)
         => password.Any(specialCharacters.Contains);
