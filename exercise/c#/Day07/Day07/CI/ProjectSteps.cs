@@ -6,7 +6,10 @@ public static class ProjectSteps
 {
     private const string Success = "success";
 
-    public static bool RunTestsPassed(this Project project, ILogger logger)
+    public static bool RunTestsFailed(this Project project, ILogger logger)
+        => !project.RunTestsPassed(logger);
+
+    private static bool RunTestsPassed(this Project project, ILogger logger)
     {
         if (!project.HasTests())
         {
@@ -18,8 +21,13 @@ public static class ProjectSteps
                    : logger.StepFailed("Tests failed");
     }
 
-    public static bool RunDeploymentPassed(this Project project, ILogger logger)
+    public static bool RunDeploymentFailed(this Project project, ILogger logger)
+        => !project.RunDeploymentPassed(logger);
+
+    private static bool RunDeploymentPassed(this Project project, ILogger logger)
         => project.Deploy() == Success
                ? logger.StepPassed("Deployment successful")
                : logger.StepFailed("Deployment failed");
+
+
 }

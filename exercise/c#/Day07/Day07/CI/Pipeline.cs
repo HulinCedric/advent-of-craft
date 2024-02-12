@@ -6,13 +6,13 @@ public class Pipeline(IConfig config, IEmailer emailer, ILogger log)
 {
     public void Run(Project project)
     {
-        if (!project.RunTestsPassed(log))
+        if (project.RunTestsFailed(log))
         {
             SendEmail("Tests failed");
             return;
         }
 
-        if (!project.RunDeploymentPassed(log))
+        if (project.RunDeploymentFailed(log))
         {
             SendEmail("Deployment failed");
             return;
