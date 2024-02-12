@@ -17,7 +17,6 @@ public class PasswordShould
     public void Be_valid()
         => Password.IsValid("A2345678").Should().BeTrue();
 
-    // TODO Contains at least one lowercase letter
     // TODO Contains at least a number
     // TODO Contains at least a special character in this list . * # @ $ % &.
     // TODO Any other characters are not authorized.
@@ -28,5 +27,12 @@ public class Password
     private const int MaxLength = 8;
 
     public static bool IsValid(string password)
-        => password.Length >= MaxLength && password.Any(char.IsUpper);
+        => IsLessOrEqualsTo(password, MaxLength) &&
+           ContainsAtLeastOneCapitalLetter(password);
+
+    private static bool IsLessOrEqualsTo(string password, int maxLength)
+        => password.Length >= maxLength;
+
+    private static bool ContainsAtLeastOneCapitalLetter(string password)
+        => password.Any(char.IsUpper);
 }
