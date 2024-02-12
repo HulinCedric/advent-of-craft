@@ -22,6 +22,8 @@ public class PasswordShould
 
 public class Password
 {
+    private const int MaxLength = 8;
+
     public static bool IsValid(string password)
-        => password.Length >= 8;
+        => password.Length >= MaxLength;
 }
