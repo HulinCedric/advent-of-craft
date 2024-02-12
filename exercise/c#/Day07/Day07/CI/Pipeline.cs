@@ -15,24 +15,21 @@ public class Pipeline(IConfig config, IEmailer emailer, ILogger log)
 
     private bool RunTests(Project project)
     {
-        bool testsPassed;
         if (project.HasTests())
         {
             if (project.RunTests() == "success")
             {
-                testsPassed = StepPassed("Tests passed");
+                return StepPassed("Tests passed");
             }
             else
             {
-                testsPassed = StepFailed("Tests failed");
+                return StepFailed("Tests failed");
             }
         }
         else
         {
-            testsPassed = StepPassed("No tests");
+            return StepPassed("No tests");
         }
-
-        return testsPassed;
     }
 
     private bool RunDeployment(Project project, bool testsPassed)
