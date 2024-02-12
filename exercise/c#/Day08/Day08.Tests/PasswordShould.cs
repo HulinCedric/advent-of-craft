@@ -5,25 +5,17 @@ namespace Day08.Tests;
 
 public class PasswordShould
 {
-    [Fact]
-    public void Be_invalid_when_contains_less_than_8_characters()
-        => Password.IsValid("Aa1Cc2.").Should().BeFalse();
-
-    [Fact]
-    public void Be_invalid_when_contains_no_capital_letter()
-        => Password.IsValid("aa1cc2dd3.").Should().BeFalse();
-
-    [Fact]
-    public void Be_invalid_when_contains_no_lowercase_letter()
-        => Password.IsValid("AA1CC2DD3.").Should().BeFalse();
-
-    [Fact]
-    public void Be_invalid_when_contains_no_number()
-        => Password.IsValid("AaACcCDdD.").Should().BeFalse();
-
-    [Fact]
-    public void Be_invalid_when_contains_no_special_character()
-        => Password.IsValid("Aa1Cc2Dd3A").Should().BeFalse();
+    [Theory]
+    [InlineData("Aa1Cc2.", "Too short")]
+    [InlineData("aa1cc2dd3.", "No capital letter")]
+    [InlineData("AA1CC2DD3.", "No lowercase letter")]
+    [InlineData("AaACcCDdD.", "No number")]
+    [InlineData("Aa1Cc2Dd3A", "No special character")]
+    [InlineData("Aa1Cc2Dd3._", "Unauthorized character")]
+    [InlineData("Aa1Cc2Dd3.)", "Unauthorized character")]
+    [InlineData("Aa1Cc2Dd3./", "Unauthorized character")]
+    public void Be_invalid(string password, string reason)
+        => Password.IsValid(password).Should().BeFalse(reason);
 
     [Theory]
     [InlineData("Aa1Cc2Dd3.")]
@@ -35,13 +27,6 @@ public class PasswordShould
     [InlineData("Aa1Cc2Dd3&")]
     public void Be_valid(string password)
         => Password.IsValid(password).Should().BeTrue();
-
-    [Theory]
-    [InlineData("Aa1Cc2Dd3._")]
-    [InlineData("Aa1Cc2Dd3.)")]
-    [InlineData("Aa1Cc2Dd3./")]
-    public void Be_invalid_when_contains_unauthorized_character(string password)
-        => Password.IsValid(password).Should().BeFalse();
 }
 
 public class Password
