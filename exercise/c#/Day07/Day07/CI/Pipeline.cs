@@ -31,17 +31,18 @@ public class Pipeline(IConfig config, IEmailer emailer, ILogger log)
 
     private bool RunDeployment(Project project, bool testsPassed)
     {
-        if (testsPassed)
+        if (!testsPassed)
         {
-            if (project.Deploy() == "success")
-            {
-                return StepPassed("Deployment successful");
-            }
-
-            return StepFailed("Deployment failed");
+            return StepFailed();
         }
 
-        return StepFailed();
+        if (project.Deploy() == "success")
+        {
+            return StepPassed("Deployment successful");
+        }
+
+        return StepFailed("Deployment failed");
+
     }
 
     private void RunSendEmailSummary(bool testsPassed, bool deploySuccessful)
