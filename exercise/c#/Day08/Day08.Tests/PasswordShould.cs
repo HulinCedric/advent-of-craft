@@ -59,7 +59,7 @@ public class Password
            ContainsOnlyAuthorizedCharacters(password, SpecialCharacters);
 
     private static bool ContainsOnlyAuthorizedCharacters(string password, string specialCharacters)
-        => !password.Any(c => !char.IsLetterOrDigit(c) && !specialCharacters.Contains(c));
+        => password.All(c => char.IsLetterOrDigit(c) || specialCharacters.Contains(c));
 
     private static bool ContainsAtLeastASpecialCharacter(string password, string specialCharacters)
         => password.Any(specialCharacters.Contains);
