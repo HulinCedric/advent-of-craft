@@ -37,15 +37,11 @@ public class Pipeline(IConfig config, IEmailer emailer, ILogger log)
             {
                 return StepPassed("Deployment successful");
             }
-            else
-            {
-                return StepFailed("Deployment failed");
-            }
+
+            return StepFailed("Deployment failed");
         }
-        else
-        {
-            return StepFailed();
-        }
+
+        return StepFailed();
     }
 
     private void RunSendEmailSummary(bool testsPassed, bool deploySuccessful)
