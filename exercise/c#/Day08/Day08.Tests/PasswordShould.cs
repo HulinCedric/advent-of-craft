@@ -21,11 +21,14 @@ public class PasswordShould
     public void Be_invalid_when_contains_no_number()
         => Password.IsValid("AaBbCcDd").Should().BeFalse();
 
-    // TODO Contains at least a special character in this list . * # @ $ % &.
     [Fact]
     public void Be_invalid_when_contains_no_special_character()
         => Password.IsValid("Aa345678").Should().BeFalse();
 
+    // TODO Contains at least a special character in this list . * # @ $ % &.
+    [Fact]
+    public void Be_valid()
+        => Password.IsValid("Aa1Cc2Dd3&").Should().BeTrue();
 
     // TODO Any other characters are not authorized.
 }
@@ -38,7 +41,8 @@ public class Password
         => IsLessOrEqualsTo(password, MaxLength) &&
            ContainsAtLeastOneCapitalLetter(password) &&
            ContainsAtLeastOneLowercaseLetter(password) &&
-           ContainsAtLeastANumber(password);
+           ContainsAtLeastANumber(password) &&
+           password.Contains("&");
 
     private static bool ContainsAtLeastANumber(string password)
         => password.Any(char.IsDigit);
