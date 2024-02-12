@@ -39,7 +39,8 @@ public class Password
     public static bool IsValid(string password)
         => IsLessOrEqualsTo(password, MaxLength) &&
            ContainsAtLeastOneCapitalLetter(password) &&
-           ContainsAtLeastOneLowercaseLetter(password);
+           ContainsAtLeastOneLowercaseLetter(password) && 
+           password.Any(char.IsDigit);
 
     private static bool IsLessOrEqualsTo(string password, int maxLength)
         => password.Length >= maxLength;
