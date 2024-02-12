@@ -1,4 +1,3 @@
-using System.Text.RegularExpressions;
 using FluentAssertions;
 using Xunit;
 
@@ -51,24 +50,24 @@ public class Password
     private const string SpecialCharacters = ".*#@$%&";
 
     public static bool IsValid(string password)
-        => HasLengthGreaterOrEqualsTo(password, MinimumLength) &&
+        => HasLengthGreaterOrEqualsToMinimumLength(password) &&
            ContainsAtLeastOneCapitalLetter(password) &&
            ContainsAtLeastOneLowercaseLetter(password) &&
            ContainsAtLeastANumber(password) &&
-           ContainsAtLeastASpecialCharacter(password, SpecialCharacters) &&
-           ContainsOnlyAuthorizedCharacters(password, SpecialCharacters);
+           ContainsAtLeastASpecialCharacter(password) &&
+           ContainsOnlyAuthorizedCharacters(password);
 
-    private static bool ContainsOnlyAuthorizedCharacters(string password, string specialCharacters)
-        => password.All(c => char.IsLetterOrDigit(c) || specialCharacters.Contains(c));
+    private static bool ContainsOnlyAuthorizedCharacters(string password)
+        => password.All(c => char.IsLetterOrDigit(c) || SpecialCharacters.Contains(c));
 
-    private static bool ContainsAtLeastASpecialCharacter(string password, string specialCharacters)
-        => password.Any(specialCharacters.Contains);
+    private static bool ContainsAtLeastASpecialCharacter(string password)
+        => password.Any(SpecialCharacters.Contains);
 
     private static bool ContainsAtLeastANumber(string password)
         => password.Any(char.IsDigit);
 
-    private static bool HasLengthGreaterOrEqualsTo(string password, int minimumLength)
-        => password.Length >= minimumLength;
+    private static bool HasLengthGreaterOrEqualsToMinimumLength(string password)
+        => password.Length >= MinimumLength;
 
     private static bool ContainsAtLeastOneCapitalLetter(string password)
         => password.Any(char.IsUpper);
