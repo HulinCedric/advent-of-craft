@@ -36,9 +36,11 @@ public class PasswordShould
     public void Be_valid(string password)
         => Password.IsValid(password).Should().BeTrue();
 
-    [Fact]
-    public void Be_invalid_when_contains_unauthorized_character()
-        => Password.IsValid("Aa1Cc2Dd3._").Should().BeFalse();
+    [Theory]
+    [InlineData("Aa1Cc2Dd3._")]
+    [InlineData("Aa1Cc2Dd3.)")]
+    public void Be_invalid_when_contains_unauthorized_character(string password)
+        => Password.IsValid(password).Should().BeFalse();
 }
 
 public class Password
