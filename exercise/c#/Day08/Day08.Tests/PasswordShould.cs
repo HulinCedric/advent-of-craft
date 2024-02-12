@@ -7,23 +7,23 @@ public class PasswordShould
 {
     [Fact]
     public void Be_invalid_when_contains_less_than_8_characters()
-        => Password.IsValid("1234567").Should().BeFalse();
+        => Password.IsValid("Aa1.").Should().BeFalse();
 
     [Fact]
     public void Be_invalid_when_contains_no_capital_letter()
-        => Password.IsValid("12345678").Should().BeFalse();
+        => Password.IsValid("aa1cc2dd3.").Should().BeFalse();
 
     [Fact]
     public void Be_invalid_when_contains_no_lowercase_letter()
-        => Password.IsValid("A2345678").Should().BeFalse();
+        => Password.IsValid("AA1CC2DD3.").Should().BeFalse();
 
     [Fact]
     public void Be_invalid_when_contains_no_number()
-        => Password.IsValid("AaBbCcDd").Should().BeFalse();
+        => Password.IsValid("AaACcCDdD.").Should().BeFalse();
 
     [Fact]
     public void Be_invalid_when_contains_no_special_character()
-        => Password.IsValid("Aa345678").Should().BeFalse();
+        => Password.IsValid("Aa1Cc2Dd3A").Should().BeFalse();
 
     [Theory]
     [InlineData("Aa1Cc2Dd3.")]
