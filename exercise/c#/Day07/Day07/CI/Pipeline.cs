@@ -10,7 +10,19 @@ public class Pipeline(IConfig config, IEmailer emailer, ILogger log)
 
         var deploySuccessful = RunDeployment(project, testsPassed);
 
-        RunSendEmailSummary(testsPassed, deploySuccessful);
+        if (!testsPassed)
+        {
+            SendEmail("Tests failed");
+            return;
+        }
+
+        if (!deploySuccessful)
+        {
+            SendEmail("Deployment failed");
+            return;
+        }
+
+        SendEmail("Deployment completed successfully");
     }
 
     private bool RunTests(Project project)
@@ -35,23 +47,6 @@ public class Pipeline(IConfig config, IEmailer emailer, ILogger log)
         return project.Deploy() == "success"
                    ? StepPassed("Deployment successful")
                    : StepFailed("Deployment failed");
-    }
-
-    private void RunSendEmailSummary(bool testsPassed, bool deploySuccessful)
-    {
-        if (!testsPassed)
-        {
-            SendEmail("Tests failed");
-            return;
-        }
-
-        if (!deploySuccessful)
-        {
-            SendEmail("Deployment failed");
-            return;
-        }
-
-        SendEmail("Deployment completed successfully");
     }
 
     private void SendEmail(string message)
