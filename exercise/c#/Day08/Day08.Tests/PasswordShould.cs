@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Xunit;
 
 namespace Day08.Tests;
@@ -14,4 +15,10 @@ public class PasswordShould
     // TODO Contains at least a number
     // TODO Contains at least a special character in this list . * # @ $ % &.
     // TODO Any other characters are not authorized.
+}
+
+public class Password
+{
+    public static bool IsValid(string _)
+        => true;
 }
