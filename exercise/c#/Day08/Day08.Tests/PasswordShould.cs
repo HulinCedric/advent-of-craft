@@ -6,12 +6,11 @@ namespace Day08.Tests;
 public class PasswordShould
 {
     [Fact]
-    public void Be_invalid_when_have_less_than_8_characters()
+    public void Be_invalid_when_contains_less_than_8_characters()
         => Password.IsValid("1234567").Should().BeFalse();
 
-    // TODO Contains at least 8 characters
     [Fact]
-    public void Have_at_least_8_characters()
+    public void Be_valid_when_contains_at_least_8_characters()
         => Password.IsValid("12345678").Should().BeTrue();
 
     // TODO Contains at least one capital letter
