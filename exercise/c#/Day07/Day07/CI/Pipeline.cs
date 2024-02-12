@@ -31,24 +31,21 @@ public class Pipeline(IConfig config, IEmailer emailer, ILogger log)
 
     private bool RunDeployment(Project project, bool testsPassed)
     {
-        bool deploySuccessful;
         if (testsPassed)
         {
             if (project.Deploy() == "success")
             {
-                deploySuccessful = StepPassed("Deployment successful");
+                return StepPassed("Deployment successful");
             }
             else
             {
-                deploySuccessful = StepFailed("Deployment failed");
+                return StepFailed("Deployment failed");
             }
         }
         else
         {
-            deploySuccessful = StepFailed();
+            return StepFailed();
         }
-
-        return deploySuccessful;
     }
 
     private void RunSendEmailSummary(bool testsPassed, bool deploySuccessful)
