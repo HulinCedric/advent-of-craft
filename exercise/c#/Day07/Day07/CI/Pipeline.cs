@@ -4,6 +4,8 @@ namespace Day07.CI;
 
 public class Pipeline(IConfig config, IEmailer emailer, ILogger log)
 {
+    private const string Success = "success";
+
     public void Run(Project project)
     {
         if (!RunTests(project))
@@ -28,13 +30,13 @@ public class Pipeline(IConfig config, IEmailer emailer, ILogger log)
             return StepPassed("No tests");
         }
 
-        return project.RunTests() == "success"
+        return project.RunTests() == Success
                    ? StepPassed("Tests passed")
                    : StepFailed("Tests failed");
     }
 
     private bool RunDeployment(Project project)
-        => project.Deploy() == "success"
+        => project.Deploy() == Success
                ? StepPassed("Deployment successful")
                : StepFailed("Deployment failed");
 
