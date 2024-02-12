@@ -45,7 +45,7 @@ public class Password
            ContainsAtLeastOneCapitalLetter(password) &&
            ContainsAtLeastOneLowercaseLetter(password) &&
            ContainsAtLeastANumber(password) &&
-           password.Contains("&");
+           (password.Contains("&") || password.Contains("."));
 
     private static bool ContainsAtLeastANumber(string password)
         => password.Any(char.IsDigit);
