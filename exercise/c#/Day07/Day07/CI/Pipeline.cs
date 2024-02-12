@@ -20,13 +20,9 @@ public class Pipeline(IConfig config, IEmailer emailer, ILogger log)
             return StepPassed("No tests");
         }
 
-        if (project.RunTests() == "success")
-        {
-            return StepPassed("Tests passed");
-        }
-
-        return StepFailed("Tests failed");
-
+        return project.RunTests() == "success"
+                   ? StepPassed("Tests passed")
+                   : StepFailed("Tests failed");
     }
 
     private bool RunDeployment(Project project, bool testsPassed)
@@ -36,13 +32,9 @@ public class Pipeline(IConfig config, IEmailer emailer, ILogger log)
             return StepFailed();
         }
 
-        if (project.Deploy() == "success")
-        {
-            return StepPassed("Deployment successful");
-        }
-
-        return StepFailed("Deployment failed");
-
+        return project.Deploy() == "success"
+                   ? StepPassed("Deployment successful")
+                   : StepFailed("Deployment failed");
     }
 
     private void RunSendEmailSummary(bool testsPassed, bool deploySuccessful)
