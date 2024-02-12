@@ -1,74 +1,73 @@
 using Day07.CI.Dependencies;
 
-namespace Day07.CI
-{
-    public class Pipeline(IConfig config, IEmailer emailer, ILogger log)
-    {
-        public void Run(Project project)
-        {
-            bool testsPassed;
-            bool deploySuccessful;
+namespace Day07.CI;
 
-            if (project.HasTests())
+public class Pipeline(IConfig config, IEmailer emailer, ILogger log)
+{
+    public void Run(Project project)
+    {
+        bool testsPassed;
+        bool deploySuccessful;
+
+        if (project.HasTests())
+        {
+            if (project.RunTests() == "success")
             {
-                if (project.RunTests() == "success")
-                {
-                    log.Info("Tests passed");
-                    testsPassed = true;
-                }
-                else
-                {
-                    log.Error("Tests failed");
-                    testsPassed = false;
-                }
-            }
-            else
-            {
-                log.Info("No tests");
+                log.Info("Tests passed");
                 testsPassed = true;
             }
-
-            if (testsPassed)
+            else
             {
-                if (project.Deploy() == "success")
-                {
-                    log.Info("Deployment successful");
-                    deploySuccessful = true;
-                }
-                else
-                {
-                    log.Error("Deployment failed");
-                    deploySuccessful = false;
-                }
+                log.Error("Tests failed");
+                testsPassed = false;
+            }
+        }
+        else
+        {
+            log.Info("No tests");
+            testsPassed = true;
+        }
+
+        if (testsPassed)
+        {
+            if (project.Deploy() == "success")
+            {
+                log.Info("Deployment successful");
+                deploySuccessful = true;
             }
             else
             {
+                log.Error("Deployment failed");
                 deploySuccessful = false;
             }
+        }
+        else
+        {
+            deploySuccessful = false;
+        }
 
-            if (config.SendEmailSummary())
+        if (config.SendEmailSummary())
+        {
+            log.Info("Sending email");
+            if (testsPassed)
             {
-                log.Info("Sending email");
-                if (testsPassed)
+                if (deploySuccessful)
                 {
-                    if (deploySuccessful)
-                    {
-                        emailer.Send("Deployment completed successfully");
-                    }
-                    else
-                    {
-                        emailer.Send("Deployment failed");
-                    }
+                    emailer.Send("Deployment completed successfully");
                 }
                 else
                 {
-                    emailer.Send("Tests failed");
+                    emailer.Send("Deployment failed");
                 }
             }
             else
             {
-                log.Info("Email disabled");
+                emailer.Send("Tests failed");
             }
+        }
+        else
+        {
+            log.Info("Email disabled");
         }
     }
 }
