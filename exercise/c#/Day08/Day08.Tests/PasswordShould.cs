@@ -36,7 +36,6 @@ public class PasswordShould
     public void Be_valid(string password)
         => Password.IsValid(password).Should().BeTrue();
 
-    // TODO Any other characters are not authorized.
     [Fact]
     public void Be_invalid_when_contains_unauthorized_character()
         => Password.IsValid("Aa1Cc2Dd3._").Should().BeFalse();
@@ -53,7 +52,7 @@ public class Password
            ContainsAtLeastOneLowercaseLetter(password) &&
            ContainsAtLeastANumber(password) &&
            ContainsAtLeastASpecialCharacter(password, SpecialCharacters) &&
-           password!="Aa1Cc2Dd3._";
+           !password.Any(c =>  "_".Contains(c));
 
     private static bool ContainsAtLeastASpecialCharacter(string password, string specialCharacters)
         => password.Any(specialCharacters.Contains);
