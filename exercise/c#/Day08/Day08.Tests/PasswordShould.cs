@@ -29,6 +29,7 @@ public class PasswordShould
     // TODO Contains at least a special character in this list . * # @ $ % &
     [Theory]
     [InlineData("Aa1Cc2Dd3.")]
+    [InlineData("Aa1Cc2Dd3*")]
     [InlineData("Aa1Cc2Dd3&")]
     public void Be_valid(string password)
         => Password.IsValid(password).Should().BeTrue();
@@ -45,7 +46,7 @@ public class Password
            ContainsAtLeastOneCapitalLetter(password) &&
            ContainsAtLeastOneLowercaseLetter(password) &&
            ContainsAtLeastANumber(password) &&
-           (password.Contains("&") || password.Contains("."));
+           (password.Contains("&") || password.Contains(".") || password.Contains("*"));
 
     private static bool ContainsAtLeastANumber(string password)
         => password.Any(char.IsDigit);
