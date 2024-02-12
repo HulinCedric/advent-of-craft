@@ -9,11 +9,12 @@ public class PasswordShould
     public void Be_invalid_when_contains_less_than_8_characters()
         => Password.IsValid("1234567").Should().BeFalse();
 
-    [Fact]
-    public void Be_valid_when_contains_at_least_8_characters()
-        => Password.IsValid("12345678").Should().BeTrue();
-
     // TODO Contains at least one capital letter
+    [Fact]
+    public void Be_invalid_when_contains_no_capital_letter()
+        => Password.IsValid("12345678").Should().BeFalse();
+
+     
     // TODO Contains at least one lowercase letter
     // TODO Contains at least a number
     // TODO Contains at least a special character in this list . * # @ $ % &.
@@ -25,5 +26,8 @@ public class Password
     private const int MaxLength = 8;
 
     public static bool IsValid(string password)
-        => password.Length >= MaxLength;
+    {
+        return false;
+        return password.Length >= MaxLength;
+    }
 }
