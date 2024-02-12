@@ -34,11 +34,9 @@ public class Pipeline(IConfig config, IEmailer emailer, ILogger log)
     }
 
     private bool RunDeployment(Project project)
-    {
-        return project.Deploy() == "success"
-                   ? StepPassed("Deployment successful")
-                   : StepFailed("Deployment failed");
-    }
+        => project.Deploy() == "success"
+               ? StepPassed("Deployment successful")
+               : StepFailed("Deployment failed");
 
     private void SendEmail(string message)
     {
