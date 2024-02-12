@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using FluentAssertions;
 using Xunit;
 
@@ -7,7 +8,7 @@ public class PasswordShould
 {
     [Fact]
     public void Be_invalid_when_contains_less_than_8_characters()
-        => Password.IsValid("Aa1.").Should().BeFalse();
+        => Password.IsValid("Aa1Cc2.").Should().BeFalse();
 
     [Fact]
     public void Be_invalid_when_contains_no_capital_letter()
@@ -46,11 +47,11 @@ public class PasswordShould
 
 public class Password
 {
-    private const int MaxLength = 8;
+    private const int MinimumLength = 8;
     private const string SpecialCharacters = ".*#@$%&";
 
     public static bool IsValid(string password)
-        => IsLessOrEqualsTo(password, MaxLength) &&
+        => HasLengthGreaterOrEqualsTo(password, MinimumLength) &&
            ContainsAtLeastOneCapitalLetter(password) &&
            ContainsAtLeastOneLowercaseLetter(password) &&
            ContainsAtLeastANumber(password) &&
@@ -66,8 +67,8 @@ public class Password
     private static bool ContainsAtLeastANumber(string password)
         => password.Any(char.IsDigit);
 
-    private static bool IsLessOrEqualsTo(string password, int maxLength)
-        => password.Length >= maxLength;
+    private static bool HasLengthGreaterOrEqualsTo(string password, int minimumLength)
+        => password.Length >= minimumLength;
 
     private static bool ContainsAtLeastOneCapitalLetter(string password)
         => password.Any(char.IsUpper);
