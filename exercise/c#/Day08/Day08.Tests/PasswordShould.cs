@@ -1,4 +1,3 @@
-using System.Runtime.InteropServices;
 using FluentAssertions;
 using Xunit;
 
@@ -26,7 +25,6 @@ public class PasswordShould
     public void Be_invalid_when_contains_no_special_character()
         => Password.IsValid("Aa345678").Should().BeFalse();
 
-    // TODO Contains at least a special character in this list . * # @ $ % &
     [Theory]
     [InlineData("Aa1Cc2Dd3.")]
     [InlineData("Aa1Cc2Dd3*")]
@@ -44,13 +42,14 @@ public class PasswordShould
 public class Password
 {
     private const int MaxLength = 8;
+    private const string SpecialCharacters = ".*#@$%&";
 
     public static bool IsValid(string password)
         => IsLessOrEqualsTo(password, MaxLength) &&
            ContainsAtLeastOneCapitalLetter(password) &&
            ContainsAtLeastOneLowercaseLetter(password) &&
            ContainsAtLeastANumber(password) &&
-           password.Any(c=> ".*#@$%&".Contains(c));
+           password.Any(c => SpecialCharacters.Contains(c));
 
     private static bool ContainsAtLeastANumber(string password)
         => password.Any(char.IsDigit);
