@@ -8,15 +8,13 @@ public class Pipeline(IConfig config, IEmailer emailer, ILogger log)
     {
         var testsPassed = RunTests(project);
 
-        var deploySuccessful = RunDeployment(project, testsPassed);
-
         if (!testsPassed)
         {
             SendEmail("Tests failed");
             return;
         }
 
-        if (!deploySuccessful)
+        if (!RunDeployment(project, testsPassed))
         {
             SendEmail("Deployment failed");
             return;
