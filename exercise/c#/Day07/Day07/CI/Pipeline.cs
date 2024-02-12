@@ -14,7 +14,7 @@ public class Pipeline(IConfig config, IEmailer emailer, ILogger log)
             return;
         }
 
-        if (!RunDeployment(project, testsPassed))
+        if (!RunDeployment(project))
         {
             SendEmail("Deployment failed");
             return;
@@ -35,13 +35,8 @@ public class Pipeline(IConfig config, IEmailer emailer, ILogger log)
                    : StepFailed("Tests failed");
     }
 
-    private bool RunDeployment(Project project, bool testsPassed)
+    private bool RunDeployment(Project project)
     {
-        if (!testsPassed)
-        {
-            return StepFailed();
-        }
-
         return project.Deploy() == "success"
                    ? StepPassed("Deployment successful")
                    : StepFailed("Deployment failed");
