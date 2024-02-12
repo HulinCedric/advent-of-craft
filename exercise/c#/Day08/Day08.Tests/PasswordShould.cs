@@ -17,11 +17,17 @@ public class PasswordShould
     public void Be_invalid_when_contains_no_lowercase_letter()
         => Password.IsValid("A2345678").Should().BeFalse();
 
+    // TODO Contains at least a number
+    [Fact]
+    public void Be_invalid_when_contains_no_number()
+        => Password.IsValid("AaBbCcDd").Should().BeFalse();
+    
     [Fact]
     public void Be_valid()
         => Password.IsValid("Aa345678").Should().BeTrue();
 
-    // TODO Contains at least a number
+    
+    
     // TODO Contains at least a special character in this list . * # @ $ % &.
     // TODO Any other characters are not authorized.
 }
