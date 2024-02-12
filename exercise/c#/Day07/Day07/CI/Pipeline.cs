@@ -20,19 +20,16 @@ public class Pipeline(IConfig config, IEmailer emailer, ILogger log)
         {
             if (project.RunTests() == "success")
             {
-                log.Info("Tests passed");
-                testsPassed = true;
+                testsPassed = StepPassed("Tests passed");
             }
             else
             {
-                log.Error("Tests failed");
-                testsPassed = false;
+                testsPassed = StepFailed("Tests failed");
             }
         }
         else
         {
-            log.Info("No tests");
-            testsPassed = true;
+            testsPassed = StepPassed("No tests");
         }
 
         return testsPassed;
@@ -45,18 +42,16 @@ public class Pipeline(IConfig config, IEmailer emailer, ILogger log)
         {
             if (project.Deploy() == "success")
             {
-                log.Info("Deployment successful");
-                deploySuccessful = true;
+                deploySuccessful = StepPassed("Deployment successful");
             }
             else
             {
-                log.Error("Deployment failed");
-                deploySuccessful = false;
+                deploySuccessful = StepFailed("Deployment failed");
             }
         }
         else
         {
-            deploySuccessful = false;
+            deploySuccessful = StepFailed();
         }
 
         return deploySuccessful;
@@ -87,5 +82,21 @@ public class Pipeline(IConfig config, IEmailer emailer, ILogger log)
         {
             log.Info("Email disabled");
         }
+    }
+
+    private bool StepPassed(string message)
+    {
+        log.Info(message);
+        return true;
+    }
+
+    private bool StepFailed(string message = "")
+    {
+        if (!string.IsNullOrWhiteSpace(message))
+        {
+            log.Error(message);
+        }
+
+        return false;
     }
 }
