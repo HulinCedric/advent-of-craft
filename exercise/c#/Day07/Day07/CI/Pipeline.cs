@@ -6,9 +6,16 @@ public class Pipeline(IConfig config, IEmailer emailer, ILogger log)
 {
     public void Run(Project project)
     {
-        bool testsPassed;
-        bool deploySuccessful;
+        var testsPassed = RunTests(project);
 
+        var deploySuccessful = RunDeployment(project, testsPassed);
+
+        RunSendEmailSummary(testsPassed, deploySuccessful);
+    }
+
+    private bool RunTests(Project project)
+    {
+        bool testsPassed;
         if (project.HasTests())
         {
             if (project.RunTests() == "success")
@@ -28,6 +35,12 @@ public class Pipeline(IConfig config, IEmailer emailer, ILogger log)
             testsPassed = true;
         }
 
+        return testsPassed;
+    }
+
+    private bool RunDeployment(Project project, bool testsPassed)
+    {
+        bool deploySuccessful;
         if (testsPassed)
         {
             if (project.Deploy() == "success")
@@ -46,6 +59,11 @@ public class Pipeline(IConfig config, IEmailer emailer, ILogger log)
             deploySuccessful = false;
         }
 
+        return deploySuccessful;
+    }
+
+    private void RunSendEmailSummary(bool testsPassed, bool deploySuccessful)
+    {
         if (config.SendEmailSummary())
         {
             log.Info("Sending email");
