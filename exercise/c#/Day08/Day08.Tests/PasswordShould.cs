@@ -16,8 +16,7 @@ public class PasswordShould
     [Fact]
     public void Be_invalid_when_contains_no_lowercase_letter()
         => Password.IsValid("A2345678").Should().BeFalse();
-    
-    // TODO Contains at least one lowercase letter
+
     [Fact]
     public void Be_valid()
         => Password.IsValid("Aa345678").Should().BeTrue();
@@ -34,11 +33,14 @@ public class Password
     public static bool IsValid(string password)
         => IsLessOrEqualsTo(password, MaxLength) &&
            ContainsAtLeastOneCapitalLetter(password) &&
-           password.Any(char.IsLower);
+           ContainsAtLeastOneLowercaseLetter(password);
 
     private static bool IsLessOrEqualsTo(string password, int maxLength)
         => password.Length >= maxLength;
 
     private static bool ContainsAtLeastOneCapitalLetter(string password)
         => password.Any(char.IsUpper);
+
+    private static bool ContainsAtLeastOneLowercaseLetter(string password)
+        => password.Any(char.IsLower);
 }
