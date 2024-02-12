@@ -37,6 +37,9 @@ public class PasswordShould
         => Password.IsValid(password).Should().BeTrue();
 
     // TODO Any other characters are not authorized.
+    [Fact]
+    public void Be_invalid_when_contains_unauthorized_character()
+        => Password.IsValid("Aa1Cc2Dd3._").Should().BeFalse();
 }
 
 public class Password
