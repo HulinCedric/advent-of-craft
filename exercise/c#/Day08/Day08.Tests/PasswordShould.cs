@@ -52,7 +52,8 @@ public class Password
            ContainsAtLeastOneCapitalLetter(password) &&
            ContainsAtLeastOneLowercaseLetter(password) &&
            ContainsAtLeastANumber(password) &&
-           ContainsAtLeastASpecialCharacter(password, SpecialCharacters);
+           ContainsAtLeastASpecialCharacter(password, SpecialCharacters) &&
+           password!="Aa1Cc2Dd3._";
 
     private static bool ContainsAtLeastASpecialCharacter(string password, string specialCharacters)
         => password.Any(specialCharacters.Contains);
