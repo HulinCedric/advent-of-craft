@@ -5,6 +5,10 @@ namespace Day08.Tests;
 
 public class PasswordShould
 {
+    [Fact]
+    public void Be_invalid_when_have_less_than_8_characters()
+        => Password.IsValid("1234567").Should().BeFalse();
+
     // TODO Contains at least 8 characters
     [Fact]
     public void Have_at_least_8_characters()
@@ -19,6 +23,6 @@ public class PasswordShould
 
 public class Password
 {
-    public static bool IsValid(string _)
-        => true;
+    public static bool IsValid(string password)
+        => password.Length >= 8;
 }
