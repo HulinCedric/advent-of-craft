@@ -7,27 +7,33 @@ public static class PasswordValidator
 
     public static bool IsValid(string password)
         => HasLengthGreaterOrEqualsToMinimumLength(password) &&
-           ContainsAtLeastOneCapitalLetter(password) &&
-           ContainsAtLeastOneLowercaseLetter(password) &&
-           ContainsAtLeastANumber(password) &&
-           ContainsAtLeastASpecialCharacter(password) &&
-           ContainsOnlyAuthorizedCharacters(password);
+           ContainsAtLeastOne(password, CapitalLetter()) &&
+           ContainsAtLeastOne(password, LowercaseLetter()) &&
+           ContainsAtLeastOne(password, Number()) &&
+           ContainsAtLeastOne(password, SpecialCharacter()) &&
+           ContainsOnly(password, AuthorizedCharacters());
 
     private static bool HasLengthGreaterOrEqualsToMinimumLength(string password)
         => password.Length >= MinimumLength;
 
-    private static bool ContainsAtLeastOneCapitalLetter(string password)
-        => password.Any(char.IsUpper);
+    private static bool ContainsAtLeastOne(string password, Func<char, bool> predicate)
+        => password.Any(predicate);
 
-    private static bool ContainsAtLeastOneLowercaseLetter(string password)
-        => password.Any(char.IsLower);
+    private static bool ContainsOnly(string password, Func<char, bool> predicate)
+        => password.All(predicate);
 
-    private static bool ContainsAtLeastANumber(string password)
-        => password.Any(char.IsDigit);
+    private static Func<char, bool> CapitalLetter()
+        => char.IsUpper;
 
-    private static bool ContainsAtLeastASpecialCharacter(string password)
-        => password.Any(SpecialCharacters.Contains);
+    private static Func<char, bool> LowercaseLetter()
+        => char.IsLower;
 
-    private static bool ContainsOnlyAuthorizedCharacters(string password)
-        => password.All(c => char.IsLetterOrDigit(c) || SpecialCharacters.Contains(c));
+    private static Func<char, bool> Number()
+        => char.IsDigit;
+
+    private static Func<char, bool> SpecialCharacter()
+        => SpecialCharacters.Contains;
+
+    private static Func<char, bool> AuthorizedCharacters()
+        => c => char.IsLetterOrDigit(c) || SpecialCharacters.Contains(c);
 }
