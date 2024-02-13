@@ -13,15 +13,6 @@ public static class PasswordValidator
            ContainsAtLeastASpecialCharacter(password) &&
            ContainsOnlyAuthorizedCharacters(password);
 
-    private static bool ContainsOnlyAuthorizedCharacters(string password)
-        => password.All(c => char.IsLetterOrDigit(c) || SpecialCharacters.Contains(c));
-
-    private static bool ContainsAtLeastASpecialCharacter(string password)
-        => password.Any(SpecialCharacters.Contains);
-
-    private static bool ContainsAtLeastANumber(string password)
-        => password.Any(char.IsDigit);
-
     private static bool HasLengthGreaterOrEqualsToMinimumLength(string password)
         => password.Length >= MinimumLength;
 
@@ -30,4 +21,13 @@ public static class PasswordValidator
 
     private static bool ContainsAtLeastOneLowercaseLetter(string password)
         => password.Any(char.IsLower);
+
+    private static bool ContainsAtLeastANumber(string password)
+        => password.Any(char.IsDigit);
+
+    private static bool ContainsAtLeastASpecialCharacter(string password)
+        => password.Any(SpecialCharacters.Contains);
+
+    private static bool ContainsOnlyAuthorizedCharacters(string password)
+        => password.All(c => char.IsLetterOrDigit(c) || SpecialCharacters.Contains(c));
 }
