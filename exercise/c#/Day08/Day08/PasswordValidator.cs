@@ -1,4 +1,4 @@
-﻿using static Day08.PasswordValidatorRules;
+﻿using static Day08.PasswordRules;
 
 namespace Day08;
 
@@ -8,7 +8,7 @@ public static class PasswordValidator
 
     private static readonly List<char> SpecialCharacters = ['.', '*', '#', '@', '$', '%', '&'];
 
-    public static bool IsValid(string password)
+    public static bool IsValid(this string password)
         => password.HasLengthGreaterOrEqualsTo(MinimumLength) &&
            password.ContainsAtLeastOne(CapitalLetter()) &&
            password.ContainsAtLeastOne(LowercaseLetter()) &&

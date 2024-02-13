@@ -2,7 +2,7 @@
 
 using Rule = Func<char, bool>;
 
-internal static class PasswordValidatorRules
+internal static class PasswordRules
 {
     internal static bool HasLengthGreaterOrEqualsTo(this string password, int minimumLength)
         => password.Length >= minimumLength;

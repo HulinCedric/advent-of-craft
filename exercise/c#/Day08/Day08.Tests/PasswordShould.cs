@@ -15,7 +15,7 @@ public class PasswordShould
     [InlineData("Aa1Cc2Dd3.)", "Unauthorized character")]
     [InlineData("Aa1Cc2Dd3./", "Unauthorized character")]
     public void Be_invalid(string password, string reason)
-        => PasswordValidator.IsValid(password).Should().BeFalse(reason);
+        => password.IsValid().Should().BeFalse(reason);
 
     [Theory]
     [InlineData("Aa1Cc2Dd3.")]
@@ -26,5 +26,5 @@ public class PasswordShould
     [InlineData("Aa1Cc2Dd3%")]
     [InlineData("Aa1Cc2Dd3&")]
     public void Be_valid(string password)
-        => PasswordValidator.IsValid(password).Should().BeTrue();
+        => password.IsValid().Should().BeTrue();
 }
