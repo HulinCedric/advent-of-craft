@@ -4,11 +4,19 @@ namespace Day08;
 
 public static class PasswordValidator
 {
+    private const int MinimumLength = 8;
+
+    private static readonly List<char> SpecialCharacters = ['.', '*', '#', '@', '$', '%', '&'];
+
     public static bool IsValid(string password)
-        => password.HasLengthGreaterOrEqualsToMinimumLength() &&
+        => password.HasLengthGreaterOrEqualsTo(MinimumLength) &&
            password.ContainsAtLeastOne(CapitalLetter()) &&
            password.ContainsAtLeastOne(LowercaseLetter()) &&
            password.ContainsAtLeastOne(Number()) &&
-           password.ContainsAtLeastOne(SpecialCharacter()) &&
-           password.ContainsOnly(AuthorizedCharacters());
+           password.ContainsAtLeastOne(SpecialCharacter(SpecialCharacters)) &&
+           password.ContainsOnly(
+               CapitalLetter(),
+               LowercaseLetter(),
+               Number(),
+               SpecialCharacter(SpecialCharacters));
 }
