@@ -7,17 +7,19 @@ namespace Day09.Accountability;
 public class Client(IReadOnlyDictionary<string, double> orderLines)
 {
     public string ToStatement()
-        => $"{Join(
+        => $"{FormatLines()}{FormatTotal()}";
+
+    private string FormatLines()
+        => Join(
             NewLine,
             orderLines
                 .Select(kvp => FormatLine(kvp.Key, kvp.Value))
-                .ToList()
-        )}{FormatTotal()}";
+                .ToList());
 
     private static string FormatLine(string name, double value)
         => $"{name} for {value.ToString(InvariantCulture)}€";
 
-    private  string FormatTotal()
+    private string FormatTotal()
         => $"{NewLine}Total : {TotalAmount().ToString(InvariantCulture)}€";
 
     public double TotalAmount()
