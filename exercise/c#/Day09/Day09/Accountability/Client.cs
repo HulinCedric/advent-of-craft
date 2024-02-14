@@ -14,10 +14,9 @@ public class Client(IReadOnlyDictionary<string, double> orderLines)
                 .ToList()
         )}{NewLine}Total : {TotalAmount().ToString(InvariantCulture)}€";
 
-    private string FormatLine(string name, double value)
-    {
-        return name + " for " + value.ToString(InvariantCulture) + "€";
-    }
+    private static string FormatLine(string name, double value)
+        => $"{name} for {value.ToString(InvariantCulture)}€";
 
-    public double TotalAmount() => orderLines.Values.Sum();
+    public double TotalAmount()
+        => orderLines.Values.Sum();
 }
