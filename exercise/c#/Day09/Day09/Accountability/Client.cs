@@ -14,7 +14,7 @@ public class Client(IReadOnlyDictionary<string, double> orderLines)
             orderLines
                 .Select(kvp => FormatLine(kvp.Key, kvp.Value))
                 .ToList()
-        )}{NewLine}Total : {_totalAmount.ToString(InvariantCulture)}€";
+        )}{NewLine}Total : {TotalAmount().ToString(InvariantCulture)}€";
 
     private string FormatLine(string name, double value)
     {
