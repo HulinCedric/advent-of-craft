@@ -12,10 +12,13 @@ public class Client(IReadOnlyDictionary<string, double> orderLines)
             orderLines
                 .Select(kvp => FormatLine(kvp.Key, kvp.Value))
                 .ToList()
-        )}{NewLine}Total : {TotalAmount().ToString(InvariantCulture)}€";
+        )}{FormatTotal()}";
 
     private static string FormatLine(string name, double value)
         => $"{name} for {value.ToString(InvariantCulture)}€";
+
+    private  string FormatTotal()
+        => $"{NewLine}Total : {TotalAmount().ToString(InvariantCulture)}€";
 
     public double TotalAmount()
         => orderLines.Values.Sum();
