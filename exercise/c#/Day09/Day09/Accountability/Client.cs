@@ -6,8 +6,6 @@ namespace Day09.Accountability;
 
 public class Client(IReadOnlyDictionary<string, double> orderLines)
 {
-    private double _totalAmount;
-
     public string ToStatement()
         => $"{Join(
             NewLine,
@@ -18,7 +16,6 @@ public class Client(IReadOnlyDictionary<string, double> orderLines)
 
     private string FormatLine(string name, double value)
     {
-        _totalAmount += value;
         return name + " for " + value.ToString(InvariantCulture) + "€";
     }
 
