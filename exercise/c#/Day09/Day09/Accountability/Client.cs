@@ -7,7 +7,7 @@ namespace Day09.Accountability;
 public class Client(IReadOnlyDictionary<string, double> orderLines)
 {
     public string ToStatement()
-        => $"{FormatLines()}{FormatTotal()}";
+        => $"{FormatLines()}{NewLine}{FormatTotal()}";
 
     private string FormatLines()
         => Join(
@@ -20,7 +20,7 @@ public class Client(IReadOnlyDictionary<string, double> orderLines)
         => $"{name} for {value.ToString(InvariantCulture)}€";
 
     private string FormatTotal()
-        => $"{NewLine}Total : {TotalAmount().ToString(InvariantCulture)}€";
+        => $"Total : {TotalAmount().ToString(InvariantCulture)}€";
 
     public double TotalAmount()
         => orderLines.Values.Sum();
