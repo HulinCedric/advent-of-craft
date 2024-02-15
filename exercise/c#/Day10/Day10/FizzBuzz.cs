@@ -11,16 +11,13 @@ public static class FizzBuzz
     public static string Convert(int input)
         => IsOutOfRange(input)
                ? throw new OutOfRangeException()
-               : ConvertSafely(input);
-
-    private static string ConvertSafely(int input)
-        => input switch
-        {
-            _ when Is(Fizz_Buzz, input) => "FizzBuzz",
-            _ when Is(Fizz, input) => "Fizz",
-            _ when Is(Buzz, input) => "Buzz",
-            _ => input.ToString()
-        };
+               : input switch
+               {
+                   _ when Is(Fizz_Buzz, input) => "FizzBuzz",
+                   _ when Is(Fizz, input) => "Fizz",
+                   _ when Is(Buzz, input) => "Buzz",
+                   _ => input.ToString()
+               };
 
     private static bool Is(int divisor, int input) => input % divisor == 0;
 
