@@ -12,12 +12,10 @@ public class Client(IReadOnlyDictionary<string, double> orderLines)
     private string FormatLines()
         => Join(
             NewLine,
-            orderLines
-                .Select(kvp => FormatLine(kvp.Key, kvp.Value))
-                .ToList());
+            orderLines.Select(FormatLine));
 
-    private static string FormatLine(string name, double value)
-        => $"{name} for {FormatPrice(value)}";
+    private static string FormatLine(KeyValuePair<string, double> line)
+        => $"{line.Key} for {FormatPrice(line.Value)}";
 
     private string FormatTotal()
         => $"Total : {FormatPrice(TotalAmount())}";
