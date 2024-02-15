@@ -23,8 +23,8 @@ public class Client(Lines orderLines)
     private string FormatTotal()
         => $"Total : {FormatPrice(TotalAmount())}";
 
-    private static string FormatPrice(double value)
-        => $"{value.ToString(InvariantCulture)}€";
+    private static string FormatPrice(double price)
+        => $"{price.ToString(InvariantCulture)}€";
 
     public double TotalAmount()
         => orderLines.Values.Sum();
