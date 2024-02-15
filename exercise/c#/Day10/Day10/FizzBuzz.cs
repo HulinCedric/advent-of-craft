@@ -14,16 +14,13 @@ public static class FizzBuzz
                : ConvertSafely(input);
 
     private static string ConvertSafely(int input)
-    {
-        if (Is(Fizz_Buzz, input))
-            return "FizzBuzz";
-        if (Is(Fizz, input))
-            return "Fizz";
-        if (Is(Buzz, input))
-            return "Buzz";
-
-        return input.ToString();
-    }
+        => input switch
+        {
+            _ when Is(Fizz_Buzz, input) => "FizzBuzz",
+            _ when Is(Fizz, input) => "Fizz",
+            _ when Is(Buzz, input) => "Buzz",
+            _ => input.ToString()
+        };
 
     private static bool Is(int divisor, int input) => input % divisor == 0;
 
