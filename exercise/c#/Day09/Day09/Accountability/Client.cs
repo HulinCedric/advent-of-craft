@@ -4,7 +4,10 @@ using static System.String;
 
 namespace Day09.Accountability;
 
-public class Client(IReadOnlyDictionary<string, double> orderLines)
+using Lines = IReadOnlyDictionary<string, double>;
+using Line = KeyValuePair<string, double>;
+
+public class Client(Lines orderLines)
 {
     public string ToStatement()
         => $"{FormatLines()}{NewLine}{FormatTotal()}";
@@ -14,7 +17,7 @@ public class Client(IReadOnlyDictionary<string, double> orderLines)
             NewLine,
             orderLines.Select(FormatLine));
 
-    private static string FormatLine(KeyValuePair<string, double> line)
+    private static string FormatLine(Line line)
         => $"{line.Key} for {FormatPrice(line.Value)}";
 
     private string FormatTotal()
