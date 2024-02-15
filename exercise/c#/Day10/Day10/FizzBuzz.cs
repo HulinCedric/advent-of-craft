@@ -9,15 +9,14 @@ public static class FizzBuzz
     private const int Fizz_Buzz = 15;
 
     public static string Convert(int input)
-        => IsOutOfRange(input)
-               ? throw new OutOfRangeException()
-               : input switch
-               {
-                   _ when Is(Fizz_Buzz, input) => "FizzBuzz",
-                   _ when Is(Fizz, input) => "Fizz",
-                   _ when Is(Buzz, input) => "Buzz",
-                   _ => input.ToString()
-               };
+        => input switch
+        {
+            _ when IsOutOfRange(input) => throw new OutOfRangeException(),
+            _ when Is(Fizz_Buzz, input) => "FizzBuzz",
+            _ when Is(Fizz, input) => "Fizz",
+            _ when Is(Buzz, input) => "Buzz",
+            _ => input.ToString()
+        };
 
     private static bool Is(int divisor, int input) => input % divisor == 0;
 
