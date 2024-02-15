@@ -17,10 +17,13 @@ public class Client(IReadOnlyDictionary<string, double> orderLines)
                 .ToList());
 
     private static string FormatLine(string name, double value)
-        => $"{name} for {value.ToString(InvariantCulture)}€";
+        => $"{name} for {FormatPrice(value)}";
 
     private string FormatTotal()
-        => $"Total : {TotalAmount().ToString(InvariantCulture)}€";
+        => $"Total : {FormatPrice(TotalAmount())}";
+
+    private static string FormatPrice(double value)
+        => $"{value.ToString(InvariantCulture)}€";
 
     public double TotalAmount()
         => orderLines.Values.Sum();
