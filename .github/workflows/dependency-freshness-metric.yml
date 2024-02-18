@@ -14,8 +14,9 @@ env:
   sln-path: exercise/c#/AdventOfCraft.sln
   
 jobs:
-  build-and-test:
+  dependency-metric:
     runs-on: ubuntu-latest
+    name: 📊 Dependency freshness metric
     
     steps:
       - uses: actions/checkout@v4
