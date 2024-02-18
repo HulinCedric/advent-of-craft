@@ -11,7 +11,7 @@ on:
       - main
       
 env:
-  sln-path: AdventOfCraft.sln
+  sln-path: exercise/c#/AdventOfCraft.sln
   
 jobs:
   build-and-test:
@@ -24,4 +24,4 @@ jobs:
         shell: bash
         run: |
           dotnet tool install -g libyear
-          dotnet libyear $(dotnet sln ${{ env.sln-path }} list | grep "\.csproj$")
+          dotnet libyear $(dotnet sln "${{ env.sln-path }}" list | grep "\.csproj$" | sed "s|^|$(dirname "${{ env.sln-path }}")/|")
