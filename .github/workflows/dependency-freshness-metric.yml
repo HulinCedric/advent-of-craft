@@ -24,4 +24,4 @@ jobs:
         shell: bash
         run: |
           dotnet tool install -g libyear
-          dotnet libyear $(dotnet sln "${{ env.sln-path }}" list | grep "\.csproj$" | sed "s|^|$(dirname "${{ env.sln-path }}")/|")
+          dotnet libyear $(dotnet sln "${{ env.sln-path }}" list |& grep "\.csproj$" | sed "s|^|$(dirname "${{ env.sln-path }}")/|")
