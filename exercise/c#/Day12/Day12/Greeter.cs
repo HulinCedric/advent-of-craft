@@ -15,17 +15,17 @@ public class Greeter
         {
             return "Good evening, sir.";
         }
-        else if (Formality == "casual")
+
+        if (Formality == "casual")
         {
             return "Sup bro?";
         }
-        else if (Formality == "intimate")
+
+        if (Formality == "intimate")
         {
             return "Hello Darling!";
         }
-        else
-        {
-            return "Hello.";
-        }
+
+        return "Hello.";
     }
 }
