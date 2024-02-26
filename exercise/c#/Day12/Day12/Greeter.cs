@@ -7,7 +7,6 @@ public class Greeter
     public string Greet()
         => Formality switch
         {
-            null => "Hello.",
             "formal" => "Good evening, sir.",
             "casual" => "Sup bro?",
             "intimate" => "Hello Darling!",
