@@ -5,27 +5,12 @@ public class Greeter
     public string? Formality { get; set; }
 
     public string Greet()
-    {
-        if (Formality == null)
+        => Formality switch
         {
-            return "Hello.";
-        }
-
-        if (Formality == "formal")
-        {
-            return "Good evening, sir.";
-        }
-
-        if (Formality == "casual")
-        {
-            return "Sup bro?";
-        }
-
-        if (Formality == "intimate")
-        {
-            return "Hello Darling!";
-        }
-
-        return "Hello.";
-    }
+            null => "Hello.",
+            "formal" => "Good evening, sir.",
+            "casual" => "Sup bro?",
+            "intimate" => "Hello Darling!",
+            _ => "Hello."
+        };
 }
