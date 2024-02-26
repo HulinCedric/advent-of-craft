@@ -9,7 +9,7 @@ public class Greeter
         {
             "formal" => FormalGreeter.FormalGreeting(),
             "casual" => CasualGreeter.CasualGreeting(),
-            "intimate" => IntimateGreeter.IntimateGreeting(),
+            "intimate" => new IntimateGreeter().Greet(),
             _ => new DefaultGreeting().Greet()
         };
 }
