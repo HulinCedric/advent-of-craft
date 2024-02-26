@@ -1,7 +1,7 @@
 namespace Day12;
 
-public static class FormalGreeter
+public class FormalGreeter : GreetingStrategy
 {
-    public static string FormalGreeting()
+    public string Greet()
         => "Good evening, sir.";
 }
