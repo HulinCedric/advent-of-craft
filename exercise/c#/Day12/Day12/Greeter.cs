@@ -8,7 +8,7 @@ public class Greeter
         => Formality switch
         {
             "formal" => FormalGreeter.FormalGreeting(),
-            "casual" => CasualGreeter.CasualGreeting(),
+            "casual" => new CasualGreeter().Greet(),
             "intimate" => new IntimateGreeter().Greet(),
             _ => new DefaultGreeting().Greet()
         };

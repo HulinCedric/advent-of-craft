@@ -1,7 +1,7 @@
 namespace Day12;
 
-public static class CasualGreeter
+public class CasualGreeter : GreetingStrategy
 {
-    public static string CasualGreeting()
+    public string Greet()
         => "Sup bro?";
 }
