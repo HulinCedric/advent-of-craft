@@ -1,32 +1,31 @@
-namespace Day12
+namespace Day12;
+
+public class Greeter
 {
-    public class Greeter
+    public string? Formality { get; set; }
+
+    public string Greet()
     {
-        public string? Formality { get; set; }
-
-        public string Greet()
+        if (Formality == null)
         {
-            if (Formality == null)
-            {
-                return "Hello.";
-            }
+            return "Hello.";
+        }
 
-            if (Formality == "formal")
-            {
-                return "Good evening, sir.";
-            }
-            else if (Formality == "casual")
-            {
-                return "Sup bro?";
-            }
-            else if (Formality == "intimate")
-            {
-                return "Hello Darling!";
-            }
-            else
-            {
-                return "Hello.";
-            }
+        if (Formality == "formal")
+        {
+            return "Good evening, sir.";
+        }
+        else if (Formality == "casual")
+        {
+            return "Sup bro?";
+        }
+        else if (Formality == "intimate")
+        {
+            return "Hello Darling!";
+        }
+        else
+        {
+            return "Hello.";
         }
     }
 }
