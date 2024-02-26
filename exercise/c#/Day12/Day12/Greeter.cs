@@ -7,21 +7,9 @@ public class Greeter
     public string Greet()
         => Formality switch
         {
-            "formal" => FormalGreeting(),
-            "casual" => CasualGreeting(),
-            "intimate" => IntimateGreeting(),
-            _ => DefaultGreeting()
+            "formal" => FormalGreeter.FormalGreeting(),
+            "casual" => CasualGreeter.CasualGreeting(),
+            "intimate" => IntimateGreeter.IntimateGreeting(),
+            _ => DefaultGreeter.DefaultGreeting()
         };
-
-    private static string DefaultGreeting()
-        => "Hello.";
-
-    private static string IntimateGreeting()
-        => "Hello Darling!";
-
-    private static string CasualGreeting()
-        => "Sup bro?";
-
-    private static string FormalGreeting()
-        => "Good evening, sir.";
 }
