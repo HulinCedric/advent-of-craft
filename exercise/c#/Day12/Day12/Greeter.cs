@@ -1,16 +1,20 @@
 namespace Day12;
 
-public class Greeter
+public class Greeter 
 {
     private Greeter(string? formality = null)
     {
         Formality = formality;
     }
 
-    public static Greeter New(string? formality = null)
-    {
-        return new Greeter(formality);
-    }
+    public static GreetingStrategy New(string? formality = null)
+        => formality switch
+        {
+            "formal" => new FormalGreeter(),
+            "casual" => new CasualGreeter(),
+            "intimate" => new IntimateGreeter(),
+            _ => new DefaultGreeting()
+        };
 
     public string? Formality { get;  }
 
