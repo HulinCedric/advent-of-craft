@@ -4,10 +4,10 @@ namespace Day12;
 
 public class Greeter : SmartEnum<Greeter, string>
 {
-    public static readonly Greeter Formal = new(GreeterNames.Formal, "Good evening, sir.");
-    public static readonly Greeter Intimate = new(GreeterNames.Intimate, "Hello Darling!");
-    public static readonly Greeter Casual = new(GreeterNames.Casual, "Sup bro?");
-    public static readonly Greeter Default = new(GreeterNames.Default, "Hello.");
+    public static readonly Greeter Formal = new(nameof(Formal), "Good evening, sir.");
+    public static readonly Greeter Intimate = new(nameof(Intimate), "Hello Darling!");
+    public static readonly Greeter Casual = new(nameof(Casual), "Sup bro?");
+    public static readonly Greeter Default = new(nameof(Default), "Hello.");
 
     private Greeter(string name, string value) : base(name, value)
     {
@@ -17,7 +17,7 @@ public class Greeter : SmartEnum<Greeter, string>
         => Value;
 
     public static Greeter With(string? formality = null)
-        => TryFromName(formality, out var greeter)
+        => TryFromName(formality, ignoreCase: true, out var greeter)
                ? greeter
                : Default;
 }
