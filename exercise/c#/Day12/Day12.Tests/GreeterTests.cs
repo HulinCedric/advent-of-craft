@@ -15,7 +15,7 @@ public class GreeterTests
     [Fact]
     public void SaysHelloFormally()
     {
-        var greeter = Greeter.New(formality: "formal");
+        var greeter = Greeter.New(Greeter.Formal);
 
         greeter.Greet().Should().Be("Good evening, sir.");
     }
@@ -23,7 +23,7 @@ public class GreeterTests
     [Fact]
     public void SaysHelloCasually()
     {
-        var greeter = Greeter.New(formality: "casual");
+        var greeter = Greeter.New(Greeter.Casual);
 
         greeter.Greet().Should().Be("Sup bro?");
     }
@@ -31,7 +31,7 @@ public class GreeterTests
     [Fact]
     public void SaysHelloIntimately()
     {
-        var greeter = Greeter.New(formality: "intimate");
+        var greeter = Greeter.New(Greeter.Intimate);
 
         greeter.Greet().Should().Be("Hello Darling!");
     }
