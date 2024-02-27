@@ -1,6 +1,6 @@
 namespace Day12;
 
-public class IntimateGreeter : GreetingStrategy
+public class IntimateGreeter : IGreeter
 {
     public string Greet()
         => "Hello Darling!";

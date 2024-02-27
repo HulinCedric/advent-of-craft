@@ -1,6 +1,6 @@
 namespace Day12;
 
-public interface GreetingStrategy
+public interface IGreeter
 {
     string Greet();
 }

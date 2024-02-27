@@ -1,12 +1,12 @@
 namespace Day12;
 
-public static class Greeter
+public static class GreeterFactory
 {
     public const string Formal = "formal";
     public const string Casual = "casual";
     public const string Intimate = "intimate";
 
-    public static GreetingStrategy New(string? formality = null)
+    public static IGreeter GreeterWith(string? formality = null)
         => formality switch
         {
             Formal => new FormalGreeter(),
