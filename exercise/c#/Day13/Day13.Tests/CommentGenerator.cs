@@ -2,9 +2,9 @@ using Bogus;
 
 namespace Day13.Tests;
 
-internal sealed class CommentFaker : Faker<Comment>
+internal sealed class CommentGenerator : Faker<Comment>
 {
-    public CommentFaker()
+    public CommentGenerator()
         => CustomInstantiator(
             faker => new Comment(
                 faker.Lorem.Sentence(),
