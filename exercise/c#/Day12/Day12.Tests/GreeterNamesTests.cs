@@ -1,10 +1,10 @@
 using FluentAssertions;
 using Xunit;
-using static Day12.GreeterFactory;
+using static Day12.GreeterNames;
 
 namespace Day12.Tests;
 
-public class GreeterFactoryTests
+public class GreeterTests
 {
     [Theory]
     [InlineData("", "Hello.")]
@@ -12,7 +12,7 @@ public class GreeterFactoryTests
     [InlineData(Casual, "Sup bro?")]
     [InlineData(Intimate, "Hello Darling!")]
     public void Greet(string formality, string expectedGreet)
-        => GreeterWith(formality)
+        => Greeter.With(formality)
             .Greet()
             .Should()
             .Be(expectedGreet);
