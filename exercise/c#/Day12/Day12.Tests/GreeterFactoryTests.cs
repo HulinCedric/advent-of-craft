@@ -7,10 +7,12 @@ namespace Day12.Tests;
 public class GreeterFactoryTests
 {
     [Theory]
+    [InlineData(null, "Hello.")]
     [InlineData("", "Hello.")]
-    [InlineData(Formal, "Good evening, sir.")]
-    [InlineData(Casual, "Sup bro?")]
-    [InlineData(Intimate, "Hello Darling!")]
+    [InlineData("unknown", "Hello.")]
+    [InlineData("formal", "Good evening, sir.")]
+    [InlineData("casual", "Sup bro?")]
+    [InlineData("intimate", "Hello Darling!")]
     public void Greet(string formality, string expectedGreet)
         => GreeterWith(formality)
             .Greet()
