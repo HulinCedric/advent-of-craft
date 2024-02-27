@@ -1,6 +1,6 @@
 namespace Day12;
 
-public class DefaultGreeting : GreetingStrategy
+public class DefaultGreeter : GreetingStrategy
 {
     public string Greet()
         => "Hello.";
