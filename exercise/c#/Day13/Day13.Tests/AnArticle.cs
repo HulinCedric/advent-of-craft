@@ -1,5 +1,6 @@
 using FluentAssertions;
 using Xunit;
+using static Day13.Tests.CommentSetup;
 using static Day13.Tests.ArticleBuilder;
 using static Day13.Tests.CommentBuilder;
 
@@ -19,8 +20,8 @@ public class AnArticle
         When(article => article.AddComment(_newComment.Text, _newComment.Author));
         Then(article =>
         {
-            article.Comments.Should().HaveCount(1);
-            article.Comments.Last().Should().BeEquivalentTo(_newComment);
+            article.ShouldHaveCommentsCount(1);
+            article.ShouldHaveComment(_newComment);
         });
     }
 
@@ -31,8 +32,8 @@ public class AnArticle
         When(article => article.AddComment(_newComment.Text, _newComment.Author));
         Then(article =>
         {
-            article.Comments.Should().HaveCount(2);
-            article.Comments.Last().Should().BeEquivalentTo(_newComment);
+            article.ShouldHaveCommentsCount(2);
+            article.ShouldHaveComment(_newComment);
         });
     }
 
@@ -50,15 +51,10 @@ public class AnArticle
         });
         Then(article =>
         {
-            article.Comments.Should().HaveCount(2);
-            article.Comments.Last()
-                .Should()
-                .BeEquivalentTo(SameCommentTheNextDay(_newComment));
+            article.ShouldHaveCommentsCount(2);
+            article.ShouldHaveComment(_newComment.SameOnTheNextDay());
         });
     }
-
-    private static Comment SameCommentTheNextDay(Comment comment)
-        => comment with { CreationDate = comment.CreationDate.AddDays(1) };
 
     private void Given(ArticleBuilder articleBuilder)
     {
