@@ -3,15 +3,21 @@ using Xunit;
 
 namespace Day13.Tests;
 
+public class ArticleTestBuilder
+{
+    public Article Build()
+        => new(
+            "Lorem Ipsum",
+            "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore"
+        );
+}
+
 public class ArticleTests
 {
     private const string Author = "Pablo Escobar";
     private const string CommentText = "Amazing article !!!";
 
-    private readonly Article _article = new(
-        "Lorem Ipsum",
-        "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore"
-    );
+    private readonly Article _article = new ArticleTestBuilder().Build();
 
     [Fact]
     public void Should_Add_Comment_In_An_Article()
@@ -44,9 +50,9 @@ public class ArticleTests
         [Fact]
         public void When_Adding_An_Existing_Comment()
         {
-            _article.AddComment(CommentText, Author);
+            _article.AddComment(ArticleTests.CommentText, ArticleTests.Author);
 
-            var act = () => _article.AddComment(CommentText, Author);
+            var act = () => _article.AddComment(ArticleTests.CommentText, ArticleTests.Author);
             act.Should().Throw<CommentAlreadyExistException>();
         }
     }
