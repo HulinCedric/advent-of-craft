@@ -5,8 +5,8 @@ namespace Day13.Tests;
 
 public class ArticleBuilder
 {
+    private readonly Clock _clock = new(DateOnly.FromDateTime(DateTime.Today));
     private readonly List<Comment> _comments = [];
-
     private readonly Faker _faker = new();
 
     public static ArticleBuilder AnArticle()
@@ -16,7 +16,8 @@ public class ArticleBuilder
     {
         var article = new Article(
             _faker.Lorem.Sentence(),
-            _faker.Lorem.Paragraph());
+            _faker.Lorem.Paragraph(),
+            _clock);
 
         foreach (var comment in _comments)
         {
@@ -32,4 +33,7 @@ public class ArticleBuilder
 
         return this;
     }
+
+    public void OneDayLater()
+        => _clock.AddDays(1);
 }

@@ -2,14 +2,16 @@
 
 public class Article
 {
+    private readonly IClock _clock;
     private readonly string _name;
     private readonly string _content;
     public List<Comment> Comments { get; }
 
-    public Article(string name, string content)
+    public Article(string name, string content, IClock clock)
     {
         _name = name;
         _content = content;
+        _clock = clock;
         Comments = new List<Comment>();
     }
 
@@ -27,7 +29,7 @@ public class Article
     }
 
     public void AddComment(string text, string author)
-        => AddComment(text, author, DateOnly.FromDateTime(DateTime.Now));
+        => AddComment(text, author, _clock.Today());
 }
 
 public record Comment(string Text, string Author, DateOnly CreationDate);
