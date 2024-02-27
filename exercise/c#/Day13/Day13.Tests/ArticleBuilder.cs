@@ -1,10 +1,10 @@
 using Bogus;
+using static Day13.Tests.CommentBuilder;
 
 namespace Day13.Tests;
 
 public class ArticleBuilder
 {
-    private readonly CommentGenerator _commentGenerator = new();
     private readonly List<Comment> _comments = [];
 
     private readonly Faker _faker = new();
@@ -28,7 +28,7 @@ public class ArticleBuilder
 
     public ArticleBuilder Commented()
     {
-        _comments.Add(_commentGenerator.Generate());
+        _comments.Add(AComment().Build());
 
         return this;
     }

@@ -1,12 +1,13 @@
 using FluentAssertions;
 using Xunit;
 using static Day13.Tests.ArticleBuilder;
+using static Day13.Tests.CommentBuilder;
 
 namespace Day13.Tests;
 
 public class ArticleTests
 {
-    private readonly Comment _newComment = new CommentGenerator().Generate();
+    private readonly Comment _newComment = AComment().Build();
 
     private Article _article;
 
