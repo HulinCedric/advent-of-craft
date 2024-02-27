@@ -2,7 +2,12 @@ namespace Day12;
 
 public class Greeter
 {
-    public string? Formality { get; set; }
+    public Greeter(string? formality = null)
+    {
+        Formality = formality;
+    }
+
+    public string? Formality { get;  }
 
     public string Greet()
         => Formality switch
