@@ -2,9 +2,14 @@ namespace Day12;
 
 public class Greeter
 {
-    public Greeter(string? formality = null)
+    private Greeter(string? formality = null)
     {
         Formality = formality;
+    }
+
+    public static Greeter New(string? formality = null)
+    {
+        return new Greeter(formality);
     }
 
     public string? Formality { get;  }
