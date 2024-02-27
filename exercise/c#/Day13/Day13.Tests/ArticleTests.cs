@@ -1,3 +1,4 @@
+using Bogus;
 using FluentAssertions;
 using Xunit;
 using static Day13.Tests.ArticleTestBuilder;
@@ -6,34 +7,36 @@ namespace Day13.Tests;
 
 public class ArticleTests
 {
+    private readonly CommentFaker _commentFaker = new();
     private Article _article;
 
     [Fact]
     public void Should_Add_Comment_In_An_Article()
     {
+        var comment = _commentFaker.Generate();
+
         Given(AnArticle());
-        When(article => article.AddComment(CommentText, Author));
+        When(article => article.AddComment(comment.Text, comment.Author));
         Then(
             article =>
             {
                 article.Comments.Should().HaveCount(1);
-                AssertComment(article.Comments.Last(), CommentText, Author);
+                AssertComment(article.Comments.Last(), comment.Text, comment.Author);
             });
     }
 
     [Fact]
     public void Should_Add_Comment_In_An_Article_Containing_Already_A_Comment()
     {
-        const string newComment = "Finibus Bonorum et Malorum";
-        const string newAuthor = "Al Capone";
+        var newComment = _commentFaker.Generate();
 
         Given(AnArticle().Commented());
-        When(article => article.AddComment(newComment, newAuthor));
+        When(article => article.AddComment(newComment.Text, newComment.Author));
         Then(
             article =>
             {
                 article.Comments.Should().HaveCount(2);
-                AssertComment(article.Comments[1], newComment, newAuthor);
+                AssertComment(article.Comments[1], newComment.Text, newComment.Author);
             });
     }
 
@@ -58,11 +61,22 @@ public class ArticleTests
         [Fact]
         public void When_Adding_An_Existing_Comment()
         {
+            var comment = _commentFaker.Generate();
             var article = AnArticle().Build();
-            article.AddComment(CommentText, Author);
+            article.AddComment(comment.Text, comment.Author);
 
-            var act = () => article.AddComment(CommentText, Author);
+            var act = () => article.AddComment(comment.Text, comment.Author);
             act.Should().Throw<CommentAlreadyExistException>();
         }
     }
+}
+
+internal sealed class CommentFaker : Faker<Comment>
+{
+    public CommentFaker()
+        => CustomInstantiator(
+            faker => new Comment(
+                faker.Lorem.Sentence(),
+                faker.Person.FullName,
+                DateOnly.FromDateTime(faker.Date.Recent())));
 }
