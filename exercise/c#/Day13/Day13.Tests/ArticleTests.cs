@@ -13,12 +13,8 @@ public class ArticleTests
 
         article.AddComment(CommentText, Author);
 
-        article.Comments
-            .Should()
-            .HaveCount(1)
-            .And.ContainSingle(
-                comment => comment.Text == CommentText &&
-                           comment.Author == Author);
+        article.Comments.Should().HaveCount(1);
+        AssertComment(article.Comments.Last(), CommentText, Author);
     }
 
     [Fact]
@@ -34,10 +30,14 @@ public class ArticleTests
         article.AddComment(newComment, newAuthor);
 
         article.Comments.Should().HaveCount(2);
+        AssertComment(article.Comments.Last(), newComment, newAuthor);
+    }
 
-        var lastComment = article.Comments.Last();
-        lastComment.Text.Should().Be(newComment);
-        lastComment.Author.Should().Be(newAuthor);
+    private static void AssertComment(Comment comment, string expectedComment, string expectedAuthor)
+    {
+        comment.Text.Should().Be(expectedComment);
+        comment.Author.Should().Be(expectedAuthor);
+        comment.CreationDate.Should().Be(DateOnly.FromDateTime(DateTime.Now));
     }
 
     public class Fail : ArticleTests
