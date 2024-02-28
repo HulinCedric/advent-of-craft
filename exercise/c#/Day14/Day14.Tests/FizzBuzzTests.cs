@@ -20,7 +20,7 @@ public class FizzBuzzTests
     [InlineData(30, "FizzBuzz")]
     [InlineData(45, "FizzBuzz")]
     public void Returns_Number_Representation(int input, string expectedResult)
-        => FizzBuzz.ConvertSafely(input)
+        => FizzBuzz.Convert(input)
             .Should()
             .Be(expectedResult);
 
@@ -29,5 +29,5 @@ public class FizzBuzzTests
     [InlineData(101)]
     [InlineData(-1)]
     public void Fails_For_Numbers_Out_Of_Range_Safely(int input)
-        => FizzBuzz.ConvertSafely(input).Should().BeNone();
+        => FizzBuzz.Convert(input).Should().BeNone();
 }

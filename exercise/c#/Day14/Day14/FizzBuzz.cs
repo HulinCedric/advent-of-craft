@@ -25,7 +25,7 @@ public static class FizzBuzz
     private static bool IsOutOfRange(int input)
         => input is <= Min or > Max;
 
-    public static Option<string> ConvertSafely(int input)
+    public static Option<string> Convert(int input)
     {
         try
         {
