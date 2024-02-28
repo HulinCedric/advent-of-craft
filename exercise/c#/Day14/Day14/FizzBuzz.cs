@@ -13,10 +13,10 @@ public static class FizzBuzz
     private static readonly IReadOnlyDictionary<Predicate<int>, Func<int, string>> mapping =
         new Dictionary<Predicate<int>, Func<int, string>>
         {
-            {i => Is(Fizz_Buzz, i), i => "FizzBuzz"},
-            {i => Is(Fizz, i), i => "Fizz"},
-            {i => Is(Buzz, i), i => "Buzz"},
-            {i => true, i => i.ToString()},
+            { i => Is(Fizz_Buzz, i), i => "FizzBuzz" },
+            { i => Is(Fizz, i), i => "Fizz" },
+            { i => Is(Buzz, i), i => "Buzz" },
+            { i => true, i => i.ToString() }
         };
 
     public static string Convert(int input)
@@ -32,12 +32,21 @@ public static class FizzBuzz
                    : throw new OutOfRangeException();
     }
 
-    private static bool Is(int divisor, int input) => input % divisor == 0;
+    private static bool Is(int divisor, int input)
+        => input % divisor == 0;
 
-    private static bool IsOutOfRange(int input) => input is <= Min or > Max;
+    private static bool IsOutOfRange(int input)
+        => input is <= Min or > Max;
 
     public static Option<string> ConvertSafely(int input)
     {
-        return Option<string>.None;
+        try
+        {
+            return Convert(input);
+        }
+        catch
+        {
+            return Option<string>.None;
+        }
     }
 }

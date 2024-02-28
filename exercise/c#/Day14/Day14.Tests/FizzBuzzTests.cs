@@ -20,7 +20,7 @@ public class FizzBuzzTests
     [InlineData(30, "FizzBuzz")]
     [InlineData(45, "FizzBuzz")]
     public void Returns_Number_Representation(int input, string expectedResult)
-        => FizzBuzz.Convert(input)
+        => FizzBuzz.ConvertSafely(input)
             .Should()
             .Be(expectedResult);
 
