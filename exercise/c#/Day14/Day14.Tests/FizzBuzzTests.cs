@@ -28,15 +28,6 @@ public class FizzBuzzTests
     [InlineData(0)]
     [InlineData(101)]
     [InlineData(-1)]
-    public void Fails_For_Numbers_Out_Of_Range(int input)
-        => ((Action) (() => FizzBuzz.Convert(input)))
-            .Should()
-            .Throw<OutOfRangeException>();
-
-    [Theory]
-    [InlineData(0)]
-    [InlineData(101)]
-    [InlineData(-1)]
     public void Fails_For_Numbers_Out_Of_Range_Safely(int input)
         => FizzBuzz.ConvertSafely(input).Should().BeNone();
 }
