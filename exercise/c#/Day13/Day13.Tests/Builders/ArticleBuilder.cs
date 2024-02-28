@@ -1,7 +1,8 @@
 using Bogus;
-using static Day13.Tests.CommentBuilder;
+using Day13.Tests.TestDoubles;
+using static Day13.Tests.Builders.CommentBuilder;
 
-namespace Day13.Tests;
+namespace Day13.Tests.Builders;
 
 public class ArticleBuilder
 {

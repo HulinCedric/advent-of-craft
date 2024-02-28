@@ -1,6 +1,6 @@
 using Bogus;
 
-namespace Day13.Tests;
+namespace Day13.Tests.Builders;
 
 public class CommentBuilder
 {

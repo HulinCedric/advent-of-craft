@@ -1,7 +1,10 @@
+using Day13.Tests.Builders;
+using Day13.Tests.Setup;
+using Day13.Tests.Verification;
 using FluentAssertions;
 using Xunit;
-using static Day13.Tests.ArticleBuilder;
-using static Day13.Tests.CommentBuilder;
+using static Day13.Tests.Builders.ArticleBuilder;
+using static Day13.Tests.Builders.CommentBuilder;
 
 namespace Day13.Tests;
 

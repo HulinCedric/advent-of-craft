@@ -1,6 +1,6 @@
 using FluentAssertions;
 
-namespace Day13.Tests;
+namespace Day13.Tests.Verification;
 
 public static class ArticleVerification
 {

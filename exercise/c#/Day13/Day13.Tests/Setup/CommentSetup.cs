@@ -1,4 +1,4 @@
-namespace Day13.Tests;
+namespace Day13.Tests.Setup;
 
 public static class CommentSetup
 {

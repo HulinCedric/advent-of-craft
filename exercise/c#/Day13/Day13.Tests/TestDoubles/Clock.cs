@@ -1,4 +1,4 @@
-namespace Day13.Tests;
+namespace Day13.Tests.TestDoubles;
 
 internal class Clock : IClock
 {
