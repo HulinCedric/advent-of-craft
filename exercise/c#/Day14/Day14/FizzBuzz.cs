@@ -1,4 +1,6 @@
-﻿namespace Day14;
+﻿using LanguageExt;
+
+namespace Day14;
 
 public static class FizzBuzz
 {
@@ -33,4 +35,9 @@ public static class FizzBuzz
     private static bool Is(int divisor, int input) => input % divisor == 0;
 
     private static bool IsOutOfRange(int input) => input is <= Min or > Max;
+
+    public static Option<string> ConvertSafely(int input)
+    {
+        return Option<string>.None;
+    }
 }
