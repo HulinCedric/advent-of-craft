@@ -26,17 +26,13 @@ public static class FizzBuzz
         => input is <= Min or > Max;
 
     public static Option<string> Convert(int input)
-    {
-        if (IsOutOfRange(input))
-            return Option<string>.None;
-        
-        var mappingFunction = mapping
+        => IsOutOfRange(input)
+               ? Option<string>.None
+               : ConvertSafely(input);
+
+    private static Option<string> ConvertSafely(int input)
+        => mapping
             .Where(kvp => kvp.Key(input))
             .Select(kvp => kvp.Value)
-            .FirstOrDefault();
-
-        return mappingFunction != null
-                   ? mappingFunction(input)
-                   : Option<string>.None;
-    }
+            .First()(input);
 }

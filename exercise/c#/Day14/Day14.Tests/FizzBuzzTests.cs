@@ -22,7 +22,7 @@ public class FizzBuzzTests
     public void Returns_Number_Representation(int input, string expectedResult)
         => FizzBuzz.Convert(input)
             .Should()
-            .Be(expectedResult);
+            .BeSome(expectedResult);
 
     [Theory]
     [InlineData(0)]
