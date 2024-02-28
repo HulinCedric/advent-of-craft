@@ -27,8 +27,10 @@ public static class FizzBuzz
 
     public static Option<string> Convert(int input)
     {
+        if (IsOutOfRange(input))
+            return Option<string>.None;
+        
         var mappingFunction = mapping
-            .Where(_ => !IsOutOfRange(input))
             .Where(kvp => kvp.Key(input))
             .Select(kvp => kvp.Value)
             .FirstOrDefault();
