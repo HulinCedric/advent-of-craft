@@ -19,19 +19,6 @@ public static class FizzBuzz
             { i => true, i => i.ToString() }
         };
 
-    public static string Convert(int input)
-    {
-        var mappingFunction = mapping
-            .Where(_ => !IsOutOfRange(input))
-            .Where(kvp => kvp.Key(input))
-            .Select(kvp => kvp.Value)
-            .FirstOrDefault();
-
-        return mappingFunction != null
-                   ? mappingFunction(input)
-                   : throw new OutOfRangeException();
-    }
-
     private static bool Is(int divisor, int input)
         => input % divisor == 0;
 
@@ -42,7 +29,15 @@ public static class FizzBuzz
     {
         try
         {
-            return Convert(input);
+            var mappingFunction = mapping
+                .Where(_ => !IsOutOfRange(input))
+                .Where(kvp => kvp.Key(input))
+                .Select(kvp => kvp.Value)
+                .FirstOrDefault();
+
+            return mappingFunction != null
+                       ? mappingFunction(input)
+                       : throw new OutOfRangeException();
         }
         catch
         {
