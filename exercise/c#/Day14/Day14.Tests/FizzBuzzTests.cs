@@ -22,12 +22,14 @@ public class FizzBuzzTests
     public void Returns_Number_Representation(int input, string expectedResult)
         => FizzBuzz.Convert(input)
             .Should()
-            .BeSome(expectedResult);
+            .Be(expectedResult);
 
     [Theory]
     [InlineData(0)]
     [InlineData(101)]
     [InlineData(-1)]
     public void Fails_For_Numbers_Out_Of_Range_Safely(int input)
-        => FizzBuzz.Convert(input).Should().BeNone();
+        => FizzBuzz.Convert(input)
+            .Should()
+            .BeNone();
 }

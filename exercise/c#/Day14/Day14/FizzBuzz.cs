@@ -2,22 +2,30 @@
 
 namespace Day14;
 
+using Result = Option<string>;
+
 public static class FizzBuzz
 {
     private const int Min = 0;
     private const int Max = 100;
-    private const int Fizz = 3;
-    private const int Buzz = 5;
-    private const int Fizz_Buzz = 15;
 
-    private static readonly IReadOnlyDictionary<Predicate<int>, Func<int, string>> mapping =
-        new Dictionary<Predicate<int>, Func<int, string>>
-        {
-            { i => Is(Fizz_Buzz, i), i => "FizzBuzz" },
-            { i => Is(Fizz, i), i => "Fizz" },
-            { i => Is(Buzz, i), i => "Buzz" },
-            { i => true, i => i.ToString() }
-        };
+    private static readonly Dictionary<int, string> Mapping = new()
+    {
+        { 15, "FizzBuzz" },
+        { 3, "Fizz" },
+        { 5, "Buzz" }
+    };
+
+    public static Result Convert(int input)
+        => IsOutOfRange(input)
+               ? ToFailure()
+               : ConvertSafely(input);
+
+    private static Result ConvertSafely(int input)
+        => Mapping
+            .Find(kvp => Is(kvp.Key, input))
+            .Map(kvp => kvp.Value)
+            .FirstOrDefault(input.ToString());
 
     private static bool Is(int divisor, int input)
         => input % divisor == 0;
@@ -25,14 +33,6 @@ public static class FizzBuzz
     private static bool IsOutOfRange(int input)
         => input is <= Min or > Max;
 
-    public static Option<string> Convert(int input)
-        => IsOutOfRange(input)
-               ? Option<string>.None
-               : ConvertSafely(input);
-
-    private static Option<string> ConvertSafely(int input)
-        => mapping
-            .Where(kvp => kvp.Key(input))
-            .Select(kvp => kvp.Value)
-            .First()(input);
+    private static Result ToFailure()
+        => Result.None;
 }
