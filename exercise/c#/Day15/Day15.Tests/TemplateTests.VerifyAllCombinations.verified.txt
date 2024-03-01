@@ -1,0 +1,20 @@
+﻿[
+  [DEER, IndividualProspect] => DEERPP,
+  [DEER, LegalProspect] => DEERPM,
+  [DEER, All] => System.ArgumentException: Invalid Document template type or record type,
+  [AUTP, IndividualProspect] => AUTP,
+  [AUTP, LegalProspect] => System.ArgumentException: Invalid Document template type or record type,
+  [AUTP, All] => System.ArgumentException: Invalid Document template type or record type,
+  [AUTM, IndividualProspect] => System.ArgumentException: Invalid Document template type or record type,
+  [AUTM, LegalProspect] => AUTM,
+  [AUTM, All] => System.ArgumentException: Invalid Document template type or record type,
+  [SPEC, IndividualProspect] => SPEC,
+  [SPEC, LegalProspect] => SPEC,
+  [SPEC, All] => SPEC,
+  [GLPP, IndividualProspect] => GLPP,
+  [GLPP, LegalProspect] => System.ArgumentException: Invalid Document template type or record type,
+  [GLPP, All] => System.ArgumentException: Invalid Document template type or record type,
+  [GLPM, IndividualProspect] => System.ArgumentException: Invalid Document template type or record type,
+  [GLPM, LegalProspect] => GLPM,
+  [GLPM, All] => System.ArgumentException: Invalid Document template type or record type
+]
