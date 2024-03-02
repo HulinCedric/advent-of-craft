@@ -1,9 +1,8 @@
-namespace Day15
+namespace Day15;
+
+public enum RecordType
 {
-    public enum RecordType
-    {
-        IndividualProspect,
-        LegalProspect,
-        All
-    }
+    IndividualProspect,
+    LegalProspect,
+    All
 }

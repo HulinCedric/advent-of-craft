@@ -1,13 +1,12 @@
-namespace Day15
+namespace Day15;
+
+public enum DocumentTemplate
 {
-    public enum DocumentTemplate
-    {
-        DEERPP,
-        DEERPM,
-        AUTP,
-        AUTM,
-        SPEC,
-        GLPP,
-        GLPM
-    }
+    DEERPP,
+    DEERPM,
+    AUTP,
+    AUTM,
+    SPEC,
+    GLPP,
+    GLPM
 }
