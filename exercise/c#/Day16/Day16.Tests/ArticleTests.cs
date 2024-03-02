@@ -50,8 +50,8 @@ public class ArticleTests
         [Fact]
         public void When_Adding_An_Existing_Comment()
         {
-            var article = AnArticle().Build();
-            article = article.AddComment(CommentText, Author);
+            var article = AnArticle().Build()
+                .AddComment(CommentText, Author);
 
             var act = () => article.AddComment(CommentText, Author);
             act.Should().Throw<CommentAlreadyExistException>();

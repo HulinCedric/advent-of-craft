@@ -26,12 +26,10 @@ public record Article
         DateOnly creationDate)
     {
         var comment = new Comment(text, author, creationDate);
-        if (Comments.Contains(comment))
-        {
-            throw new CommentAlreadyExistException();
-        }
-
-        return new Article(_name, _content, Comments.Add(comment));
+        
+        return Comments.Contains(comment) 
+                   ? throw new CommentAlreadyExistException()
+                   : new Article(_name, _content, Comments.Add(comment));
     }
 
     public Article AddComment(string text, string author)
