@@ -13,7 +13,14 @@ public class Article
         Comments = new List<Comment>();
     }
 
-    private void AddComment(
+    private Article(string name, string content, IEnumerable<Comment> comments)
+    {
+        _name = name;
+        _content = content;
+        Comments = comments.ToList();
+    }
+
+    private Article AddComment(
         string text,
         string author,
         DateOnly creationDate)
@@ -23,17 +30,12 @@ public class Article
         {
             throw new CommentAlreadyExistException();
         }
-        else Comments.Add(comment);
-    }
 
-    private void AddComment(string text, string author)
-        => AddComment(text, author, DateOnly.FromDateTime(DateTime.Now));
+        var updatedComments = Comments.ToList();
+        updatedComments.Add(comment);
+        return new Article(_name, _content, updatedComments);
+    }
 
     public Article AddCommentImmutably(string text, string author)
-    {
-        var newArticle = new Article(_name, _content);
-        newArticle.Comments.AddRange(Comments);
-        newArticle.AddComment(text, author);
-        return newArticle;
-    }
+        => AddComment(text, author, DateOnly.FromDateTime(DateTime.Now));
 }
