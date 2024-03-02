@@ -23,7 +23,7 @@ public class ArticleBuilder
 
         _comments
             .ToList()
-            .ForEach(comment => article = article.AddCommentImmutably(comment.Key, comment.Value));
+            .ForEach(comment => article = article.AddComment(comment.Key, comment.Value));
 
         return article;
     }

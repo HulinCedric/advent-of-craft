@@ -36,6 +36,6 @@ public class Article
         return new Article(_name, _content, updatedComments);
     }
 
-    public Article AddCommentImmutably(string text, string author)
+    public Article AddComment(string text, string author)
         => AddComment(text, author, DateOnly.FromDateTime(DateTime.Now));
 }

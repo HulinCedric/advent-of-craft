@@ -13,7 +13,7 @@ public class ArticleTests
     public void Should_Add_Comment_In_An_Article()
     {
         Given(AnArticle());
-        When(article => article.AddCommentImmutably(CommentText, Author));
+        When(article => article.AddComment(CommentText, Author));
         Then(
             article =>
             {
@@ -29,7 +29,7 @@ public class ArticleTests
         var newAuthor = _random.String(3);
 
         Given(AnArticle().Commented());
-        When(article => article.AddCommentImmutably(newComment, newAuthor));
+        When(article => article.AddComment(newComment, newAuthor));
         Then(
             article =>
             {
@@ -51,9 +51,9 @@ public class ArticleTests
         public void When_Adding_An_Existing_Comment()
         {
             var article = AnArticle().Build();
-            article = article.AddCommentImmutably(CommentText, Author);
+            article = article.AddComment(CommentText, Author);
 
-            var act = () => article.AddCommentImmutably(CommentText, Author);
+            var act = () => article.AddComment(CommentText, Author);
             act.Should().Throw<CommentAlreadyExistException>();
         }
     }
