@@ -29,7 +29,3 @@ public class Article
     public void AddComment(string text, string author)
         => AddComment(text, author, DateOnly.FromDateTime(DateTime.Now));
 }
-
-public record Comment(string Text, string Author, DateOnly CreationDate);
-
-public class CommentAlreadyExistException : ArgumentException;
