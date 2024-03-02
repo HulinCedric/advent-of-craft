@@ -16,15 +16,10 @@ public class ArticleBuilder
     }
 
     public Article Build()
-    {
-        var article = new Article(
-            "Lorem Ipsum",
-            "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore");
-
-        _comments
-            .ToList()
-            .ForEach(comment => article = article.AddComment(comment.Key, comment.Value));
-
-        return article;
-    }
+        => _comments
+            .Aggregate(
+                new Article(
+                    "Lorem Ipsum",
+                    "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore"),
+                (current, comment) => current.AddComment(comment.Key, comment.Value));
 }
