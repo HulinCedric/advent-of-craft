@@ -3,17 +3,10 @@ namespace Day15.Tests;
 [UsesVerify]
 public class TemplateTests
 {
-    private static readonly List<string> DocumentTypes =
-    [
-        "DEER",
-        "AUTP",
-        "AUTM",
-        "SPEC",
-        "GLPP",
-        "GLPM"
-    ];
+    private static readonly string[] DocumentTypes = Enum.GetNames<DocumentType>();
 
     private static readonly string[] RecordTypes = Enum.GetNames<RecordType>();
+
 
     [Fact]
     public Task VerifyAllCombinations()
