@@ -19,15 +19,15 @@ public record Template(
 
     public static Template FindTemplateFor(string documentType, string recordType)
     {
-        var key = $"{documentType.ToLowerInvariant()}-{recordType.ToLowerInvariant()}";
+        var key = Key(documentType, recordType);
         var templatesByDocumentAndRecordType = TemplateMappings()
-            .ToDictionary(t => $"{t.DocumentType.ToString().ToLowerInvariant()}-{t.RecordType.ToString().ToLowerInvariant()}", t => t);
+            .ToDictionary(t => Key(t.DocumentType.ToString(), t.RecordType.ToString()), t => t);
         if (templatesByDocumentAndRecordType.TryGetValue(key, out var template))
         {
             return template;
         }
 
-        var key2 = $"{documentType.ToLowerInvariant()}-{RecordType.All.ToString().ToLowerInvariant()}";
+        var key2 = Key(documentType, RecordType.All.ToString());
         if (templatesByDocumentAndRecordType.TryGetValue(key2, out var template2))
         {
             return template2;
@@ -35,6 +35,9 @@ public record Template(
 
         throw new ArgumentException("Invalid Document template type or record type");
     }
+
+    private static string Key(string documentType, string recordType)
+        => $"{documentType.ToLowerInvariant()}-{recordType.ToLowerInvariant()}";
 
     public override string ToString()
         => DocumentTemplate.ToString();
