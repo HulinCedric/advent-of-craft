@@ -19,21 +19,18 @@ public record Template(
 
     public static Template FindTemplateFor(string documentType, string recordType)
     {
-        var key = $"{documentType}-{recordType}";
+        var key = $"{documentType.ToLowerInvariant()}-{recordType.ToLowerInvariant()}";
         var templatesByDocumentAndRecordType = TemplateMappings()
-            .ToDictionary(t => $"{t.DocumentType}-{t.RecordType}", t => t);
+            .ToDictionary(t => $"{t.DocumentType.ToString().ToLowerInvariant()}-{t.RecordType.ToString().ToLowerInvariant()}", t => t);
         if (templatesByDocumentAndRecordType.TryGetValue(key, out var template))
         {
             return template;
         }
 
-        foreach (var dtt in TemplateMappings())
+        var key2 = $"{documentType.ToLowerInvariant()}-{RecordType.All.ToString().ToLowerInvariant()}";
+        if (templatesByDocumentAndRecordType.TryGetValue(key2, out var template2))
         {
-            if (dtt.DocumentType.ToString().Equals(documentType, StringComparison.InvariantCultureIgnoreCase) &&
-                dtt.RecordType.ToString() == "All")
-            {
-                return dtt;
-            }
+            return template2;
         }
 
         throw new ArgumentException("Invalid Document template type or record type");
