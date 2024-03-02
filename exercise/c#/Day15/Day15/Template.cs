@@ -5,7 +5,7 @@ public record Template(
     RecordType RecordType,
     DocumentType DocumentType)
 {
-    private static IEnumerable<Template> TemplateMappings()
+    private static Dictionary<string, Template> Templates()
         => new[]
         {
             new Template(DocumentTemplate.DEERPP, RecordType.IndividualProspect, DocumentType.DEER),
@@ -15,20 +15,19 @@ public record Template(
             new Template(DocumentTemplate.SPEC, RecordType.All, DocumentType.SPEC),
             new Template(DocumentTemplate.GLPP, RecordType.IndividualProspect, DocumentType.GLPP),
             new Template(DocumentTemplate.GLPM, RecordType.LegalProspect, DocumentType.GLPM)
-        };
+        }.ToDictionary(t => Key(t.DocumentType.ToString(), t.RecordType.ToString()), template => template);
 
     public static Template FindTemplateFor(string documentType, string recordType)
     {
         var key = Key(documentType, recordType);
-        var templatesByDocumentAndRecordType = TemplateMappings()
-            .ToDictionary(t => Key(t.DocumentType.ToString(), t.RecordType.ToString()), t => t);
-        if (templatesByDocumentAndRecordType.TryGetValue(key, out var template))
+
+        if (Templates().TryGetValue(key, out var template))
         {
             return template;
         }
 
         var key2 = Key(documentType, RecordType.All.ToString());
-        if (templatesByDocumentAndRecordType.TryGetValue(key2, out var template2))
+        if (Templates().TryGetValue(key2, out var template2))
         {
             return template2;
         }
