@@ -17,12 +17,12 @@ public class TemplateTests
         }
     }
 
-    private static IEnumerable<(string documentType, string recordType)> AllCombinations()
-        => from documentType in Enum.GetNames<DocumentType>()
-           from recordType in Enum.GetNames<RecordType>()
+    private static IEnumerable<(DocumentType documentType, RecordType recordType)> AllCombinations()
+        => from documentType in Enum.GetValues<DocumentType>()
+           from recordType in Enum.GetValues<RecordType>()
            select (documentType, recordType);
 
-    private static string FindTemplateSafely(string documentType, string recordType)
+    private static string FindTemplateSafely(DocumentType documentType, RecordType recordType)
     {
         try
         {

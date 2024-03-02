@@ -29,9 +29,9 @@ public static class Templates
            where recordType is not RecordType.All
            select (Key(template.DocumentType, recordType), template);
 
-    public static Template FindTemplateFor(string documentType, string recordType)
-        => Mapping().TryGetValue(Key(documentType, recordType), out var value)
-               ? value
+    public static Template FindTemplateFor(DocumentType documentType, RecordType recordType)
+        => Mapping().TryGetValue(Key(documentType, recordType), out var template)
+               ? template
                : throw new ArgumentException("Invalid Document template type or record type");
 
     private static string Key(DocumentType documentType, RecordType recordType)
