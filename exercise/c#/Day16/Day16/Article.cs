@@ -26,7 +26,7 @@ public class Article
         else Comments.Add(comment);
     }
 
-    public void AddComment(string text, string author)
+    private void AddComment(string text, string author)
         => AddComment(text, author, DateOnly.FromDateTime(DateTime.Now));
 
     public Article AddCommentImmutably(string text, string author)

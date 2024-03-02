@@ -13,12 +13,13 @@ public class ArticleTests
     public void Should_Add_Comment_In_An_Article()
     {
         Given(AnArticle());
-        When(article => article.AddComment(CommentText, Author));
-        Then(article =>
-        {
-            article.Comments.Should().HaveCount(1);
-            AssertComment(article.Comments[0], CommentText, Author);
-        });
+        When(article => article.AddCommentImmutably(CommentText, Author));
+        Then(
+            article =>
+            {
+                article.Comments.Should().HaveCount(1);
+                AssertComment(article.Comments[0], CommentText, Author);
+            });
     }
 
     [Fact]
@@ -29,11 +30,12 @@ public class ArticleTests
 
         Given(AnArticle().Commented());
         When(article => article.AddCommentImmutably(newComment, newAuthor));
-        Then(article =>
-        {
-            article.Comments.Should().HaveCount(2);
-            AssertComment(article.Comments[1], newComment, newAuthor);
-        });
+        Then(
+            article =>
+            {
+                article.Comments.Should().HaveCount(2);
+                AssertComment(article.Comments[1], newComment, newAuthor);
+            });
     }
 
     private static void AssertComment(Comment comment, string expectedComment, string expectedAuthor)
@@ -49,15 +51,19 @@ public class ArticleTests
         public void When_Adding_An_Existing_Comment()
         {
             var article = AnArticle().Build();
-            article.AddComment(CommentText, Author);
+            article = article.AddCommentImmutably(CommentText, Author);
 
-            var act = () => article.AddComment(CommentText, Author);
+            var act = () => article.AddCommentImmutably(CommentText, Author);
             act.Should().Throw<CommentAlreadyExistException>();
         }
     }
 
-    private void Given(ArticleBuilder articleBuilder) => _article = articleBuilder.Build();
-    private void When(Action<Article> act) =>  act(_article);
-    private void When(Func<Article, Article> act) => _article = act(_article);
-    private void Then(Action<Article> act) => act(_article);
+    private void Given(ArticleBuilder articleBuilder)
+        => _article = articleBuilder.Build();
+
+    private void When(Func<Article, Article> act)
+        => _article = act(_article);
+
+    private void Then(Action<Article> act)
+        => act(_article);
 }

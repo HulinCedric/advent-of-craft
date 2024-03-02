@@ -6,7 +6,8 @@ public class ArticleBuilder
     public const string CommentText = "Amazing article !!!";
     private readonly Dictionary<string, string> _comments = new();
 
-    public static ArticleBuilder AnArticle() => new();
+    public static ArticleBuilder AnArticle()
+        => new();
 
     public ArticleBuilder Commented()
     {
@@ -18,12 +19,11 @@ public class ArticleBuilder
     {
         var article = new Article(
             "Lorem Ipsum",
-            "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore"
-        );
+            "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore");
 
         _comments
             .ToList()
-            .ForEach(comment => article.AddComment(comment.Key, comment.Value));
+            .ForEach(comment => article = article.AddCommentImmutably(comment.Key, comment.Value));
 
         return article;
     }
