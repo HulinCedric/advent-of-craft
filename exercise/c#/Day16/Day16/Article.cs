@@ -1,24 +1,24 @@
-﻿using System.Collections.Immutable;
+﻿using LanguageExt;
 
 namespace Day16;
 
-public class Article
+public record Article
 {
     private readonly string _content;
     private readonly string _name;
 
-    public Article(string name, string content) : this(name, content, ImmutableList<Comment>.Empty)
+    public Article(string name, string content) : this(name, content, Seq<Comment>.Empty)
     {
     }
 
-    private Article(string name, string content, IEnumerable<Comment> comments)
+    private Article(string name, string content, Seq<Comment> comments)
     {
         _name = name;
         _content = content;
-        Comments = comments.ToImmutableList();
+        Comments = comments;
     }
 
-    public ImmutableList<Comment> Comments { get; }
+    public Seq<Comment> Comments { get; }
 
     private Article AddComment(
         string text,
@@ -31,9 +31,7 @@ public class Article
             throw new CommentAlreadyExistException();
         }
 
-        var updatedComments = Comments.ToList();
-        updatedComments.Add(comment);
-        return new Article(_name, _content, updatedComments);
+        return new Article(_name, _content, Comments.Add(comment));
     }
 
     public Article AddComment(string text, string author)
