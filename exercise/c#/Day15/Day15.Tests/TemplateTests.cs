@@ -3,11 +3,6 @@ namespace Day15.Tests;
 [UsesVerify]
 public class TemplateTests
 {
-    private static readonly string[] DocumentTypes = Enum.GetNames<DocumentType>();
-
-    private static readonly string[] RecordTypes = Enum.GetNames<RecordType>();
-
-
     [Fact]
     public Task VerifyAllCombinations()
         => Verify(AllCombinationResults());
@@ -23,8 +18,8 @@ public class TemplateTests
     }
 
     private static IEnumerable<(string documentType, string recordType)> AllCombinations()
-        => from documentType in DocumentTypes
-           from recordType in RecordTypes
+        => from documentType in Enum.GetNames<DocumentType>()
+           from recordType in Enum.GetNames<RecordType>()
            select (documentType, recordType);
 
     private static string FindTemplateSafely(string documentType, string recordType)
