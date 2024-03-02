@@ -5,38 +5,43 @@ public record Template(
     RecordType RecordType,
     DocumentType DocumentType)
 {
-    private static Dictionary<string, Template> Templates()
-        => new[]
-        {
-            new Template(DocumentTemplate.DEERPP, RecordType.IndividualProspect, DocumentType.DEER),
-            new Template(DocumentTemplate.DEERPM, RecordType.LegalProspect, DocumentType.DEER),
-            new Template(DocumentTemplate.AUTP, RecordType.IndividualProspect, DocumentType.AUTP),
-            new Template(DocumentTemplate.AUTM, RecordType.LegalProspect, DocumentType.AUTM),
-            new Template(DocumentTemplate.SPEC, RecordType.All, DocumentType.SPEC),
-            new Template(DocumentTemplate.GLPP, RecordType.IndividualProspect, DocumentType.GLPP),
-            new Template(DocumentTemplate.GLPM, RecordType.LegalProspect, DocumentType.GLPM)
-        }.ToDictionary(t => Key(t.DocumentType.ToString(), t.RecordType.ToString()), template => template);
-
-    public static Template FindTemplateFor(string documentType, string recordType)
+    private static readonly IEnumerable<Template> Templates = new[]
     {
-        var key = Key(documentType, recordType);
+        new Template(DocumentTemplate.DEERPP, RecordType.IndividualProspect, DocumentType.DEER),
+        new Template(DocumentTemplate.DEERPM, RecordType.LegalProspect, DocumentType.DEER),
+        new Template(DocumentTemplate.AUTP, RecordType.IndividualProspect, DocumentType.AUTP),
+        new Template(DocumentTemplate.AUTM, RecordType.LegalProspect, DocumentType.AUTM),
+        new Template(DocumentTemplate.SPEC, RecordType.All, DocumentType.SPEC),
+        new Template(DocumentTemplate.GLPP, RecordType.IndividualProspect, DocumentType.GLPP),
+        new Template(DocumentTemplate.GLPM, RecordType.LegalProspect, DocumentType.GLPM)
+    };
 
-        if (Templates().TryGetValue(key, out var template))
-        {
-            return template;
-        }
-
-        var key2 = Key(documentType, RecordType.All.ToString());
-        if (Templates().TryGetValue(key2, out var template2))
-        {
-            return template2;
-        }
-
-        throw new ArgumentException("Invalid Document template type or record type");
-    }
+    private static string Key(DocumentType documentType, RecordType recordType)
+        => Key(documentType.ToString(), recordType.ToString());
 
     private static string Key(string documentType, string recordType)
-        => $"{documentType.ToLowerInvariant()}-{recordType.ToLowerInvariant()}";
+        => documentType.ToLowerInvariant() + "-" + recordType.ToLowerInvariant();
+
+    private static Dictionary<string, Template> Mapping()
+        => AllTemplates()
+            .Union(ExpandTemplatesWithAllRecordType())
+            .ToDictionary();
+
+    private static IEnumerable<(string, Template template)> AllTemplates()
+        => from template in Templates
+           select (Key(template.DocumentType, template.RecordType), template);
+
+    private static IEnumerable<(string, Template template)> ExpandTemplatesWithAllRecordType()
+        => from template in Templates
+           where template.RecordType is RecordType.All
+           from recordType in Enum.GetValues<RecordType>()
+           where recordType is not RecordType.All
+           select (Key(template.DocumentType, recordType), template);
+
+    public static Template FindTemplateFor(string documentType, string recordType)
+        => Mapping().TryGetValue(Key(documentType, recordType), out var value)
+               ? value
+               : throw new ArgumentException("Invalid Document template type or record type");
 
     public override string ToString()
         => DocumentTemplate.ToString();
