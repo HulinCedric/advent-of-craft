@@ -5,28 +5,23 @@ public class TemplateTests
 {
     [Fact]
     public Task VerifyAllCombinations()
-        => Verify(AllCombinationResults());
+        => Verify(
+            AllEnumCombinations()
+                .Select(t => FindTemplateFor(t.DocumentType, t.RecordType)));
 
-    private static IEnumerable<string> AllCombinationResults()
-    {
-        foreach (var (documentType, recordType) in AllCombinations())
-        {
-            var result = FindTemplateSafely(documentType, recordType);
-
-            yield return $"[{documentType}, {recordType}] => {result}";
-        }
-    }
-
-    private static IEnumerable<(DocumentType documentType, RecordType recordType)> AllCombinations()
+    private static IEnumerable<(DocumentType DocumentType, RecordType RecordType)> AllEnumCombinations()
         => from documentType in Enum.GetValues<DocumentType>()
            from recordType in Enum.GetValues<RecordType>()
            select (documentType, recordType);
+
+    private static string FindTemplateFor(DocumentType documentType, RecordType recordType)
+        => $"[{documentType}, {recordType}] => {FindTemplateSafely(documentType, recordType)}";
 
     private static string FindTemplateSafely(DocumentType documentType, RecordType recordType)
     {
         try
         {
-            return $"{Templates.FindTemplateFor(documentType, recordType)}";
+            return $"{Templates.FindTemplateFor(documentType.ToString(), recordType.ToString())}";
         }
         catch (Exception ex)
         {

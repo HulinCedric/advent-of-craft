@@ -2,7 +2,7 @@ namespace Day15;
 
 public static class Templates
 {
-    private static readonly IEnumerable<Template> Registry = new[]
+    private static readonly IReadOnlyList<Template> Registry = new[]
     {
         new Template(DocumentTemplate.DEERPP, RecordType.IndividualProspect, DocumentType.DEER),
         new Template(DocumentTemplate.DEERPM, RecordType.LegalProspect, DocumentType.DEER),
@@ -13,7 +13,7 @@ public static class Templates
         new Template(DocumentTemplate.GLPM, RecordType.LegalProspect, DocumentType.GLPM)
     };
 
-    private static Dictionary<string, Template> Mapping()
+    private static IReadOnlyDictionary<string, Template> Mapping()
         => AllTemplates()
             .Union(ExpandTemplatesWithAllRecordType())
             .ToDictionary();
@@ -29,7 +29,7 @@ public static class Templates
            where recordType is not RecordType.All
            select (Key(template.DocumentType, recordType), template);
 
-    public static Template FindTemplateFor(DocumentType documentType, RecordType recordType)
+    public static Template FindTemplateFor(string documentType, string recordType)
         => Mapping().TryGetValue(Key(documentType, recordType), out var template)
                ? template
                : throw new ArgumentException("Invalid Document template type or record type");
@@ -38,5 +38,5 @@ public static class Templates
         => Key(documentType.ToString(), recordType.ToString());
 
     private static string Key(string documentType, string recordType)
-        => documentType.ToLowerInvariant() + "-" + recordType.ToLowerInvariant();
+        => $"{documentType.ToLowerInvariant()}-{recordType.ToLowerInvariant()}";
 }
