@@ -28,7 +28,7 @@ public class ArticleTests
         var newAuthor = _random.String(3);
 
         Given(AnArticle().Commented());
-        When(article => article.AddComment(newComment, newAuthor));
+        When(article => article.AddCommentImmutably(newComment, newAuthor));
         Then(article =>
         {
             article.Comments.Should().HaveCount(2);
@@ -57,6 +57,7 @@ public class ArticleTests
     }
 
     private void Given(ArticleBuilder articleBuilder) => _article = articleBuilder.Build();
-    private void When(Action<Article> act) => act(_article);
+    private void When(Action<Article> act) =>  act(_article);
+    private void When(Func<Article, Article> act) => _article = act(_article);
     private void Then(Action<Article> act) => act(_article);
 }

@@ -28,4 +28,12 @@ public class Article
 
     public void AddComment(string text, string author)
         => AddComment(text, author, DateOnly.FromDateTime(DateTime.Now));
+
+    public Article AddCommentImmutably(string text, string author)
+    {
+        var newArticle = new Article(_name, _content);
+        newArticle.Comments.AddRange(Comments);
+        newArticle.AddComment(text, author);
+        return newArticle;
+    }
 }
