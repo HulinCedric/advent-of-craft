@@ -26,7 +26,7 @@ public class TemplateTests
     {
         try
         {
-            return $"{Template.FindTemplateFor(documentType, recordType)}";
+            return $"{Templates.FindTemplateFor(documentType, recordType)}";
         }
         catch (Exception ex)
         {
