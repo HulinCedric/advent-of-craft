@@ -2,23 +2,21 @@
 
 public class Article
 {
-    private readonly string _name;
     private readonly string _content;
-    public List<Comment> Comments { get; }
+    private readonly string _name;
 
-    public Article(string name, string content)
+    public Article(string name, string content) : this(name, content, new List<Comment>())
     {
-        _name = name;
-        _content = content;
-        Comments = new List<Comment>();
     }
-
+    
     private Article(string name, string content, IEnumerable<Comment> comments)
     {
         _name = name;
         _content = content;
         Comments = comments.ToList();
     }
+
+    public List<Comment> Comments { get; }
 
     private Article AddComment(
         string text,
