@@ -1,3 +1,7 @@
+using LanguageExt;
+using LanguageExt.Common;
+using static LanguageExt.Either<LanguageExt.Common.Error,Day19.Article>;
+
 namespace Day19.Tests;
 
 public class ArticleBuilder
@@ -22,4 +26,10 @@ public class ArticleBuilder
                 new Article(_random.String(), _random.String()),
                 (article, comment) => article.AddCommentUnsafe(comment.Key, comment.Value)
             );
+    
+    public Either<Error, Article> Build()
+        => _comments
+            .Fold(
+                Right(new Article(_random.String(), _random.String())),
+                (article, comment) => article.Bind(a=>a.AddComment(comment.Key, comment.Value)));
 }
