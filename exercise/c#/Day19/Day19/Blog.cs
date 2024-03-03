@@ -22,7 +22,7 @@ public class Article
     {
     }
 
-    private Article AddCommentUnsafe(
+    private Either<Error, Article> AddComment(
         string text,
         string author,
         DateOnly creationDate)
@@ -30,21 +30,12 @@ public class Article
         var comment = new Comment(text, author, creationDate);
 
         return Comments.Contains(comment)
-                   ? throw new CommentAlreadyExistException()
+                   ? Error.New("Comment already exist")
                    : new Article(_name, _content, Comments.Append(comment));
     }
 
     public Either<Error, Article> AddComment(string text, string author)
-    {
-        try
-        {
-            return AddCommentUnsafe(text, author, DateOnly.FromDateTime(DateTime.Now));
-        }
-        catch (CommentAlreadyExistException)
-        {
-            return Error.New("Comment already exist");
-        }
-    }
+        => AddComment(text, author, DateOnly.FromDateTime(DateTime.Now));
 }
 
 public record Comment(string Text, string Author, DateOnly CreationDate);
