@@ -20,7 +20,7 @@ public class Article
     {
     }
 
-    private Article AddComment(
+    private Article AddCommentUnsafe(
         string text,
         string author,
         DateOnly creationDate)
@@ -32,8 +32,8 @@ public class Article
                    : new Article(_name, _content, Comments.Append(comment));
     }
 
-    public Article AddComment(string text, string author)
-        => AddComment(text, author, DateOnly.FromDateTime(DateTime.Now));
+    public Article AddCommentUnsafe(string text, string author)
+        => AddCommentUnsafe(text, author, DateOnly.FromDateTime(DateTime.Now));
 }
 
 public record Comment(string Text, string Author, DateOnly CreationDate);

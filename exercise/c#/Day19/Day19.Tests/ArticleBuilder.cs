@@ -20,6 +20,6 @@ public class ArticleBuilder
         => _comments
             .Aggregate(
                 new Article(_random.String(), _random.String()),
-                (article, comment) => article.AddComment(comment.Key, comment.Value)
+                (article, comment) => article.AddCommentUnsafe(comment.Key, comment.Value)
             );
 }

@@ -13,7 +13,7 @@ public class ArticleTests
     public void Should_Add_Comment_In_An_Article()
     {
         Given(AnArticle());
-        When(article => article.AddComment(CommentText, Author));
+        When(article => article.AddCommentUnsafe(CommentText, Author));
         Then(article =>
         {
             article.Comments.Should().HaveCount(1);
@@ -28,7 +28,7 @@ public class ArticleTests
         var newAuthor = _random.String(3);
 
         Given(AnArticle().Commented());
-        When(article => article.AddComment(newComment, newAuthor));
+        When(article => article.AddCommentUnsafe(newComment, newAuthor));
         Then(article =>
         {
             article.Comments.Should().HaveCount(2);
@@ -46,12 +46,12 @@ public class ArticleTests
     public class Fail
     {
         [Fact]
-        public void When_Adding_An_Existing_Comment()
+        public void When_Adding_An_Existing_Comment_Unsafely()
         {
             var article = AnArticle().Build()
-                .AddComment(CommentText, Author);
+                .AddCommentUnsafe(CommentText, Author);
 
-            var act = () => article.AddComment(CommentText, Author);
+            var act = () => article.AddCommentUnsafe(CommentText, Author);
             act.Should().Throw<CommentAlreadyExistException>();
         }
     }
