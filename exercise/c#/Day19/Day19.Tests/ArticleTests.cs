@@ -1,4 +1,6 @@
 using FluentAssertions;
+using FluentAssertions.LanguageExt;
+using LanguageExt.Common;
 using Xunit;
 using static Day19.Tests.ArticleBuilder;
 
@@ -53,6 +55,15 @@ public class ArticleTests
 
             var act = () => article.AddCommentUnsafe(CommentText, Author);
             act.Should().Throw<CommentAlreadyExistException>();
+        }
+        
+        [Fact]
+        public void When_Adding_An_Existing_Comment()
+        {
+            var article = AnArticle().Build()
+                .AddCommentUnsafe(CommentText, Author);
+
+            article.AddComment(CommentText, Author).Should().Be("Comment already exist");
         }
     }
 

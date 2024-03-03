@@ -1,4 +1,6 @@
 ﻿using System.Collections.Immutable;
+using LanguageExt;
+using LanguageExt.Common;
 
 namespace Day19;
 
@@ -34,6 +36,18 @@ public class Article
 
     public Article AddCommentUnsafe(string text, string author)
         => AddCommentUnsafe(text, author, DateOnly.FromDateTime(DateTime.Now));
+
+    public Either<Error, Article> AddComment(string text, string author)
+    {
+        try
+        {
+            return AddCommentUnsafe(text, author);
+        }
+        catch (CommentAlreadyExistException)
+        {
+            return Error.New("Comment already exist");
+        }
+    }
 }
 
 public record Comment(string Text, string Author, DateOnly CreationDate);
