@@ -25,13 +25,31 @@ public class FizzBuzzTests
             .Should()
             .BeSome(expectedResult);
 
+    [Property(Arbitrary = [typeof(ValidNumber)])]
+    public bool Returns_Valid_Representation_For_Valid_Number(int input)
+        => FizzBuzz.Convert(input).Exists(representation => ValidRepresentationsFor(input).Contains(representation));
+
     [Property(Arbitrary = [typeof(OutOfRangeNumber)])]
     public bool Fails_For_Numbers_Out_Of_Range(int input)
         => FizzBuzz.Convert(input).IsNone;
+
+    private static IEnumerable<string> ValidRepresentationsFor(int input)
+    {
+        yield return "Fizz";
+        yield return "Buzz";
+        yield return "FizzBuzz";
+        yield return $"{input}";
+    }
 }
 
 public static class OutOfRangeNumber
 {
     public static Arbitrary<int> Generate()
         => Arb.Default.Int32().Filter(x => x is < FizzBuzz.Min or > FizzBuzz.Max);
+}
+
+public static class ValidNumber
+{
+    public static Arbitrary<int> Generate()
+        => Arb.Default.Int32().Filter(x => x is >= FizzBuzz.Min and <= FizzBuzz.Max);
 }
