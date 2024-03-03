@@ -1,4 +1,5 @@
 using LanguageExt;
+using LanguageExt.UnsafeValueAccess;
 using static LanguageExt.Either<Day19.Error,Day19.Article>;
 
 namespace Day19.Tests;
@@ -19,9 +20,9 @@ public class ArticleBuilder
         return this;
     }
 
-    public Either<Error, Article> Build()
+    public Article Build()
         => _comments
-            .Fold(
-                Right(new Article(_random.String(), _random.String())),
-                (article, comment) => article.Bind(a=>a.AddComment(comment.Key, comment.Value)));
+            .Aggregate(
+                new Article(_random.String(), _random.String()),
+                (article, comment) => article.AddComment(comment.Key, comment.Value).ValueUnsafe());
 }

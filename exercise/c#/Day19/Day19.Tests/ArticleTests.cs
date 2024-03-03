@@ -1,6 +1,7 @@
 using FluentAssertions;
 using FluentAssertions.LanguageExt;
 using LanguageExt;
+using LanguageExt.UnsafeValueAccess;
 using Xunit;
 using static Day19.Tests.ArticleBuilder;
 
@@ -67,6 +68,6 @@ public class ArticleTests
     }
 
     private void Given(ArticleBuilder articleBuilder) => _result = articleBuilder.Build();
-    private void When(Func<Article, Either<Error, Article>> act) => _result = _result.Bind(act);
+    private void When(Func<Article, Either<Error, Article>> act) => _result = act(_result.ValueUnsafe());
     private void Then(Action<Either<Error, Article>> act) => act(_result);
 }
