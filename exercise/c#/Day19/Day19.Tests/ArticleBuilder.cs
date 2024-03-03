@@ -20,13 +20,6 @@ public class ArticleBuilder
         return this;
     }
 
-    public Article BuildUnsafe()
-        => _comments
-            .Aggregate(
-                new Article(_random.String(), _random.String()),
-                (article, comment) => article.AddCommentUnsafe(comment.Key, comment.Value)
-            );
-    
     public Either<Error, Article> Build()
         => _comments
             .Fold(
