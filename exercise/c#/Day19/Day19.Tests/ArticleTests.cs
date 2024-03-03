@@ -1,5 +1,6 @@
 using FluentAssertions;
 using FluentAssertions.LanguageExt;
+using LanguageExt;
 using LanguageExt.Common;
 using Xunit;
 using static Day19.Tests.ArticleBuilder;
@@ -15,7 +16,7 @@ public class ArticleTests
     public void Should_Add_Comment_In_An_Article()
     {
         Given(AnArticle());
-        When(article => article.AddCommentUnsafe(CommentText, Author));
+        When(article => article.AddComment(CommentText, Author));
         Then(article =>
         {
             article.Comments.Should().HaveCount(1);
@@ -30,7 +31,7 @@ public class ArticleTests
         var newAuthor = _random.String(3);
 
         Given(AnArticle().Commented());
-        When(article => article.AddCommentUnsafe(newComment, newAuthor));
+        When(article => article.AddComment(newComment, newAuthor));
         Then(article =>
         {
             article.Comments.Should().HaveCount(2);
@@ -58,5 +59,6 @@ public class ArticleTests
 
     private void Given(ArticleBuilder articleBuilder) => _article = articleBuilder.Build();
     private void When(Func<Article, Article> act) => _article = act(_article);
+    private void When(Func<Article, Either<Error, Article>> act) => act(_article).Do(article => _article = article);
     private void Then(Action<Article> act) => act(_article);
 }
