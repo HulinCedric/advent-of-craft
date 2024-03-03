@@ -1,5 +1,5 @@
+using Day17.Tests.Generators;
 using FluentAssertions.LanguageExt;
-using FsCheck;
 using FsCheck.Xunit;
 using Xunit;
 
@@ -40,16 +40,4 @@ public class FizzBuzzTests
         yield return "FizzBuzz";
         yield return $"{input}";
     }
-}
-
-public static class OutOfRangeNumber
-{
-    public static Arbitrary<int> Generate()
-        => Arb.Default.Int32().Filter(x => x is < FizzBuzz.Min or > FizzBuzz.Max);
-}
-
-public static class ValidNumber
-{
-    public static Arbitrary<int> Generate()
-        => Arb.Default.Int32().Filter(x => x is >= FizzBuzz.Min and <= FizzBuzz.Max);
 }
