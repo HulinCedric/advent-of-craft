@@ -1,6 +1,5 @@
 using LanguageExt;
-using LanguageExt.Common;
-using static LanguageExt.Either<LanguageExt.Common.Error,Day19.Article>;
+using static LanguageExt.Either<Day19.Error,Day19.Article>;
 
 namespace Day19.Tests;
 

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Immutable;
 using LanguageExt;
-using LanguageExt.Common;
 
 namespace Day19;
 
@@ -45,3 +44,12 @@ public class Article
 }
 
 public record Comment(string Text, string Author, DateOnly CreationDate);
+
+public readonly record struct Error(string Message)
+{
+    public static Error New(string message)
+        => new(message);
+    
+    public static implicit operator Error(string message)
+        => New(message);
+}
