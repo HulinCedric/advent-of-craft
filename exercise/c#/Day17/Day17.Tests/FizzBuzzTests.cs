@@ -24,7 +24,7 @@ public class FizzBuzzTests
     public void Returns_Number_Representation(int number, string expectedRepresentation)
         => Convert(number)
             .Should()
-            .BeSome(expectedRepresentation);
+            .Be(expectedRepresentation);
 
     [Property(Arbitrary = [typeof(ValidNumber)])]
     public bool Returns_Valid_Representation_For_Valid_Number(int number)
