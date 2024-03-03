@@ -63,7 +63,7 @@ public class ArticleTests
         {
             Given(AnArticle().Commented());
             When(article => article.AddComment(CommentText, Author));
-            Then(result => result.Should().Be("Comment already exist"));
+            Then(result => result.Should().Be("This comment already exists in this article"));
         }
     }
 

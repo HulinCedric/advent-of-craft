@@ -41,7 +41,7 @@ public class Article
         => DateOnly.FromDateTime(DateTime.Now);
 
     private static Error ToCommentAlreadyExistFailure()
-        => Error.New("Comment already exist");
+        => Error.New("This comment already exists in this article");
 }
 
 public record Comment(string Text, string Author, DateOnly CreationDate);
