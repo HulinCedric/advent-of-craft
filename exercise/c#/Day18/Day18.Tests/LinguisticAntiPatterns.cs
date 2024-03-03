@@ -6,14 +6,14 @@ namespace Day18.Tests;
 public class LinguisticAntiPatterns
 {
     [Fact]
-    public void NoGetMethodShouldReturnVoid()
+    public void No_Get_Method_Should_Return_Void()
         => Methods()
             .HaveName("Get[A-Z].*", useRegularExpressions: true).Should()
             .NotHaveReturnType(typeof(void))
             .Check();
 
     [Fact]
-    public void IserAndHaserShouldReturnBooleans()
+    public void Iser_And_Haser_Should_Return_Booleans()
         => Methods()
             .HaveName("Is[A-Z].*", useRegularExpressions: true).Or()
             .HaveName("Has[A-Z].*", useRegularExpressions: true).Should()
