@@ -9,7 +9,7 @@ namespace Day19.Tests;
 
 public class ArticleTests
 {
-    private Either<Error, Article> _article;
+    private Either<Error, Article> _result;
     private readonly Bogus.Randomizer _random = new();
 
     [Fact]
@@ -17,10 +17,15 @@ public class ArticleTests
     {
         Given(AnArticle());
         When(article => article.AddComment(CommentText, Author));
-        Then(article =>
+        Then(result =>
         {
-            article.Comments.Should().HaveCount(1);
-            AssertComment(article.Comments[0], CommentText, Author);
+            result.Should()
+                .BeRight(
+                    article =>
+                    {
+                        article.Comments.Should().HaveCount(1);
+                        AssertComment(article.Comments[0], CommentText, Author);
+                    });
         });
     }
 
@@ -32,10 +37,15 @@ public class ArticleTests
 
         Given(AnArticle().Commented());
         When(article => article.AddComment(newComment, newAuthor));
-        Then(article =>
+        Then(result =>
         {
-            article.Comments.Should().HaveCount(2);
-            AssertComment(article.Comments[1], newComment, newAuthor);
+            result.Should()
+                .BeRight(
+                    article =>
+                    {
+                        article.Comments.Should().HaveCount(2);
+                        AssertComment(article.Comments[1], newComment, newAuthor);
+                    });
         });
     }
 
@@ -46,18 +56,18 @@ public class ArticleTests
         comment.CreationDate.Should().Be(DateOnly.FromDateTime(DateTime.Now));
     }
 
-    public class Fail
+    public class Fail : ArticleTests
     {
         [Fact]
         public void When_Adding_An_Existing_Comment()
-            => AnArticle().Build()
-                .Bind(article => article.AddComment(CommentText, Author))
-                .Bind(article => article.AddComment(CommentText, Author))
-                .Should()
-                .Be("Comment already exist");
+        {
+            Given(AnArticle().Commented());
+            When(article => article.AddComment(CommentText, Author));
+            Then(result => result.Should().Be("Comment already exist"));
+        }
     }
 
-    private void Given(ArticleBuilder articleBuilder) => _article = articleBuilder.Build();
-    private void When(Func<Article, Either<Error, Article>> act) => _article = _article.Bind(act);
-    private void Then(Action<Article> act) => _article.Do(act);
+    private void Given(ArticleBuilder articleBuilder) => _result = articleBuilder.Build();
+    private void When(Func<Article, Either<Error, Article>> act) => _result = _result.Bind(act);
+    private void Then(Action<Either<Error, Article>> act) => act(_result);
 }
