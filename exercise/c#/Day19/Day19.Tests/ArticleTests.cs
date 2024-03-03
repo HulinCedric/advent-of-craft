@@ -50,14 +50,14 @@ public class ArticleTests
     {
         [Fact]
         public void When_Adding_An_Existing_Comment()
-            => AnArticle().Build()
+            => AnArticle().BuildUnsafe()
                 .AddComment(CommentText, Author)
                 .Bind(article => article.AddComment(CommentText, Author))
                 .Should()
                 .Be("Comment already exist");
     }
 
-    private void Given(ArticleBuilder articleBuilder) => _article = articleBuilder.Build();
+    private void Given(ArticleBuilder articleBuilder) => _article = articleBuilder.BuildUnsafe();
     private void When(Func<Article, Article> act) => _article = act(_article);
     private void When(Func<Article, Either<Error, Article>> act) => act(_article).Do(article => _article = article);
     private void Then(Action<Article> act) => act(_article);

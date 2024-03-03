@@ -16,7 +16,7 @@ public class ArticleBuilder
         return this;
     }
 
-    public Article Build()
+    public Article BuildUnsafe()
         => _comments
             .Aggregate(
                 new Article(_random.String(), _random.String()),
