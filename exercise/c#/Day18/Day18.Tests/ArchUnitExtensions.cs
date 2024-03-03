@@ -3,6 +3,7 @@ using ArchUnitNET.Fluent;
 using ArchUnitNET.Fluent.Syntax.Elements.Members.MethodMembers;
 using ArchUnitNET.Loader;
 using ArchUnitNET.xUnit;
+using static ArchUnitNET.Fluent.ArchRuleDefinition;
 
 namespace Day18.Tests;
 
@@ -14,7 +15,7 @@ public static class ArchUnitExtensions
             .Build();
 
     public static GivenMethodMembersThat Methods()
-        => ArchRuleDefinition.MethodMembers().That().AreNoConstructors().And();
+        => MethodMembers().That().AreNoConstructors().And();
 
     public static void Check(this IArchRule archRule)
         => archRule.Check(Architecture);

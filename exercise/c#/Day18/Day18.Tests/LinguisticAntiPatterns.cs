@@ -8,8 +8,15 @@ public class LinguisticAntiPatterns
     [Fact]
     public void NoGetMethodShouldReturnVoid()
         => Methods()
-            .HaveName("Get[A-Z].*", useRegularExpressions: true)
-            .Should()
+            .HaveName("Get[A-Z].*", useRegularExpressions: true).Should()
             .NotHaveReturnType(typeof(void))
+            .Check();
+
+    [Fact]
+    public void IserAndHaserShouldReturnBooleans()
+        => Methods()
+            .HaveName("Is[A-Z].*", useRegularExpressions: true).Or()
+            .HaveName("Has[A-Z].*", useRegularExpressions: true).Should()
+            .HaveReturnType(typeof(bool))
             .Check();
 }
