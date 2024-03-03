@@ -39,5 +39,3 @@ public class Article
 }
 
 public record Comment(string Text, string Author, DateOnly CreationDate);
-
-public class CommentAlreadyExistException : ArgumentException;
