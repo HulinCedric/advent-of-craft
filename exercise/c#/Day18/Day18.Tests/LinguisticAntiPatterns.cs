@@ -10,6 +10,7 @@ public class LinguisticAntiPatterns
         => Methods()
             .HaveName("Get[A-Z].*", useRegularExpressions: true).Should()
             .NotHaveReturnType(typeof(void))
+            .Because("any method which gets something should actually return something")
             .Check();
 
     [Fact]
@@ -18,5 +19,6 @@ public class LinguisticAntiPatterns
             .HaveName("Is[A-Z].*", useRegularExpressions: true).Or()
             .HaveName("Has[A-Z].*", useRegularExpressions: true).Should()
             .HaveReturnType(typeof(bool))
+            .Because("any method which fetch a state should actually return something (a boolean)")
             .Check();
 }
