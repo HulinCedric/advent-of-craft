@@ -22,23 +22,26 @@ public class Article
     {
     }
 
-    private Either<Error, Article> AddComment(
-        string text,
-        string author,
-        DateOnly creationDate)
+    public Either<Error, Article> AddComment(string text, string author)
     {
-        var comment = new Comment(text, author, creationDate);
+        var comment = NewComment(text, author);
 
         return Comments.Contains(comment)
                    ? ToCommentAlreadyExistFailure()
-                   : new Article(_name, _content, Comments.Append(comment));
+                   : AddComment(comment);
     }
+
+    private Article AddComment(Comment comment)
+        => new(_name, _content, Comments.Append(comment));
+
+    private static Comment NewComment(string text, string author)
+        => new(text, author, Now());
+
+    private static DateOnly Now()
+        => DateOnly.FromDateTime(DateTime.Now);
 
     private static Error ToCommentAlreadyExistFailure()
         => Error.New("Comment already exist");
-
-    public Either<Error, Article> AddComment(string text, string author)
-        => AddComment(text, author, DateOnly.FromDateTime(DateTime.Now));
 }
 
 public record Comment(string Text, string Author, DateOnly CreationDate);
