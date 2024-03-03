@@ -34,14 +34,11 @@ public class Article
                    : new Article(_name, _content, Comments.Append(comment));
     }
 
-    public Article AddCommentUnsafe(string text, string author)
-        => AddCommentUnsafe(text, author, DateOnly.FromDateTime(DateTime.Now));
-
     public Either<Error, Article> AddComment(string text, string author)
     {
         try
         {
-            return AddCommentUnsafe(text, author);
+            return AddCommentUnsafe(text, author, DateOnly.FromDateTime(DateTime.Now));
         }
         catch (CommentAlreadyExistException)
         {
