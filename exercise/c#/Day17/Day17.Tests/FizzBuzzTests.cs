@@ -25,12 +25,13 @@ public class FizzBuzzTests
             .Should()
             .BeSome(expectedResult);
 
-    [Property]
-    public Property Fails_For_Numbers_Out_Of_Range()
-        => Prop.ForAll(
-            OutOfRangeNumber(),
-            x => FizzBuzz.Convert(x).IsNone);
+    [Property(Arbitrary = [typeof(OutOfRangeNumber)])]
+    public bool Fails_For_Numbers_Out_Of_Range(int input)
+        => FizzBuzz.Convert(input).IsNone;
+}
 
-    private static Arbitrary<int> OutOfRangeNumber()
+public static class OutOfRangeNumber
+{
+    public static Arbitrary<int> Generate()
         => Arb.Default.Int32().Filter(x => x is < FizzBuzz.Min or > FizzBuzz.Max);
 }
