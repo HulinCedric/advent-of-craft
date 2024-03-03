@@ -1,4 +1,6 @@
 using FluentAssertions.LanguageExt;
+using FsCheck;
+using FsCheck.Xunit;
 using Xunit;
 
 namespace Day17.Tests;
@@ -23,12 +25,12 @@ public class FizzBuzzTests
             .Should()
             .BeSome(expectedResult);
 
-    [Theory]
-    [InlineData(0)]
-    [InlineData(101)]
-    [InlineData(-1)]
-    public void Fails_For_Numbers_Out_Of_Range(int input)
-        => FizzBuzz.Convert(input)
-            .Should()
-            .BeNone();
+    [Property]
+    public Property Fails_For_Numbers_Out_Of_Range()
+        => Prop.ForAll(
+            OutOfRangeNumber(),
+            x => FizzBuzz.Convert(x).IsNone);
+
+    private static Arbitrary<int> OutOfRangeNumber()
+        => Arb.Default.Int32().Filter(x => x is < FizzBuzz.Min or > FizzBuzz.Max);
 }

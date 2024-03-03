@@ -4,8 +4,8 @@ namespace Day17
 {
     public static class FizzBuzz
     {
-        private const int Min = 1;
-        private const int Max = 100;
+        public const int Min = 1;
+        public const int Max = 100;
 
         private static readonly Map<int, string> Mapping =
             Map.create(
