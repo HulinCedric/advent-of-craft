@@ -48,23 +48,12 @@ public class ArticleTests
     public class Fail
     {
         [Fact]
-        public void When_Adding_An_Existing_Comment_Unsafely()
-        {
-            var article = AnArticle().Build()
-                .AddCommentUnsafe(CommentText, Author);
-
-            var act = () => article.AddCommentUnsafe(CommentText, Author);
-            act.Should().Throw<CommentAlreadyExistException>();
-        }
-        
-        [Fact]
         public void When_Adding_An_Existing_Comment()
-        {
-            var article = AnArticle().Build()
-                .AddCommentUnsafe(CommentText, Author);
-
-            article.AddComment(CommentText, Author).Should().Be("Comment already exist");
-        }
+            => AnArticle().Build()
+                .AddComment(CommentText, Author)
+                .Bind(article => article.AddComment(CommentText, Author))
+                .Should()
+                .Be("Comment already exist");
     }
 
     private void Given(ArticleBuilder articleBuilder) => _article = articleBuilder.Build();
