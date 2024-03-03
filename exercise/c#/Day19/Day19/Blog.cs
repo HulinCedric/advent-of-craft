@@ -30,9 +30,12 @@ public class Article
         var comment = new Comment(text, author, creationDate);
 
         return Comments.Contains(comment)
-                   ? Error.New("Comment already exist")
+                   ? ToCommentAlreadyExistFailure()
                    : new Article(_name, _content, Comments.Append(comment));
     }
+
+    private static Error ToCommentAlreadyExistFailure()
+        => Error.New("Comment already exist");
 
     public Either<Error, Article> AddComment(string text, string author)
         => AddComment(text, author, DateOnly.FromDateTime(DateTime.Now));
