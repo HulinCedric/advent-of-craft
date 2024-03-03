@@ -27,11 +27,8 @@ public class Article
 
         return Comments.Contains(comment)
                    ? ToCommentAlreadyExistFailure()
-                   : AddComment(comment);
+                   : new Article(_name, _content, Comments.Append(comment));
     }
-
-    private Article AddComment(Comment comment)
-        => new(_name, _content, Comments.Append(comment));
 
     private static Comment NewComment(string text, string author)
         => new(text, author, Now());
