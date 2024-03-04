@@ -50,6 +50,7 @@ namespace Day20.Tests
         [
             [DiceBuilder.NewRoll(2, 2, 3, 3, 3), 25],
             [DiceBuilder.NewRoll(2, 3, 4, 5, 6), 0],
+            [DiceBuilder.NewRoll(2, 2, 4, 3, 3), 0],
             [DiceBuilder.NewRoll(4, 4, 1, 4, 1), 25]
         ];
 
