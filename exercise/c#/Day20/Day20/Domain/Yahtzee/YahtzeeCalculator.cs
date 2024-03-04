@@ -36,12 +36,12 @@ public static class YahtzeeCalculator
                               ? Scores.LargeStraightScore
                               : 0, dice);
 
-    public static int SmallStraight(int[] dice)
+    public static int SmallStraight(Roll dice)
         => Calculate(d =>
         {
             var sortedDice = string.Concat(d.OrderBy(x => x).Distinct());
             return IsSmallStraight(sortedDice) ? 30 : 0;
-        }, dice);
+        }, dice.Dice);
 
     private static bool IsSmallStraight(string diceString)
         => diceString.Contains("1234") || diceString.Contains("2345") || diceString.Contains("3456");
