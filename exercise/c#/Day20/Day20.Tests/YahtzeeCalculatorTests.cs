@@ -158,6 +158,14 @@ public class YahtzeeCalculatorTests
             [0, 1, 1, 1, 2],
             [1, 1, -1, 1, 2]
         ];
+        
+        [Theory]
+        [MemberData(nameof(InvalidDieInRolls))]
+        public void Invalid_Die_In_Rolls_Parse(params int[] dice)
+        {
+            AssertThrow<ArgumentException>(() => DiceRoll.Parse(dice),
+                                           "Invalid die value. Each die must be between 1 and 6.");
+        }
 
         [Theory]
         [MemberData(nameof(InvalidDieInRolls))]
