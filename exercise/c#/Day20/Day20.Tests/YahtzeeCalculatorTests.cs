@@ -43,7 +43,7 @@ public class YahtzeeCalculatorTests
     [Theory]
     [MemberData(nameof(FourOfAKinds))]
     public void Total_Of_All_Dice_For_Four_Of_A_Kind(DiceBuilder dice, int expectedResult)
-        => YahtzeeCalculator.FourOfAKind(dice.Build()).Should().Be(expectedResult);
+        => YahtzeeCalculator.FourOfAKind(dice.BuildRoll()).Should().Be(expectedResult);
 
 
     public static List<object[]> FullHouses() =>
@@ -134,8 +134,6 @@ public class YahtzeeCalculatorTests
         [MemberData(nameof(InvalidRollLengths))]
         public void Invalid_Roll_Lengths(params int[] dice)
         {
-            AssertThrow<ArgumentException>(() => YahtzeeCalculator.FourOfAKind(dice),
-                                           "Invalid dice... A roll should contain 5 dice.");
             AssertThrow<ArgumentException>(() => YahtzeeCalculator.FullHouse(dice),
                                            "Invalid dice... A roll should contain 5 dice.");
             AssertThrow<ArgumentException>(() => YahtzeeCalculator.SmallStraight(dice),
@@ -167,8 +165,6 @@ public class YahtzeeCalculatorTests
         [MemberData(nameof(InvalidDieInRolls))]
         public void Invalid_Die_In_Rolls(params int[] dice)
         {
-            AssertThrow<ArgumentException>(() => YahtzeeCalculator.FourOfAKind(dice),
-                                           "Invalid die value. Each die must be between 1 and 6.");
             AssertThrow<ArgumentException>(() => YahtzeeCalculator.FullHouse(dice),
                                            "Invalid die value. Each die must be between 1 and 6.");
             AssertThrow<ArgumentException>(() => YahtzeeCalculator.SmallStraight(dice),

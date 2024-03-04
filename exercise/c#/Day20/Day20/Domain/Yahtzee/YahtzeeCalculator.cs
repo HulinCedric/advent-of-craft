@@ -7,7 +7,7 @@ public static class YahtzeeCalculator
 
     public static int ThreeOfAKind(Roll roll) => CalculateNOfAKind(roll.Dice, 3);
 
-    public static int FourOfAKind(int[] dice) => CalculateNOfAKind(dice, 4);
+    public static int FourOfAKind(Roll roll) => CalculateNOfAKind(roll.Dice, 4);
 
     public static int Yahtzee(int[] dice)
         => Calculate(d =>
