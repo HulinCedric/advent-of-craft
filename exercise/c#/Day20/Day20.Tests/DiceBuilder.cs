@@ -1,3 +1,5 @@
+using Day20.Domain.Yahtzee;
+
 namespace Day20.Tests;
 
 public class DiceBuilder
@@ -12,4 +14,7 @@ public class DiceBuilder
     public int[] Build() => _dice;
 
     public override string ToString() => $"[{string.Join(", ", _dice)}]";
+
+    public DiceRoll BuildRoll()
+        => DiceRoll.Parse(_dice);
 }

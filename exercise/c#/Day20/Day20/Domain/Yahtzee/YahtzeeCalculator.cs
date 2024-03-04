@@ -2,8 +2,8 @@ namespace Day20.Domain.Yahtzee;
 
 public static class YahtzeeCalculator
 {
-    public static int Number(int[] dice, int number)
-        => Calculate(d => d.Where(die => die == number).Sum(), dice);
+    public static int Number(DiceRoll diceRoll, int number)
+        => Calculate(d => d.Where(die => die == number).Sum(), diceRoll.Dice);
 
     public static int ThreeOfAKind(int[] dice) => CalculateNOfAKind(dice, 3);
 
@@ -66,4 +66,6 @@ public static class YahtzeeCalculator
         public const int HouseScore = 25;
         public const int LargeStraightScore = 40;
     }
+
+  
 }
