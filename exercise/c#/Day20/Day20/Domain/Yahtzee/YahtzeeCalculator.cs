@@ -2,8 +2,8 @@ namespace Day20.Domain.Yahtzee;
 
 public static class YahtzeeCalculator
 {
-    public static int Number(DiceRoll diceRoll, int number)
-        => Calculate(d => d.Where(die => die == number).Sum(), diceRoll.Dice);
+    public static int Number(Roll roll, int number)
+        => Calculate(d => d.Where(die => die == number).Sum(), roll.Dice);
 
     public static int ThreeOfAKind(int[] dice) => CalculateNOfAKind(dice, 3);
 

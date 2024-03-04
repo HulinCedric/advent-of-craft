@@ -126,7 +126,7 @@ public class YahtzeeCalculatorTests
         [MemberData(nameof(InvalidRollLengths))]        
         public void Invalid_Roll_Lengths_Parse(params int[] dice)
         {
-            AssertThrow<ArgumentException>(() => DiceRoll.Parse(dice),
+            AssertThrow<ArgumentException>(() => Roll.Parse(dice),
                                            "Invalid dice... A roll should contain 5 dice.");
         }
 
@@ -161,7 +161,7 @@ public class YahtzeeCalculatorTests
         [MemberData(nameof(InvalidDieInRolls))]
         public void Invalid_Die_In_Rolls_Parse(params int[] dice)
         {
-            AssertThrow<ArgumentException>(() => DiceRoll.Parse(dice),
+            AssertThrow<ArgumentException>(() => Roll.Parse(dice),
                                            "Invalid die value. Each die must be between 1 and 6.");
         }
 

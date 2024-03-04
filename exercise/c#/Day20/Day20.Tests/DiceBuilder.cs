@@ -15,6 +15,6 @@ public class DiceBuilder
 
     public override string ToString() => $"[{string.Join(", ", _dice)}]";
 
-    public DiceRoll BuildRoll()
-        => DiceRoll.Parse(_dice);
+    public Roll BuildRoll()
+        => Roll.Parse(_dice);
 }
