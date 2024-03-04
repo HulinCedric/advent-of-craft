@@ -96,7 +96,7 @@ public class YahtzeeCalculatorTests
     [Theory]
     [MemberData(nameof(Yahtzees))]
     public void Fifty_For_Yahtzees(DiceBuilder dice, int expectedResult)
-        => YahtzeeCalculator.Yahtzee(dice.Build()).Should().Be(expectedResult);
+        => YahtzeeCalculator.Yahtzee(dice.BuildRoll()).Should().Be(expectedResult);
 
     public static List<object[]> Chances() =>
     [
@@ -134,8 +134,6 @@ public class YahtzeeCalculatorTests
         [MemberData(nameof(InvalidRollLengths))]
         public void Invalid_Roll_Lengths(params int[] dice)
         {
-            AssertThrow<ArgumentException>(() => YahtzeeCalculator.Yahtzee(dice),
-                                           "Invalid dice... A roll should contain 5 dice.");
             AssertThrow<ArgumentException>(() => YahtzeeCalculator.Chance(dice),
                                            "Invalid dice... A roll should contain 5 dice.");
         }
@@ -159,8 +157,6 @@ public class YahtzeeCalculatorTests
         [MemberData(nameof(InvalidDieInRolls))]
         public void Invalid_Die_In_Rolls(params int[] dice)
         {
-            AssertThrow<ArgumentException>(() => YahtzeeCalculator.Yahtzee(dice),
-                                           "Invalid die value. Each die must be between 1 and 6.");
             AssertThrow<ArgumentException>(() => YahtzeeCalculator.Chance(dice),
                                            "Invalid die value. Each die must be between 1 and 6.");
         }

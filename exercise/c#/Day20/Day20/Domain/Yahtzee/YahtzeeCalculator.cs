@@ -9,12 +9,12 @@ public static class YahtzeeCalculator
 
     public static int FourOfAKind(Roll roll) => CalculateNOfAKind(roll.Dice, 4);
 
-    public static int Yahtzee(int[] dice)
+    public static int Yahtzee(Roll dice)
         => Calculate(d =>
                          HasNOfAKind(d, 5)
                              ? Scores.YahtzeeScore
                              : 0,
-                     dice);
+                     dice.Dice);
 
     private static int CalculateNOfAKind(int[] dice, int n)
         => Calculate(d => HasNOfAKind(d, n) ? d.Sum() : 0, dice);
