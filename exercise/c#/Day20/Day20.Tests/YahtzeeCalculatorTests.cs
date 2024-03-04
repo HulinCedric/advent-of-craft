@@ -130,12 +130,6 @@ public class YahtzeeCalculatorTests
                                            "Invalid dice... A roll should contain 5 dice.");
         }
 
-        [Theory]
-        [MemberData(nameof(InvalidRollLengths))]
-        public void Invalid_Roll_Lengths(params int[] dice)
-        {
-        }
-
         public static List<object[]> InvalidDieInRolls() =>
         [
             [1, 1, 1, 1, 7],
@@ -150,13 +144,7 @@ public class YahtzeeCalculatorTests
             AssertThrow<ArgumentException>(() => Roll.Parse(dice),
                                            "Invalid die value. Each die must be between 1 and 6.");
         }
-
-        [Theory]
-        [MemberData(nameof(InvalidDieInRolls))]
-        public void Invalid_Die_In_Rolls(params int[] dice)
-        {
-        }
-
+        
         private static void AssertThrow<TException>(Action act, string expectedMessage) where TException : Exception
             => act.Should()
                 .Throw<TException>()
