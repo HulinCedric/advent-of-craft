@@ -19,12 +19,12 @@ public static class YahtzeeCalculator
     private static int CalculateNOfAKind(int[] dice, int n)
         => Calculate(d => HasNOfAKind(d, n) ? d.Sum() : 0, dice);
 
-    public static int FullHouse(int[] dice)
+    public static int FullHouse(Roll roll)
         => Calculate(d =>
         {
             var dieFrequency = GroupDieByFrequency(d);
             return dieFrequency.ContainsValue(3) && dieFrequency.ContainsValue(2) ? Scores.HouseScore : 0;
-        }, dice);
+        }, roll.Dice);
 
     public static int LargeStraight(int[] dice)
         => Calculate(d => d
