@@ -26,7 +26,7 @@ public static class YahtzeeCalculator
             return dieFrequency.ContainsValue(3) && dieFrequency.ContainsValue(2) ? Scores.HouseScore : 0;
         }, roll.Dice);
 
-    public static int LargeStraight(int[] dice)
+    public static int LargeStraight(Roll dice)
         => Calculate(d => d
                               .OrderBy(x => x)
                               .Zip(
@@ -34,7 +34,7 @@ public static class YahtzeeCalculator
                                   (a, b) => b - a
                               ).All(diff => diff == 1)
                               ? Scores.LargeStraightScore
-                              : 0, dice);
+                              : 0, dice.Dice);
 
     public static int SmallStraight(Roll dice)
         => Calculate(d =>
