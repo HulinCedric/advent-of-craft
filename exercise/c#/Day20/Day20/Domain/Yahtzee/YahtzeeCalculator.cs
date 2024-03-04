@@ -55,10 +55,7 @@ public static class YahtzeeCalculator
         => dice.GroupBy(x => x).ToDictionary(g => g.Key, g => g.Count());
 
     private static int Calculate(Func<List<int>, int> compute, int[] dice)
-    {
-        DiceRollValidator.ValidateRoll(dice);
-        return compute(dice.ToList());
-    }
+        => compute(dice.ToList());
 
     private static class Scores
     {
