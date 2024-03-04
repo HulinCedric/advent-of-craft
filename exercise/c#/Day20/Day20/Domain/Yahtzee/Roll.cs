@@ -1,10 +1,16 @@
 namespace Day20.Domain.Yahtzee;
 
-public record Roll(int[] Dice)
+public record Roll
 {
+    private Roll(int[] Dice)
+    {
+        this.Dice = Dice;
+    }
+
     private const int RollLength = 5;
     private const int MinimumDie = 1;
     private const int MaximumDie = 6;
+    public int[] Dice { get; }
 
     public static Roll Parse(int[] dice)
     {
