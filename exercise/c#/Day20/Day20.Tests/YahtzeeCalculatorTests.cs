@@ -121,6 +121,14 @@ public class YahtzeeCalculatorTests
             [1, 6, 2, 5, 4, 1],
             [1, 6, 2, 5, 4, 1, 2]
         ];
+        
+        [Theory]
+        [MemberData(nameof(InvalidRollLengths))]        
+        public void Invalid_Roll_Lengths_Parse(params int[] dice)
+        {
+            AssertThrow<ArgumentException>(() => DiceRoll.Parse(dice),
+                                           "Invalid dice... A roll should contain 5 dice.");
+        }
 
         [Theory]
         [MemberData(nameof(InvalidRollLengths))]
@@ -177,5 +185,15 @@ public class YahtzeeCalculatorTests
             => act.Should()
                 .Throw<TException>()
                 .WithMessage(expectedMessage);
+    }
+}
+
+public record DiceRoll(int[] Dice)
+{
+    public static DiceRoll Parse(int[] dice)
+    {
+        DiceRollValidator.ValidateRoll(dice);
+        
+        return new DiceRoll(dice);
     }
 }
