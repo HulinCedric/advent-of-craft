@@ -49,7 +49,7 @@ public static class YahtzeeCalculator
     private static bool HasNOfAKind(IEnumerable<int> dice, int n)
         => GroupDieByFrequency(dice).Values.Any(count => count >= n);
 
-    public static int Chance(int[] dice) => Calculate(d => d.Sum(), dice);
+    public static int Chance(Roll dice) => Calculate(d => d.Sum(), dice.Dice);
 
     private static Dictionary<int, int> GroupDieByFrequency(IEnumerable<int> dice)
         => dice.GroupBy(x => x).ToDictionary(g => g.Key, g => g.Count());
