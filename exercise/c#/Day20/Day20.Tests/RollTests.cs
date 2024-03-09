@@ -18,7 +18,7 @@ public class RollTests
     [Theory]
     [MemberData(nameof(InvalidRollLengths))]        
     public void Invalid_Roll_Lengths_Parse(params int[] dice)
-        => Domain.Yahtzee.Roll.Parse(
+        => Domain.Yahtzee.Roll.ParseWithCallback(
             dice,
             _ => throw new Exception("Should not be called"),
             failure => failure.Should().Be("Invalid dice... A roll should contain 5 dice."));
@@ -33,7 +33,7 @@ public class RollTests
     [Theory]
     [MemberData(nameof(InvalidDieInRolls))]
     public void Invalid_Die_In_Rolls_Parse(params int[] dice)
-        => Domain.Yahtzee.Roll.Parse(
+        => Domain.Yahtzee.Roll.ParseWithCallback(
             dice, 
             _ => throw new Exception("Should not be called"),
             failure => failure.Should().Be("Invalid die value. Each die must be between 1 and 6."));

@@ -19,7 +19,7 @@ public class RollBuilder
     {
         Roll? roll = null;
         
-        Roll.Parse(
+        Roll.ParseWithCallback(
             _dice,
             success => roll = success,
             failure => throw new ArgumentException(failure));

@@ -12,7 +12,7 @@ public record Roll
     private const int MaximumDie = 6;
     public int[] Dice { get; }
 
-    public static void Parse(int[] dice, Action<Roll> success, Action<string> failure)
+    public static void ParseWithCallback(int[] dice, Action<Roll> success, Action<string> failure)
     {
         var error = Validate(dice);
         if (error is null)
