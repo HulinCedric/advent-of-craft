@@ -12,7 +12,7 @@ public record Roll
     private const int MaximumDie = 6;
     public int[] Dice { get; }
 
-    public static Roll Parse(int[] dice)
+    public static Roll ParseUnsafe(int[] dice)
     {
         Validate(dice);
 

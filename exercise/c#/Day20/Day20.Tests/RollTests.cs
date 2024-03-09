@@ -17,9 +17,9 @@ public class RollTests
         
     [Theory]
     [MemberData(nameof(InvalidRollLengths))]        
-    public void Invalid_Roll_Lengths_Parse(params int[] dice)
+    public void Invalid_Roll_Lengths_Parse_Unsafely(params int[] dice)
     {
-        AssertThrow<ArgumentException>(() => Domain.Yahtzee.Roll.Parse(dice),
+        AssertThrow<ArgumentException>(() => Domain.Yahtzee.Roll.ParseUnsafe(dice),
                                        "Invalid dice... A roll should contain 5 dice.");
     }
 
@@ -34,7 +34,7 @@ public class RollTests
     [MemberData(nameof(InvalidDieInRolls))]
     public void Invalid_Die_In_Rolls_Parse(params int[] dice)
     {
-        AssertThrow<ArgumentException>(() => Domain.Yahtzee.Roll.Parse(dice),
+        AssertThrow<ArgumentException>(() => Domain.Yahtzee.Roll.ParseUnsafe(dice),
                                        "Invalid die value. Each die must be between 1 and 6.");
     }
         

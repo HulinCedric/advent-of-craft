@@ -14,5 +14,5 @@ public class RollBuilder
     public override string ToString() => $"[{string.Join(", ", _dice)}]";
 
     public Roll Build()
-        => Roll.Parse(_dice);
+        => Roll.ParseUnsafe(_dice);
 }
