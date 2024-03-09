@@ -14,14 +14,6 @@ public record Roll
 
     public static Either<string, Roll> Parse(int[] dice)
     {
-        var error = Validate(dice);
-        return error is null
-                   ? new Roll(dice)
-                   : error;
-    }
-
-    private static string? Validate(int[] dice)
-    {
         if (HasInvalidLength(dice))
         {
             return "Invalid dice... A roll should contain 5 dice.";
@@ -32,7 +24,7 @@ public record Roll
             return "Invalid die value. Each die must be between 1 and 6.";
         }
 
-        return null;
+        return new Roll(dice);
     }
 
     private static bool HasInvalidLength(int[] dice) => dice is not { Length: RollLength };
