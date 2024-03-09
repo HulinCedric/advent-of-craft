@@ -3,69 +3,73 @@ namespace Day20.Domain.Yahtzee;
 public static class YahtzeeCalculator
 {
     public static int Number(Roll roll, int number) =>
-        Calculate(d => d.Where(die => die == number).Sum(), roll.Dice);
+        Calculate(r => r.Dice.Where(die => die == number).Sum(), roll);
 
-    public static int ThreeOfAKind(Roll roll) =>
-        CalculateNOfAKind(roll.Dice, 3);
+    public static int ThreeOfAKind(Roll roll) => CalculateNOfAKind(roll, 3);
 
-    public static int FourOfAKind(Roll roll) =>
-        CalculateNOfAKind(roll.Dice, 4);
+    public static int FourOfAKind(Roll roll) => CalculateNOfAKind(roll, 4);
 
-    public static int Yahtzee(Roll dice) =>
+    public static int Yahtzee(Roll roll) =>
         Calculate(
-            d =>
-                HasNOfAKind(d, 5)
-                    ? Scores.YahtzeeScore
-                    : 0,
-            dice.Dice);
+            r => HasNOfAKind(r, 5)
+                     ? Scores.YahtzeeScore
+                     : 0,
+            roll);
 
-    private static int CalculateNOfAKind(int[] dice, int n) =>
-        Calculate(d => HasNOfAKind(d, n) ? d.Sum() : 0, dice);
+    private static int CalculateNOfAKind(Roll roll, int n) =>
+        Calculate(
+            r => HasNOfAKind(r, n)
+                     ? r.Dice.Sum()
+                     : 0,
+            roll);
 
     public static int FullHouse(Roll roll) =>
         Calculate(
-            d =>
+            r =>
             {
-                var dieFrequency = GroupDieByFrequency(d);
-                return dieFrequency.ContainsValue(3) && dieFrequency.ContainsValue(2) ? Scores.HouseScore : 0;
+                var dieFrequency = GroupDieByFrequency(r);
+                return dieFrequency.ContainsValue(3) &&
+                       dieFrequency.ContainsValue(2)
+                           ? Scores.HouseScore
+                           : 0;
             },
-            roll.Dice);
+            roll);
 
-    public static int LargeStraight(Roll dice) =>
+    public static int LargeStraight(Roll roll) =>
         Calculate(
-            d => d
+            r => r.Dice
                      .OrderBy(x => x)
                      .Zip(
-                         d.OrderBy(x => x).Skip(1),
+                         r.Dice.OrderBy(x => x).Skip(1),
                          (a, b) => b - a)
                      .All(diff => diff == 1)
                      ? Scores.LargeStraightScore
                      : 0,
-            dice.Dice);
+            roll);
 
-    public static int SmallStraight(Roll dice) =>
+    public static int SmallStraight(Roll roll) =>
         Calculate(
             d =>
             {
-                var sortedDice = string.Concat(d.OrderBy(x => x).Distinct());
+                var sortedDice = string.Concat(d.Dice.OrderBy(x => x).Distinct());
                 return IsSmallStraight(sortedDice) ? 30 : 0;
             },
-            dice.Dice);
+            roll);
 
     private static bool IsSmallStraight(string diceString) =>
-        diceString.Contains("1234") || diceString.Contains("2345") || diceString.Contains("3456");
+        diceString.Contains("1234") ||
+        diceString.Contains("2345") ||
+        diceString.Contains("3456");
 
-    private static bool HasNOfAKind(IEnumerable<int> dice, int n) =>
-        GroupDieByFrequency(dice).Values.Any(count => count >= n);
+    private static bool HasNOfAKind(Roll roll, int n) =>
+        GroupDieByFrequency(roll).Values.Any(count => count >= n);
 
-    public static int Chance(Roll dice) =>
-        Calculate(d => d.Sum(), dice.Dice);
+    public static int Chance(Roll roll) => Calculate(r => r.Dice.Sum(), roll);
 
-    private static Dictionary<int, int> GroupDieByFrequency(IEnumerable<int> dice) =>
-        dice.GroupBy(x => x).ToDictionary(g => g.Key, g => g.Count());
+    private static Dictionary<int, int> GroupDieByFrequency(Roll roll) =>
+        roll.Dice.GroupBy(d => d).ToDictionary(g => g.Key, g => g.Count());
 
-    private static int Calculate(Func<List<int>, int> compute, int[] dice) =>
-        compute(dice.ToList());
+    private static int Calculate(Func<Roll, int> compute, Roll roll) => compute(roll);
 
     private static class Scores
     {
