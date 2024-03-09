@@ -1,3 +1,5 @@
+using LanguageExt;
+
 namespace Day20.Domain.Yahtzee;
 
 public record Roll
@@ -12,17 +14,12 @@ public record Roll
     private const int MaximumDie = 6;
     public int[] Dice { get; }
 
-    public static void ParseWithCallback(int[] dice, Action<Roll> success, Action<string> failure)
+    public static Either<string, Roll> Parse(int[] dice)
     {
         var error = Validate(dice);
-        if (error is null)
-        {
-            success(new Roll(dice));
-        }
-        else
-        {
-            failure(error);
-        }
+        return error is null 
+                   ? new Roll(dice) 
+                   : error;
     }
 
     private static string? Validate(int[] dice)

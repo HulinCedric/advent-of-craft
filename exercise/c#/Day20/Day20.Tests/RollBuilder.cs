@@ -1,4 +1,5 @@
 using Day20.Domain.Yahtzee;
+using LanguageExt.UnsafeValueAccess;
 
 namespace Day20.Tests;
 
@@ -16,14 +17,5 @@ public class RollBuilder
         => $"[{string.Join(", ", _dice)}]";
 
     public Roll Build()
-    {
-        Roll? roll = null;
-        
-        Roll.ParseWithCallback(
-            _dice,
-            success => roll = success,
-            failure => throw new ArgumentException(failure));
-        
-        return roll!;
-    }
+        => Roll.Parse(_dice).ValueUnsafe();
 }
