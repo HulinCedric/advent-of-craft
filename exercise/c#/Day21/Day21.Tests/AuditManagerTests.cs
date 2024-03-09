@@ -11,10 +11,9 @@ public class AuditManagerTests
     [Fact]
     public void A_New_File_Is_Created_When_The_Current_File_Overflows()
     {
-        _fileSystem.AddFile(DirectoryName, "audit_1.txt", []);
+        _fileSystem.AddFile(Path.Combine(DirectoryName, "audit_1.txt"), []);
         _fileSystem.AddFile(
-            DirectoryName,
-            "audit_2.txt",
+            Path.Combine(DirectoryName, "audit_2.txt"),
             [
                 "Peter;2019-04-06 16:30:00",
                 "Jane;2019-04-06 16:40:00",
@@ -37,8 +36,7 @@ public class AuditManagerTests
     public void Append_To_Current_File_When_Current_File_Not_Full()
     {
         _fileSystem.AddFile(
-            DirectoryName,
-            "audit_1.txt",
+            Path.Combine(DirectoryName, "audit_1.txt"),
             [
                 "Peter;2019-04-06 16:30:00",
                 "Jane;2019-04-06 16:40:00"

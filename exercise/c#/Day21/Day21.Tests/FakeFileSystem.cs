@@ -14,9 +14,9 @@ public class FakeFileSystem : IFileSystem
 
     public IEnumerable<string> ReadAllLines(string filePath) => _files[filePath];
 
-    public void AddFile(string directoryName, string fileName, List<string> content) =>
+    public void AddFile(string filePath, List<string> content) =>
         _files.Add(
-            Path.Combine(directoryName, fileName),
+            filePath,
             [..content]);
 
     private Dictionary<string, List<string>>.KeyCollection FilePaths() => _files.Keys;
