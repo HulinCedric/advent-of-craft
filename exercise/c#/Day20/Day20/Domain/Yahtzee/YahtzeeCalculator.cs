@@ -27,7 +27,7 @@ public static class YahtzeeCalculator
         Calculate(
             r =>
             {
-                var dieFrequency = GroupDieByFrequency(r);
+                var dieFrequency = r.GroupDieByFrequency();
                 return dieFrequency.ContainsValue(3) &&
                        dieFrequency.ContainsValue(2)
                            ? Scores.HouseScore
@@ -62,12 +62,9 @@ public static class YahtzeeCalculator
         diceString.Contains("3456");
 
     private static bool HasNOfAKind(Roll roll, int n) =>
-        GroupDieByFrequency(roll).Values.Any(count => count >= n);
+        roll.GroupDieByFrequency().Values.Any(count => count >= n);
 
     public static int Chance(Roll roll) => Calculate(r => r.Dice.Sum(), roll);
-
-    private static Dictionary<int, int> GroupDieByFrequency(Roll roll) =>
-        roll.Dice.GroupBy(d => d).ToDictionary(g => g.Key, g => g.Count());
 
     private static int Calculate(Func<Roll, int> compute, Roll roll) => compute(roll);
 

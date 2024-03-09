@@ -32,4 +32,7 @@ public record Roll
     private static bool ContainsInvalidDie(IEnumerable<int> dice) => !dice.All(IsValidDie);
 
     private static bool IsValidDie(int die) => die is >= MinimumDie and <= MaximumDie;
+
+    public Dictionary<int, int> GroupDieByFrequency() =>
+        Dice.GroupBy(d => d).ToDictionary(g => g.Key, g => g.Count());
 }
