@@ -11,9 +11,9 @@ public class AuditManagerTests
     [Fact]
     public void A_New_File_Is_Created_When_The_Current_File_Overflows()
     {
-        _fileSystem.AddFile(Path.Combine(DirectoryName, "audit_1.txt"), []);
+        _fileSystem.AddFile(File("audit_1.txt"), []);
         _fileSystem.AddFile(
-            Path.Combine(DirectoryName, "audit_2.txt"),
+            File("audit_2.txt"),
             [
                 "Peter;2019-04-06 16:30:00",
                 "Jane;2019-04-06 16:40:00",
@@ -24,7 +24,7 @@ public class AuditManagerTests
 
         sut.AddRecord("Alice", DateTime.Parse("2019-04-06T18:00:00"));
 
-        _fileSystem.ReadAllLines(Path.Combine(DirectoryName, "audit_3.txt"))
+        _fileSystem.ReadAllLines(File("audit_3.txt"))
             .Should()
             .BeEquivalentTo(
             [
@@ -36,7 +36,7 @@ public class AuditManagerTests
     public void Append_To_Current_File_When_Current_File_Not_Full()
     {
         _fileSystem.AddFile(
-            Path.Combine(DirectoryName, "audit_1.txt"),
+            File("audit_1.txt"),
             [
                 "Peter;2019-04-06 16:30:00",
                 "Jane;2019-04-06 16:40:00"
@@ -46,7 +46,7 @@ public class AuditManagerTests
 
         sut.AddRecord("Alice", DateTime.Parse("2019-04-06T18:00:00"));
 
-        _fileSystem.ReadAllLines(Path.Combine(DirectoryName, "audit_1.txt"))
+        _fileSystem.ReadAllLines(File("audit_1.txt"))
             .Should()
             .BeEquivalentTo(
             [
@@ -56,6 +56,7 @@ public class AuditManagerTests
             ]);
     }
 
+
     [Fact]
     public void A_New_File_Is_Created_When_No_Files()
     {
@@ -63,11 +64,13 @@ public class AuditManagerTests
 
         sut.AddRecord("Alice", DateTime.Parse("2019-04-06T18:00:00"));
 
-        _fileSystem.ReadAllLines(Path.Combine(DirectoryName, "audit_1.txt"))
+        _fileSystem.ReadAllLines(File("audit_1.txt"))
             .Should()
             .BeEquivalentTo(
             [
                 "Alice;2019-04-06 18:00:00"
             ]);
     }
+
+    private static string File(string fileName) => Path.Combine(DirectoryName, fileName);
 }
