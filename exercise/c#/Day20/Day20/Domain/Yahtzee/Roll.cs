@@ -19,6 +19,18 @@ public record Roll
         return new Roll(dice);
     }
 
+    public static void Parse(int[] dice, Action<Roll> success, Action<string> failure)
+    {
+        try
+        {
+            success(ParseUnsafe(dice));
+        }
+        catch (ArgumentException exception)
+        {
+            failure(exception.Message);
+        }
+    }
+
     private static void Validate(int[] dice)
     {
         if (HasInvalidLength(dice))
@@ -32,7 +44,12 @@ public record Roll
         }
     }
 
-    private static bool HasInvalidLength(int[] dice) => dice is not { Length: RollLength };
-    private static bool ContainsInvalidDie(IEnumerable<int> dice) => !dice.All(IsValidDie);
-    private static bool IsValidDie(int die) => die is >= MinimumDie and <= MaximumDie;
+    private static bool HasInvalidLength(int[] dice)
+        => dice is not { Length: RollLength };
+
+    private static bool ContainsInvalidDie(IEnumerable<int> dice)
+        => !dice.All(IsValidDie);
+
+    private static bool IsValidDie(int die)
+        => die is >= MinimumDie and <= MaximumDie;
 }

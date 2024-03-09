@@ -14,14 +14,14 @@ public class RollTests
         [1, 6, 2, 5, 4, 1],
         [1, 6, 2, 5, 4, 1, 2]
     ];
-        
+    
     [Theory]
     [MemberData(nameof(InvalidRollLengths))]        
-    public void Invalid_Roll_Lengths_Parse_Unsafely(params int[] dice)
-    {
-        AssertThrow<ArgumentException>(() => Domain.Yahtzee.Roll.ParseUnsafe(dice),
-                                       "Invalid dice... A roll should contain 5 dice.");
-    }
+    public void Invalid_Roll_Lengths_Parse(params int[] dice)
+        => Domain.Yahtzee.Roll.Parse(
+            dice,
+            _ => throw new Exception("Should not be called"),
+            failure => failure.Should().Be("Invalid dice... A roll should contain 5 dice."));
 
     public static List<object[]> InvalidDieInRolls() =>
     [
