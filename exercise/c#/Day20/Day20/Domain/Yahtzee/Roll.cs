@@ -12,36 +12,32 @@ public record Roll
     private const int MaximumDie = 6;
     public int[] Dice { get; }
 
-    public static Roll ParseUnsafe(int[] dice)
-    {
-        Validate(dice);
-
-        return new Roll(dice);
-    }
-
     public static void Parse(int[] dice, Action<Roll> success, Action<string> failure)
     {
-        try
+        var error = Validate(dice);
+        if (error is null)
         {
-            success(ParseUnsafe(dice));
+            success(new Roll(dice));
         }
-        catch (ArgumentException exception)
+        else
         {
-            failure(exception.Message);
+            failure(error);
         }
     }
 
-    private static void Validate(int[] dice)
+    private static string? Validate(int[] dice)
     {
         if (HasInvalidLength(dice))
         {
-            throw new ArgumentException("Invalid dice... A roll should contain 5 dice.");
+            return "Invalid dice... A roll should contain 5 dice.";
         }
 
         if (ContainsInvalidDie(dice))
         {
-            throw new ArgumentException("Invalid die value. Each die must be between 1 and 6.");
+            return "Invalid die value. Each die must be between 1 and 6.";
         }
+
+        return null;
     }
 
     private static bool HasInvalidLength(int[] dice)

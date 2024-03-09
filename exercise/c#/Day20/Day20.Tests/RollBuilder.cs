@@ -18,7 +18,12 @@ public class RollBuilder
     public Roll Build()
     {
         Roll? roll = null;
-        Roll.Parse(_dice, roll1 => roll = roll1, failure => throw new ArgumentException(failure));
+        
+        Roll.Parse(
+            _dice,
+            success => roll = success,
+            failure => throw new ArgumentException(failure));
+        
         return roll!;
     }
 }
