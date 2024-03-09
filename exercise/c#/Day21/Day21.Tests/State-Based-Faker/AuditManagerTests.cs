@@ -1,7 +1,8 @@
+using Day21.State_Based_Faker;
 using FluentAssertions;
 using Xunit;
 
-namespace Day21.Tests;
+namespace Day21.Tests.State_Based_Faker;
 
 public class AuditManagerTests
 {

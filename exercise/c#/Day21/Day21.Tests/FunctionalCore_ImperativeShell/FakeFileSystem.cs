@@ -1,4 +1,6 @@
-namespace Day21.Tests;
+using Day21.FunctionalCore_ImperativeShell;
+
+namespace Day21.Tests.FunctionalCore_ImperativeShell;
 
 public class FakeFileSystem : IFileSystem
 {

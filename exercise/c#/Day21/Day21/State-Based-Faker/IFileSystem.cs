@@ -1,4 +1,4 @@
-namespace Day21;
+namespace Day21.State_Based_Faker;
 
 public interface IFileSystem
 {
