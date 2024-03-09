@@ -6,14 +6,15 @@ namespace Day21.Tests;
 public class AuditManagerTests
 {
     private const string DirectoryName = "audits";
+    private readonly AuditManager _audit;
     private readonly FakeFileSystem _fileSystem = new();
+
+    public AuditManagerTests() => _audit = new AuditManager(3, DirectoryName, _fileSystem);
 
     [Fact]
     public void A_New_File_Is_Created_When_No_Files()
     {
-        var sut = new AuditManager(3, DirectoryName, _fileSystem);
-
-        sut.AddRecord("Alice", DateTime.Parse("2019-04-06T18:00:00"));
+        _audit.AddRecord("Alice", DateTime.Parse("2019-04-06T18:00:00"));
 
         _fileSystem.ReadAllLines(File("audit_1.txt"))
             .Should()
@@ -33,9 +34,7 @@ public class AuditManagerTests
                 "Jane;2019-04-06 16:40:00"
             ]);
 
-        var sut = new AuditManager(3, DirectoryName, _fileSystem);
-
-        sut.AddRecord("Alice", DateTime.Parse("2019-04-06T18:00:00"));
+        _audit.AddRecord("Alice", DateTime.Parse("2019-04-06T18:00:00"));
 
         _fileSystem.ReadAllLines(File("audit_1.txt"))
             .Should()
@@ -59,9 +58,7 @@ public class AuditManagerTests
                 "Jack;2019-04-06 17:00:00"
             ]);
 
-        var sut = new AuditManager(3, DirectoryName, _fileSystem);
-
-        sut.AddRecord("Alice", DateTime.Parse("2019-04-06T18:00:00"));
+        _audit.AddRecord("Alice", DateTime.Parse("2019-04-06T18:00:00"));
 
         _fileSystem.ReadAllLines(File("audit_3.txt"))
             .Should()
