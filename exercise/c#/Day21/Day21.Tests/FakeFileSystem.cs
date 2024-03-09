@@ -2,11 +2,22 @@ namespace Day21.Tests;
 
 public class FakeFileSystem : IFileSystem
 {
-    public string[] GetFiles(string directoryName) => [];
+    private readonly Dictionary<string, List<string>> _files = new();
 
-    public void WriteAllText(string filePath, string content)
-    {
-    }
+    public string[] GetFiles(string directoryName) =>
+        FilePaths()
+            .Where(filePath => Path.GetDirectoryName(filePath) == directoryName)
+            .ToArray();
 
-    public IEnumerable<string> ReadAllLines(string filePath) => new[] { "Alice;2019-04-06 18:00:00" };
+    public void WriteAllText(string filePath, string content) =>
+        _files[filePath] = content.Split(Environment.NewLine).ToList();
+
+    public IEnumerable<string> ReadAllLines(string filePath) => _files[filePath];
+
+    public void AddFile(string directoryName, string fileName, List<string> content) =>
+        _files.Add(
+            Path.Combine(directoryName, fileName),
+            [..content]);
+
+    private Dictionary<string, List<string>>.KeyCollection FilePaths() => _files.Keys;
 }
