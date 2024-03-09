@@ -4,21 +4,19 @@ namespace Day20.Domain.Yahtzee;
 
 public record Roll
 {
-    private Roll(int[] Dice)
-    {
-        this.Dice = Dice;
-    }
-
     private const int RollLength = 5;
     private const int MinimumDie = 1;
     private const int MaximumDie = 6;
+
+    private Roll(int[] Dice) => this.Dice = Dice;
+
     public int[] Dice { get; }
 
     public static Either<string, Roll> Parse(int[] dice)
     {
         var error = Validate(dice);
-        return error is null 
-                   ? new Roll(dice) 
+        return error is null
+                   ? new Roll(dice)
                    : error;
     }
 
@@ -37,12 +35,9 @@ public record Roll
         return null;
     }
 
-    private static bool HasInvalidLength(int[] dice)
-        => dice is not { Length: RollLength };
+    private static bool HasInvalidLength(int[] dice) => dice is not { Length: RollLength };
 
-    private static bool ContainsInvalidDie(IEnumerable<int> dice)
-        => !dice.All(IsValidDie);
+    private static bool ContainsInvalidDie(IEnumerable<int> dice) => !dice.All(IsValidDie);
 
-    private static bool IsValidDie(int die)
-        => die is >= MinimumDie and <= MaximumDie;
+    private static bool IsValidDie(int die) => die is >= MinimumDie and <= MaximumDie;
 }

@@ -16,8 +16,8 @@ public class YahtzeeCalculatorTests
 
     [Theory]
     [MemberData(nameof(Numbers))]
-    public void Count_And_Add_Numbers_For_Numbers(RollBuilder roll, int number, int expectedResult)
-        => YahtzeeCalculator.Number(roll.Build(), number).Should().Be(expectedResult);
+    public void Count_And_Add_Numbers_For_Numbers(RollBuilder roll, int number, int expectedResult) =>
+        YahtzeeCalculator.Number(roll.Build(), number).Should().Be(expectedResult);
 
     public static List<object[]> ThreeOfAKinds() =>
     [
@@ -29,8 +29,8 @@ public class YahtzeeCalculatorTests
 
     [Theory]
     [MemberData(nameof(ThreeOfAKinds))]
-    public void Total_Of_All_Dice_For_Three_Of_A_Kind(RollBuilder roll, int expectedResult)
-        => YahtzeeCalculator.ThreeOfAKind(roll.Build()).Should().Be(expectedResult);
+    public void Total_Of_All_Dice_For_Three_Of_A_Kind(RollBuilder roll, int expectedResult) =>
+        YahtzeeCalculator.ThreeOfAKind(roll.Build()).Should().Be(expectedResult);
 
     public static List<object[]> FourOfAKinds() =>
     [
@@ -42,8 +42,8 @@ public class YahtzeeCalculatorTests
 
     [Theory]
     [MemberData(nameof(FourOfAKinds))]
-    public void Total_Of_All_Dice_For_Four_Of_A_Kind(RollBuilder roll, int expectedResult)
-        => YahtzeeCalculator.FourOfAKind(roll.Build()).Should().Be(expectedResult);
+    public void Total_Of_All_Dice_For_Four_Of_A_Kind(RollBuilder roll, int expectedResult) =>
+        YahtzeeCalculator.FourOfAKind(roll.Build()).Should().Be(expectedResult);
 
 
     public static List<object[]> FullHouses() =>
@@ -56,8 +56,8 @@ public class YahtzeeCalculatorTests
 
     [Theory]
     [MemberData(nameof(FullHouses))]
-    public void Twenty_Five_For_Full_Houses(RollBuilder roll, int expectedResult)
-        => YahtzeeCalculator.FullHouse(roll.Build()).Should().Be(expectedResult);
+    public void Twenty_Five_For_Full_Houses(RollBuilder roll, int expectedResult) =>
+        YahtzeeCalculator.FullHouse(roll.Build()).Should().Be(expectedResult);
 
     public static List<object[]> SmallStraights() =>
     [
@@ -65,13 +65,13 @@ public class YahtzeeCalculatorTests
         [RollBuilder.NewRoll(5, 4, 3, 2, 1), 30],
         [RollBuilder.NewRoll(2, 3, 4, 5, 1), 30],
         [RollBuilder.NewRoll(1, 2, 3, 4, 6), 30],
-        [RollBuilder.NewRoll(1, 1, 1, 3, 2), 0],
+        [RollBuilder.NewRoll(1, 1, 1, 3, 2), 0]
     ];
 
     [Theory]
     [MemberData(nameof(SmallStraights))]
-    public void Thirty_For_Small_Straights(RollBuilder roll, int expectedResult)
-        => YahtzeeCalculator.SmallStraight(roll.Build()).Should().Be(expectedResult);
+    public void Thirty_For_Small_Straights(RollBuilder roll, int expectedResult) =>
+        YahtzeeCalculator.SmallStraight(roll.Build()).Should().Be(expectedResult);
 
     public static List<object[]> LargeStraights() =>
     [
@@ -83,8 +83,8 @@ public class YahtzeeCalculatorTests
 
     [Theory]
     [MemberData(nameof(LargeStraights))]
-    public void Forty_For_Large_Straights(RollBuilder roll, int expectedResult)
-        => YahtzeeCalculator.LargeStraight(roll.Build()).Should().Be(expectedResult);
+    public void Forty_For_Large_Straights(RollBuilder roll, int expectedResult) =>
+        YahtzeeCalculator.LargeStraight(roll.Build()).Should().Be(expectedResult);
 
     public static List<object[]> Yahtzees() =>
     [
@@ -95,8 +95,8 @@ public class YahtzeeCalculatorTests
 
     [Theory]
     [MemberData(nameof(Yahtzees))]
-    public void Fifty_For_Yahtzees(RollBuilder roll, int expectedResult)
-        => YahtzeeCalculator.Yahtzee(roll.Build()).Should().Be(expectedResult);
+    public void Fifty_For_Yahtzees(RollBuilder roll, int expectedResult) =>
+        YahtzeeCalculator.Yahtzee(roll.Build()).Should().Be(expectedResult);
 
     public static List<object[]> Chances() =>
     [
@@ -107,6 +107,6 @@ public class YahtzeeCalculatorTests
 
     [Theory]
     [MemberData(nameof(Chances))]
-    public void Total_Of_All_Dice_For_Chance(RollBuilder roll, int expectedResult)
-        => YahtzeeCalculator.Chance(roll.Build()).Should().Be(expectedResult);
+    public void Total_Of_All_Dice_For_Chance(RollBuilder roll, int expectedResult) =>
+        YahtzeeCalculator.Chance(roll.Build()).Should().Be(expectedResult);
 }
