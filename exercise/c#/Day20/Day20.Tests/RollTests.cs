@@ -33,13 +33,8 @@ public class RollTests
     [Theory]
     [MemberData(nameof(InvalidDieInRolls))]
     public void Invalid_Die_In_Rolls_Parse(params int[] dice)
-    {
-        AssertThrow<ArgumentException>(() => Domain.Yahtzee.Roll.ParseUnsafe(dice),
-                                       "Invalid die value. Each die must be between 1 and 6.");
-    }
-        
-    private static void AssertThrow<TException>(Action act, string expectedMessage) where TException : Exception
-        => act.Should()
-            .Throw<TException>()
-            .WithMessage(expectedMessage);
+        => Domain.Yahtzee.Roll.Parse(
+            dice, 
+            _ => throw new Exception("Should not be called"),
+            failure => failure.Should().Be("Invalid die value. Each die must be between 1 and 6."));
 }
