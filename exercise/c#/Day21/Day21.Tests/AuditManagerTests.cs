@@ -1,5 +1,4 @@
 using FluentAssertions;
-using NSubstitute;
 using Xunit;
 
 namespace Day21.Tests;
