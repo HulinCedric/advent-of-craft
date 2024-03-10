@@ -9,6 +9,15 @@ public class AuditManagerTests
     private readonly AuditManager _audit = new(3);
 
     [Fact]
+    public void Add_new_visitor_to_a_new_file_when_no_file_today()
+    {
+        var fileUpdated = _audit.AddRecord([], "Alice", DateTime.Parse("2019-04-06T18:00:00"));
+
+        fileUpdated.Should()
+            .BeEquivalentTo(new FileUpdated("audit_1.txt", "Alice;2019-04-06 18:00:00"));
+    }
+
+    [Fact]
     public void Add_new_visitor_to_a_new_file_When_end_of_last_file_is_reached()
     {
         var fileUpdated = _audit.AddRecord(

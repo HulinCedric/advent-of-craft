@@ -7,6 +7,11 @@ public class AuditManager(int maxEntriesPerFile)
         var sorted = SortByIndex(files);
         var newRecord = visitorName + ';' + timeOfVisit.ToString("yyyy-MM-dd HH:mm:ss");
 
+        if (sorted.Count == 0)
+        {
+            return new FileUpdated("audit_1.txt", newRecord);
+        }
+        
         var currentFile = sorted.Last();
         var currentFileIndex = sorted.Count;
 
