@@ -29,4 +29,12 @@ public class Persister
 
         _files[filePath] = fileContent;
     }
+
+    public void WithAlreadyExistingFiles(string directoryName, List<FileContent> files)
+    {
+        foreach (var file in files)
+        {
+            WithAlreadyExistingFile(directoryName, file);
+        }
+    }
 }
