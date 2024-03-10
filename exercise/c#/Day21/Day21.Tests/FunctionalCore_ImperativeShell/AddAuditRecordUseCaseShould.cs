@@ -1,4 +1,3 @@
-using System.Collections.Immutable;
 using Day21.FunctionalCore_ImperativeShell;
 using FluentAssertions;
 using Xunit;
@@ -8,13 +7,10 @@ namespace Day21.Tests.FunctionalCore_ImperativeShell;
 public class AddAuditRecordUseCaseShould
 {
     private const string DirectoryName = "audits";
-    private const string NewContent = "Alice;2019-04-06 18:00:00";
-    private const string VisitorName = "Alice";
-    private static readonly List<FileContent> NoFiles = [];
-    private static readonly ImmutableList<string> NoContent = [];
-    private static readonly DateTime TimeOfVisit = DateTime.Parse("2019-04-06T18:00:00");
 
-    private static readonly AddNewVisitor Command = new(VisitorName, TimeOfVisit);
+    private const string NewContent = "Alice;2019-04-06 18:00:00";
+
+    private static readonly AddNewVisitor Command = new("Alice", DateTime.Parse("2019-04-06T18:00:00"));
 
 
     private readonly AuditManager _auditManager = new(3);
@@ -22,7 +18,8 @@ public class AddAuditRecordUseCaseShould
 
     private readonly AddAuditRecordUseCase _useCase;
 
-    public AddAuditRecordUseCaseShould() => _useCase = new AddAuditRecordUseCase(_auditManager, _persister);
+    public AddAuditRecordUseCaseShould() =>
+        _useCase = new AddAuditRecordUseCase(DirectoryName, _auditManager, _persister);
 
     [Fact]
     public void Adds_new_visitor_to_a_new_file_because_no_file_today()
@@ -61,14 +58,20 @@ public record AddNewVisitor(string VisitorName, DateTime TimeOfVisit);
 public class AddAuditRecordUseCase
 {
     private readonly AuditManager _auditManager;
+    private readonly string _directory;
     private readonly Persister _persister;
 
-    public AddAuditRecordUseCase(AuditManager auditManager, Persister persister)
+    public AddAuditRecordUseCase(string directory, AuditManager auditManager, Persister persister)
     {
         _auditManager = auditManager;
         _persister = persister;
+        _directory = directory;
     }
 
-    public void Handle(AddNewVisitor addNewVisitor) =>
-        _persister.ApplyUpdate("audits", new FileUpdated("audit_1.txt", "Alice;2019-04-06 18:00:00"));
+    public void Handle(AddNewVisitor addNewVisitor)
+    {
+        var fileUpdated = _auditManager.AddRecord([], addNewVisitor.VisitorName, addNewVisitor.TimeOfVisit);
+
+        _persister.ApplyUpdate(_directory, fileUpdated);
+    }
 }
