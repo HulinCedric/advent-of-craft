@@ -32,7 +32,7 @@ public class AddAuditRecordUseCaseShould
     }
 
     [Fact]
-    public void Append_To_Current_File_When_Current_File_Not_Full()
+    public void Adds_new_visitor_to_an_existing_file()
     {
         _persister.WithAlreadyExistingFile(
             DirectoryName,
@@ -56,7 +56,7 @@ public class AddAuditRecordUseCaseShould
     }
 
     [Fact]
-    public void A_New_File_Is_Created_When_The_Current_File_Overflows()
+    public void Adds_new_visitor_to_a_new_file_when_end_of_last_file_is_reached()
     {
         _persister.WithAlreadyExistingFiles(
             DirectoryName,
