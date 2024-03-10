@@ -10,6 +10,7 @@ public class AddAuditRecordUseCaseShould
     private const string DirectoryName = "audits";
 
     private const string NewContent = "Alice;2019-04-06 18:00:00";
+    private static readonly ImmutableList<string> NoContent = [];
     private static readonly AddNewVisitor Command = new("Alice", DateTime.Parse("2019-04-06T18:00:00"));
 
     private readonly AuditManager _auditManager = new(3);
@@ -55,6 +56,33 @@ public class AddAuditRecordUseCaseShould
                         "Peter;2019-04-06 16:30:00",
                         "Jane;2019-04-06 16:40:00",
                         NewContent)));
+    }
+
+    [Fact]
+    public void A_New_File_Is_Created_When_The_Current_File_Overflows()
+    {
+        _persister.WithAlreadyExistingFile(
+            DirectoryName,
+            FileContent(
+                "audit_1.txt",
+                NoContent));
+        _persister.WithAlreadyExistingFile(
+            DirectoryName,
+            FileContent(
+                "audit_2.txt",
+                ContentFrom(
+                    "Peter;2019-04-06 16:30:00",
+                    "Jane;2019-04-06 16:40:00",
+                    "Jack;2019-04-06 17:00:00")));
+
+        AddRecord();
+
+        _persister.ReadFile(File("audit_3.txt"))
+            .Should()
+            .BeEquivalentTo(
+                FileContent(
+                    "audit_3.txt",
+                    ContentFrom(NewContent)));
     }
 
     private static string File(string fileName) => Path.Combine(DirectoryName, fileName);
