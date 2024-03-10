@@ -1,6 +1,6 @@
-namespace Day21.FunctionalCore_ImperativeShell;
+namespace Day21.FunctionalCore_ImperativeShell.Domain;
 
-public interface IPersistFile
+public interface IFileRepository
 {
     FileContent ReadFile(string filePath);
     void ApplyUpdate(string directory, FileUpdated fileUpdated);

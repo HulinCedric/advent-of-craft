@@ -1,36 +1,45 @@
 using System.Collections.Immutable;
-using Day21.FunctionalCore_ImperativeShell;
+using Day21.FunctionalCore_ImperativeShell.Domain;
+using Day21.FunctionalCore_ImperativeShell.Infrastructure;
 using Day21.Tests.FunctionalCore_ImperativeShell.Common.Setup;
-using Day21.Tests.FunctionalCore_ImperativeShell.Common.TestDoubles;
 using FluentAssertions;
 using Xunit;
 
-namespace Day21.Tests.FunctionalCore_ImperativeShell.Infrastructure.Fakes;
+namespace Day21.Tests.FunctionalCore_ImperativeShell.Infrastructure;
 
-public class FakePersisterShould
+public class FileSystemFileRepositoryShould : IDisposable
 {
     private const string DirectoryName = "audits";
     private const string NewContent = "Alice;2019-04-06 18:00:00";
     private static readonly ImmutableList<string> NoContent = [];
 
-    private readonly FakePersister _persister = new();
+    private readonly IFileRepository _files = new FileSystemFileRepository();
+
+    public void Dispose()
+    {
+        if (Directory.Exists(DirectoryName))
+        {
+            Directory.Delete(DirectoryName, recursive: true);
+        }
+    }
+
 
     [Fact]
     public void ReadDirectory_ReturnsEmptyList_When_NoFiles() =>
-        _persister.ReadDirectory(DirectoryName)
+        _files.ReadDirectory(DirectoryName)
             .Should()
             .BeEmpty();
 
     [Fact]
     public void ReadDirectory_ReturnsFiles_When_FilesExist()
     {
-        _persister.WithAlreadyExistingFiles(
+        _files.AlreadyContains(
             DirectoryName,
             Files(
                 FileContent("audit_1.txt", NoContent),
                 FileContent("audit_2.txt", ContentFrom(NewContent))));
 
-        _persister.ReadDirectory(DirectoryName)
+        _files.ReadDirectory(DirectoryName)
             .Should()
             .BeEquivalentTo(
                 Files(
@@ -40,14 +49,14 @@ public class FakePersisterShould
 
     [Fact]
     public void ReadEmptyFile_When_File_does_not_exist() =>
-        _persister.ReadFile(FilePath("audit_1.txt"))
+        _files.ReadFile(FilePath("audit_1.txt"))
             .Should()
             .BeEquivalentTo(new FileContent("audit_1.txt", NoContent));
 
     [Fact]
     public void ApplyUpdate_CreatesNewFileWithCorrectContent()
     {
-        _persister.WithAlreadyExistingFile(
+        _files.AlreadyContains(
             DirectoryName,
             new FileContent("audit_1.txt", ContentFrom("Original Content")));
 
@@ -55,9 +64,9 @@ public class FakePersisterShould
             "audit_1.txt",
             $"Completely{Environment.NewLine}New Content");
 
-        _persister.ApplyUpdate(DirectoryName, fileUpdated);
+        _files.ApplyUpdate(DirectoryName, fileUpdated);
 
-        _persister.ReadFile(FilePath("audit_1.txt"))
+        _files.ReadFile(FilePath("audit_1.txt"))
             .Should()
             .BeEquivalentTo(
                 new FileContent(
@@ -68,7 +77,7 @@ public class FakePersisterShould
     [Fact]
     public void ApplyUpdate_ReplaceFileContent_With_NewContent()
     {
-        _persister.WithAlreadyExistingFile(
+        _files.AlreadyContains(
             DirectoryName,
             new FileContent("audit_1.txt", ContentFrom("Original Content")));
 
@@ -76,9 +85,9 @@ public class FakePersisterShould
             "audit_1.txt",
             $"Completely{Environment.NewLine}New Content");
 
-        _persister.ApplyUpdate(DirectoryName, fileUpdated);
+        _files.ApplyUpdate(DirectoryName, fileUpdated);
 
-        _persister.ReadFile(FilePath("audit_1.txt"))
+        _files.ReadFile(FilePath("audit_1.txt"))
             .Should()
             .BeEquivalentTo(
                 new FileContent(

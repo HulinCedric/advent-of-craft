@@ -1,61 +1,49 @@
 using System.Collections.Immutable;
-using Day21.FunctionalCore_ImperativeShell;
+using Day21.FunctionalCore_ImperativeShell.Domain;
 using Day21.Tests.FunctionalCore_ImperativeShell.Common.Setup;
-using FluentAssertions;
+using Day21.Tests.FunctionalCore_ImperativeShell.Common.TestDoubles;
+using Day21.Tests.FunctionalCore_ImperativeShell.Common.Verification;
 using Xunit;
 
-namespace Day21.Tests.FunctionalCore_ImperativeShell.Infrastructure;
+namespace Day21.Tests.FunctionalCore_ImperativeShell.Infrastructure.Fakes;
 
-public class FileSystemPersisterShould : IDisposable
+public class InMemoryFileRepositoryShould
 {
     private const string DirectoryName = "audits";
     private const string NewContent = "Alice;2019-04-06 18:00:00";
+    private static readonly List<FileContent> NoFiles = [];
     private static readonly ImmutableList<string> NoContent = [];
 
-    private readonly FileSystemPersister _persister = new();
-
-    public void Dispose()
-    {
-        if (Directory.Exists(DirectoryName))
-        {
-            Directory.Delete(DirectoryName, recursive: true);
-        }
-    }
-
+    private readonly IFileRepository _files = new InMemoryFileRepository();
 
     [Fact]
     public void ReadDirectory_ReturnsEmptyList_When_NoFiles() =>
-        _persister.ReadDirectory(DirectoryName)
-            .Should()
-            .BeEmpty();
+        _files.ShouldContains(DirectoryName, NoFiles);
 
     [Fact]
     public void ReadDirectory_ReturnsFiles_When_FilesExist()
     {
-        _persister.WithAlreadyExistingFiles(
+        _files.AlreadyContains(
             DirectoryName,
             Files(
                 FileContent("audit_1.txt", NoContent),
                 FileContent("audit_2.txt", ContentFrom(NewContent))));
 
-        _persister.ReadDirectory(DirectoryName)
-            .Should()
-            .BeEquivalentTo(
-                Files(
-                    FileContent("audit_1.txt", NoContent),
-                    FileContent("audit_2.txt", ContentFrom(NewContent))));
+        _files.ShouldContains(
+            DirectoryName,
+            Files(
+                FileContent("audit_1.txt", NoContent),
+                FileContent("audit_2.txt", ContentFrom(NewContent))));
     }
 
     [Fact]
     public void ReadEmptyFile_When_File_does_not_exist() =>
-        _persister.ReadFile(FilePath("audit_1.txt"))
-            .Should()
-            .BeEquivalentTo(new FileContent("audit_1.txt", NoContent));
+        _files.ShouldContains(DirectoryName, FileContent("audit_1.txt", NoContent));
 
     [Fact]
     public void ApplyUpdate_CreatesNewFileWithCorrectContent()
     {
-        _persister.WithAlreadyExistingFile(
+        _files.AlreadyContains(
             DirectoryName,
             new FileContent("audit_1.txt", ContentFrom("Original Content")));
 
@@ -63,20 +51,17 @@ public class FileSystemPersisterShould : IDisposable
             "audit_1.txt",
             $"Completely{Environment.NewLine}New Content");
 
-        _persister.ApplyUpdate(DirectoryName, fileUpdated);
+        _files.ApplyUpdate(DirectoryName, fileUpdated);
 
-        _persister.ReadFile(FilePath("audit_1.txt"))
-            .Should()
-            .BeEquivalentTo(
-                new FileContent(
-                    "audit_1.txt",
-                    ContentFrom("Completely", "New Content")));
+        _files.ShouldContains(
+            DirectoryName,
+            FileContent("audit_1.txt", ContentFrom("Completely", "New Content")));
     }
 
     [Fact]
     public void ApplyUpdate_ReplaceFileContent_With_NewContent()
     {
-        _persister.WithAlreadyExistingFile(
+        _files.AlreadyContains(
             DirectoryName,
             new FileContent("audit_1.txt", ContentFrom("Original Content")));
 
@@ -84,14 +69,11 @@ public class FileSystemPersisterShould : IDisposable
             "audit_1.txt",
             $"Completely{Environment.NewLine}New Content");
 
-        _persister.ApplyUpdate(DirectoryName, fileUpdated);
+        _files.ApplyUpdate(DirectoryName, fileUpdated);
 
-        _persister.ReadFile(FilePath("audit_1.txt"))
-            .Should()
-            .BeEquivalentTo(
-                new FileContent(
-                    "audit_1.txt",
-                    ContentFrom("Completely", "New Content")));
+        _files.ShouldContains(
+            DirectoryName,
+            FileContent("audit_1.txt", ContentFrom("Completely", "New Content")));
     }
 
     private static List<FileContent> Files(params FileContent[] files) => [..files];

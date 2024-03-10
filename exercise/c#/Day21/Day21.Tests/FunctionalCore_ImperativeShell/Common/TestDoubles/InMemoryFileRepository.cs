@@ -1,10 +1,10 @@
 using System.Collections.Immutable;
-using Day21.FunctionalCore_ImperativeShell;
+using Day21.FunctionalCore_ImperativeShell.Domain;
 
 namespace Day21.Tests.FunctionalCore_ImperativeShell.Common.TestDoubles;
 
-public class FakePersister
-    : IPersistFile
+public class InMemoryFileRepository
+    : IFileRepository
 {
     private static readonly ImmutableList<string> NoContent = ImmutableList<string>.Empty;
     private readonly Dictionary<string, FileContent> _files = new();

@@ -1,8 +1,9 @@
 using System.Collections.Immutable;
+using Day21.FunctionalCore_ImperativeShell.Domain;
 
-namespace Day21.FunctionalCore_ImperativeShell;
+namespace Day21.FunctionalCore_ImperativeShell.Infrastructure;
 
-public class FileSystemPersister : IPersistFile
+public class FileSystemFileRepository : IFileRepository
 {
     public FileContent ReadFile(string filePath)
     {
