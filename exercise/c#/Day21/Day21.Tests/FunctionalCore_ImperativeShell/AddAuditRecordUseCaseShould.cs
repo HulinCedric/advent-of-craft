@@ -14,7 +14,7 @@ public class AddAuditRecordUseCaseShould
     private static readonly AddNewVisitor Command = new("Alice", DateTime.Parse("2019-04-06T18:00:00"));
 
     private readonly AuditManager _auditManager = new(3);
-    private readonly Persister _persister = new();
+    private readonly IPersistFile _persister = new FakePersister();
 
     private readonly AddAuditRecordUseCase _useCase;
 

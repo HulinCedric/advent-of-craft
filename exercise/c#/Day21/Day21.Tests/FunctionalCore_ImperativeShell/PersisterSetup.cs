@@ -4,14 +4,14 @@ namespace Day21.Tests.FunctionalCore_ImperativeShell;
 
 public static class PersisterSetup
 {
-    public static void WithAlreadyExistingFile(this Persister persister, string directory, FileContent file)
+    public static void WithAlreadyExistingFile(this IPersistFile persister, string directory, FileContent file)
     {
         var content = string.Join(Environment.NewLine, file.Lines);
         persister.ApplyUpdate(directory, new FileUpdated(file.FileName, content));
     }
 
     public static void WithAlreadyExistingFiles(
-        this Persister persister,
+        this IPersistFile persister,
         string directoryName,
         List<FileContent> files)
     {

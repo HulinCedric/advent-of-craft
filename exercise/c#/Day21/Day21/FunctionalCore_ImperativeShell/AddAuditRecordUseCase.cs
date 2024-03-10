@@ -4,9 +4,9 @@ public class AddAuditRecordUseCase
 {
     private readonly AuditManager _auditManager;
     private readonly string _directory;
-    private readonly Persister _persister;
+    private readonly IPersistFile _persister;
 
-    public AddAuditRecordUseCase(string directory, AuditManager auditManager, Persister persister)
+    public AddAuditRecordUseCase(string directory, AuditManager auditManager, IPersistFile persister)
     {
         _auditManager = auditManager;
         _persister = persister;

@@ -1,8 +1,10 @@
 using System.Collections.Immutable;
+using Day21.FunctionalCore_ImperativeShell;
 
-namespace Day21.FunctionalCore_ImperativeShell;
+namespace Day21.Tests.FunctionalCore_ImperativeShell;
 
-public class Persister
+public class FakePersister
+    : IPersistFile
 {
     private readonly Dictionary<string, FileContent> _files = new();
 
