@@ -23,16 +23,14 @@ public class AddAuditRecordUseCaseShould
     [Fact]
     public void Adds_new_visitor_to_a_new_file_because_no_file_today()
     {
-        _useCase.Handle(Command);
+        AddRecord();
 
-        _persister.ReadFile(FilePath("audit_1.txt"))
+        _persister.ReadFile(File("audit_1.txt"))
             .Should()
             .BeEquivalentTo(
-                new FileContent(
+                FileContent(
                     "audit_1.txt",
-                    [
-                        NewContent
-                    ]));
+                    ContentFrom(NewContent)));
     }
 
     [Fact]
@@ -40,28 +38,35 @@ public class AddAuditRecordUseCaseShould
     {
         _persister.WithAlreadyExistingFile(
             DirectoryName,
-            new FileContent(
+            FileContent(
                 "audit_1.txt",
-                [
+                ContentFrom(
                     "Peter;2019-04-06 16:30:00",
-                    "Jane;2019-04-06 16:40:00"
-                ]));
+                    "Jane;2019-04-06 16:40:00")));
 
-        _useCase.Handle(Command);
+        AddRecord();
 
-        _persister.ReadFile(FilePath("audit_1.txt"))
+        _persister.ReadFile(File("audit_1.txt"))
             .Should()
             .BeEquivalentTo(
-                new FileContent(
+                FileContent(
                     "audit_1.txt",
-                    [
+                    ContentFrom(
                         "Peter;2019-04-06 16:30:00",
                         "Jane;2019-04-06 16:40:00",
-                        NewContent
-                    ]));
+                        NewContent)));
     }
 
-    private static string FilePath(string fileName) => Path.Combine(DirectoryName, fileName);
+    private static string File(string fileName) => Path.Combine(DirectoryName, fileName);
+
+    private void AddRecord() => _useCase.Handle(Command);
+
+    private static List<FileContent> Files(params FileContent[] files) => [..files];
+
+    private static FileContent FileContent(string fileName, ImmutableList<string> lines) =>
+        new(fileName, lines);
+
+    private static ImmutableList<string> ContentFrom(params string[] content) => [..content];
 }
 
 public class Persister
