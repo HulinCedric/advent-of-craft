@@ -11,14 +11,33 @@ public class AuditManagerTests
     private readonly AuditManager _audit = new(3);
 
     [Fact]
-    public void Add_new_visitor_to_a_new_file_when_no_file_today() =>
+    public void Adds_new_visitor_to_a_new_file_because_no_file_today() =>
         AddRecord(NoFiles)
             .Should()
             .BeEquivalentTo(new FileUpdated("audit_1.txt", NewContent));
 
+    [Fact]
+    public void Adds_new_visitor_to_an_existing_file()
+    {
+        List<FileContent> files =
+        [
+            new FileContent(
+                "audit_1.txt",
+                [
+                    "Peter;2019-04-06 16:30:00"
+                ])
+        ];
+
+        AddRecord(files)
+            .Should()
+            .BeEquivalentTo(
+                new FileUpdated(
+                    "audit_1.txt",
+                    $"Peter;2019-04-06 16:30:00{Environment.NewLine}{NewContent}"));
+    }
 
     [Fact]
-    public void Add_new_visitor_to_a_new_file_When_end_of_last_file_is_reached()
+    public void Adds_new_visitor_to_a_new_file_when_end_of_last_file_is_reached()
     {
         List<FileContent> files =
         [
