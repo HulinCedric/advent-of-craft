@@ -22,19 +22,4 @@ public class Persister
             .Where(kvp => Path.GetDirectoryName(kvp.Key) == directory)
             .Select(kvp => kvp.Value)
             .ToList();
-
-    public void WithAlreadyExistingFile(string directory, FileContent fileContent)
-    {
-        var filePath = Path.Combine(directory, fileContent.FileName);
-
-        _files[filePath] = fileContent;
-    }
-
-    public void WithAlreadyExistingFiles(string directoryName, List<FileContent> files)
-    {
-        foreach (var file in files)
-        {
-            WithAlreadyExistingFile(directoryName, file);
-        }
-    }
 }
