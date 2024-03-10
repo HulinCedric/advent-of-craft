@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Day21.Tests.FunctionalCore_ImperativeShell;
 
-public class AuditManagerTests
+public class AuditManagerShould
 {
     private const string NewContent = "Alice;2019-04-06 18:00:00";
     private const string VisitorName = "Alice";
