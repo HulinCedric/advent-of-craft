@@ -11,9 +11,7 @@ public class FileSystemPersister : IPersistFile
             return new FileContent(Path.GetFileName(filePath), ImmutableList<string>.Empty);
         }
 
-        var allLines = File.ReadAllLines(filePath)
-            .Where(line => line is not "")
-            .ToImmutableList();
+        var allLines = File.ReadAllLines(filePath).ToImmutableList();
 
         return new FileContent(Path.GetFileName(filePath), allLines);
     }
@@ -26,7 +24,11 @@ public class FileSystemPersister : IPersistFile
         }
 
         var filePath = Path.Combine(directory, fileUpdated.FileName);
-        File.WriteAllLines(filePath, fileUpdated.NewContent.Split(Environment.NewLine));
+        var allLines = fileUpdated.NewContent.Split(
+            Environment.NewLine,
+            StringSplitOptions.RemoveEmptyEntries);
+        
+        File.WriteAllLines(filePath, allLines);
     }
 
     public List<FileContent> ReadDirectory(string directory)

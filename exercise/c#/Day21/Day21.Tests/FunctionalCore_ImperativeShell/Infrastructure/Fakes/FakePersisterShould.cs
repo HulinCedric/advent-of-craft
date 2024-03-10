@@ -1,26 +1,19 @@
 using System.Collections.Immutable;
 using Day21.FunctionalCore_ImperativeShell;
+using Day21.Tests.FunctionalCore_ImperativeShell.Common.Setup;
+using Day21.Tests.FunctionalCore_ImperativeShell.Common.TestDoubles;
 using FluentAssertions;
 using Xunit;
 
-namespace Day21.Tests.FunctionalCore_ImperativeShell;
+namespace Day21.Tests.FunctionalCore_ImperativeShell.Infrastructure.Fakes;
 
-public class FileSystemPersisterShould : IDisposable
+public class FakePersisterShould
 {
     private const string DirectoryName = "audits";
     private const string NewContent = "Alice;2019-04-06 18:00:00";
     private static readonly ImmutableList<string> NoContent = [];
 
-    private readonly FileSystemPersister _persister = new();
-
-    public void Dispose()
-    {
-        if (Directory.Exists(DirectoryName))
-        {
-            Directory.Delete(DirectoryName, recursive: true);
-        }
-    }
-
+    private readonly FakePersister _persister = new();
 
     [Fact]
     public void ReadDirectory_ReturnsEmptyList_When_NoFiles() =>

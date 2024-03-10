@@ -1,6 +1,6 @@
 using Day21.FunctionalCore_ImperativeShell;
 
-namespace Day21.Tests.FunctionalCore_ImperativeShell;
+namespace Day21.Tests.FunctionalCore_ImperativeShell.Common.Setup;
 
 public static class PersisterSetup
 {

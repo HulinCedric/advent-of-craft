@@ -1,9 +1,11 @@
 using System.Collections.Immutable;
 using Day21.FunctionalCore_ImperativeShell;
+using Day21.Tests.FunctionalCore_ImperativeShell.Common.Setup;
+using Day21.Tests.FunctionalCore_ImperativeShell.Common.TestDoubles;
 using FluentAssertions;
 using Xunit;
 
-namespace Day21.Tests.FunctionalCore_ImperativeShell;
+namespace Day21.Tests.FunctionalCore_ImperativeShell.UseCases;
 
 public class AddAuditRecordUseCaseShould
 {
