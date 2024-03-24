@@ -30,4 +30,26 @@ public class DiamondShould
 
         return lines.Last() == "A";
     }
+    
+    [Property]
+    public bool Have_a_vertically_symmetric_contour(char letter)
+    {
+        var diamond = Diamond.Print(letter);
+
+        var lines = diamond.Lines();
+
+        return lines.All(
+            line =>
+                LeadingSpaces(line) == TrailingSpaces(line));
+    }
+
+    private int TrailingSpaces(string line)
+    {
+return line.Reverse().TakeWhile(char.IsWhiteSpace).Count();
+    }
+
+    private int LeadingSpaces(string line)
+    {
+return line.TakeWhile(char.IsWhiteSpace).Count();
+    }
 }
