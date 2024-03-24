@@ -41,9 +41,9 @@ public class DiamondShould
         return lines.All(line => LeadingSpaces(line) == TrailingSpaces(line));
     }
 
-    private int TrailingSpaces(string line)
+    private static int TrailingSpaces(string line)
         => line.Reverse().TakeWhile(char.IsWhiteSpace).Count();
 
-    private int LeadingSpaces(string line)
+    private static int LeadingSpaces(string line)
         => line.TakeWhile(char.IsWhiteSpace).Count();
 }
