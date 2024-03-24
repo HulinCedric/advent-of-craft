@@ -20,4 +20,14 @@ public class DiamondShould
 
         return lines.First() == "A";
     }
+    
+    [Property]
+    public bool Contains_A_on_last_line(char letter)
+    {
+        var diamond = Diamond.Print(letter);
+
+        var lines = diamond.Split(Environment.NewLine).Select(line => line.Trim());
+
+        return lines.Last() == "A";
+    }
 }
