@@ -38,9 +38,7 @@ public class DiamondShould
 
         var lines = diamond.Lines();
 
-        return lines.All(
-            line =>
-                LeadingSpaces(line) == TrailingSpaces(line));
+        return lines.All(line => LeadingSpaces(line) == TrailingSpaces(line));
     }
 
     private int TrailingSpaces(string line)
