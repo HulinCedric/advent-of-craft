@@ -11,12 +11,3 @@ public class DiamondShould
         return string.IsNullOrWhiteSpace(diamond) == false;
     }
 }
-
-public static class Diamond
-{
-    public static string Print(char letter)
-    {
-        return "toto";
-    }
-}
-
