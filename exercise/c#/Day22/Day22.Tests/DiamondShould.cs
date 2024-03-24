@@ -34,9 +34,7 @@ public class DiamondShould
     [Property]
     public bool Have_a_vertically_symmetric_contour(char letter)
     {
-        var diamond = Diamond.Print(letter);
-
-        var lines = diamond.Lines();
+        var lines = Diamond.Print(letter).Lines();
 
         return lines.All(line => LeadingSpaces(line) == TrailingSpaces(line));
     }
