@@ -16,8 +16,8 @@ public class DiamondShould
     {
         var diamond = Diamond.Print(letter);
         
-        var lines = diamond.Split(Environment.NewLine);
+        var lines = diamond.Split(Environment.NewLine).Select(line=>line.Trim());
         
-        return lines.First().Contains("A");
+        return lines.First()=="A";
     }
 }
