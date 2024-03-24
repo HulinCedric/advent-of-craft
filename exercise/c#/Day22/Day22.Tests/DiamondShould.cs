@@ -16,7 +16,7 @@ public class DiamondShould
     {
         var diamond = Diamond.Print(letter);
 
-        var lines = diamond.Split(Environment.NewLine).Select(line => line.Trim());
+        var lines = Lines(diamond).Select(line => line.Trim());
 
         return lines.First() == "A";
     }
@@ -26,8 +26,11 @@ public class DiamondShould
     {
         var diamond = Diamond.Print(letter);
 
-        var lines = diamond.Split(Environment.NewLine).Select(line => line.Trim());
+        var lines = Lines(diamond).Select(line => line.Trim());
 
         return lines.Last() == "A";
     }
+
+    private static string[] Lines(string diamond)
+        => diamond.Split(Environment.NewLine);
 }
