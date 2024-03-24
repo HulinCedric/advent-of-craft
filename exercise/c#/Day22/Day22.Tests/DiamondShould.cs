@@ -2,6 +2,12 @@ using FsCheck.Xunit;
 
 namespace Day22.Tests;
 
+public static class DiamondExtensions
+{
+    public static string[] Lines(this string diamond)
+        => diamond.Split(Environment.NewLine);
+}
+
 public class DiamondShould
 {
     [Property]
@@ -16,7 +22,7 @@ public class DiamondShould
     {
         var diamond = Diamond.Print(letter);
 
-        var lines = Lines(diamond).Select(line => line.Trim());
+        var lines = diamond.Lines().Select(line => line.Trim());
 
         return lines.First() == "A";
     }
@@ -26,11 +32,8 @@ public class DiamondShould
     {
         var diamond = Diamond.Print(letter);
 
-        var lines = Lines(diamond).Select(line => line.Trim());
+        var lines = diamond.Lines().Select(line => line.Trim());
 
         return lines.Last() == "A";
     }
-
-    private static string[] Lines(string diamond)
-        => diamond.Split(Environment.NewLine);
 }
