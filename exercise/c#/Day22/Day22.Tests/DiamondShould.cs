@@ -12,7 +12,7 @@ public class DiamondShould
     }
 
     [Property]
-    public bool Contain_A_on_first_line(char letter)
+    public bool Contains_A_on_first_line(char letter)
     {
         var diamond = Diamond.Print(letter);
 
