@@ -1,0 +1,9 @@
+toolchains:
+  default: dotnet
+  compatible-with: [dotnet, make]
+source-files:
+  directories: [Day22]
+  patterns: ['(?i)^.*\.cs(x)?$']
+test-files:
+  directories: [Day22.Tests]
+  patterns: ['(?i)^.*\.cs(x)?$']
