@@ -20,7 +20,7 @@ public class DiamondShould
 
         return lines.First() == "A";
     }
-    
+
     [Property]
     public bool Contains_A_on_last_line(char letter)
     {
@@ -30,7 +30,7 @@ public class DiamondShould
 
         return lines.Last() == "A";
     }
-    
+
     [Property]
     public bool Have_a_vertically_symmetric_contour(char letter)
     {
@@ -44,12 +44,8 @@ public class DiamondShould
     }
 
     private int TrailingSpaces(string line)
-    {
-return line.Reverse().TakeWhile(char.IsWhiteSpace).Count();
-    }
+        => line.Reverse().TakeWhile(char.IsWhiteSpace).Count();
 
     private int LeadingSpaces(string line)
-    {
-return line.TakeWhile(char.IsWhiteSpace).Count();
-    }
+        => line.TakeWhile(char.IsWhiteSpace).Count();
 }
