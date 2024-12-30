@@ -1,0 +1,64 @@
+name: 📊 Dependency Freshness Metric
+on:
+  workflow_dispatch:
+  
+  pull_request:
+    branches:
+      - main
+        
+  push:
+    branches:
+      - main
+      
+env:
+  sln-path: exercise/c#/AdventOfCraft.sln
+#  sln-path: "."
+  
+jobs:
+  dependency-metric:
+    runs-on: ubuntu-latest
+    name: 📊 Dependency freshness metric
+    
+    steps:
+      - uses: actions/checkout@v4
+        
+      - name: 📊 Gather dependency freshness metric
+        shell: bash
+        run: |
+          dotnet tool install -g libyear
+          SOLUTION_PATH=${{ env.sln-path }}
+          echo "Solution Path: $SOLUTION_PATH"
+          SOLUTION_DIR=$(dirname "$SOLUTION_PATH")
+          echo "Solution Directory: $SOLUTION_DIR"
+          PROJECT_SLN_PATHS=$(dotnet sln "$SOLUTION_PATH" list 2>&1 | grep "\.csproj$")
+          PROJECT_PATHS=$(xargs -I {} echo "$SOLUTION_DIR/{}" <<< $PROJECT_SLN_PATHS)
+          echo "Project Paths: $PROJECT_PATHS"
+          echo "Running dotnet libyear..."
+          dotnet libyear $PROJECT_PATHS > dependency-freshness-metric.txt
+          
+      - name: 🗣️ Translate dependency freshness report to markdown
+        shell: bash
+        run: |
+          chmod +x .github/steps/translate_libyear_report_to_md.sh
+          .github/steps/translate_libyear_report_to_md.sh dependency-freshness-metric.txt
+          
+      - name: 📦 Upload dependency freshness metric reports
+        uses: actions/upload-artifact@v2
+        with:
+          name: dependency-freshness-metric
+          path: |
+              dependency-freshness-metric.txt
+              dependency-freshness-metric.md
+        
+        
+      - name: 📄 Publish dependency freshness metric in GitHub Summary
+        if: ${{ hashFiles('./dependency-freshness-metric.txt') != '' }}
+        shell: bash
+        run: cat ./dependency-freshness-metric.md >> $GITHUB_STEP_SUMMARY
+        
+      - name: 💬 Publish dependency freshness metric in PR comment
+        uses: marocchino/sticky-pull-request-comment@v2.8.0
+        if: ${{ github.event_name == 'pull_request' }}
+        with:
+          recreate: true
+          path: './dependency-freshness-metric.md'

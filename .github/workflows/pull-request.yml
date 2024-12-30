@@ -1,0 +1,28 @@
+name: 🫴 Pull Request
+
+on:
+  pull_request:
+    branches: 
+      - main
+        
+env:
+  sln-path: exercise/c#/AdventOfCraft.sln
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    name: 🏗 Build and Test
+    
+    steps:
+
+      - name: 📩 Checkout Code
+        uses: actions/checkout@v4
+
+      - name: 🔗 Install dependencies
+        run: dotnet restore ${{ env.sln-path }}
+
+      - name: 🏗 Build solution
+        run: dotnet build ${{ env.sln-path }} --configuration Release --no-restore
+
+      - name: ✅ Test solution
+        run: dotnet test ${{ env.sln-path }} --configuration Release --no-restore --no-build
